@@ -6,6 +6,10 @@ import com.range.enums.Region;
 import com.range.exception.BunnyFileUploadFailedException;
 import com.range.exception.BunnyInvalidCredentialsException;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+
 public interface BunnyUploader {
     /**
      * Uploads a file to a specific Bunny.net Storage Zone.
@@ -16,10 +20,23 @@ public interface BunnyUploader {
      * @param storageRegion    The geographical region where the storage zone is located.
      * @return {@link PutObjectResponse} containing the upload metadata and the public file URL.
      * @throws BunnyFileUploadFailedException if the upload fails due to network issues, or server errors.
-     * @throws BunnyInvalidCredentialsException if invalid credentials
      */
     PutObjectResponse uploadFileBunny(PutObjectRequest putObjectRequest,
                                       String storageZoneName,
                                       Region storageRegion)
-            throws BunnyFileUploadFailedException, BunnyInvalidCredentialsException;
+            throws BunnyFileUploadFailedException ;
+    /**
+     * Uploads a file to a specific Bunny.net Storage Zone.
+     *
+     * @param putObjectRequest The request object containing the file data (InputStream),
+     *                         target path (key), and content type.
+     * @param storageZoneName  The unique name of your Storage Zone (acts as the username).
+     * storageRegion  is default selected.FRANKFURT_DE
+     * @return {@link PutObjectResponse} containing the upload metadata and the public file URL.
+     * @throws BunnyFileUploadFailedException if the upload fails due to network issues, or server errors.
+     * @throws BunnyInvalidCredentialsException if invalid credentials
+     */
+    PutObjectResponse uploadFileBunnyWithDefaultRegion(PutObjectRequest putObjectRequest,
+                                      String storageZoneName)
+            throws BunnyFileUploadFailedException;
 }

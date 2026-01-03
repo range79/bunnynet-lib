@@ -9,7 +9,6 @@ public class BunnyNetClient {
 
     /**
      * BunnyNetClient constructor with all parameters.
-     *
      * @param apiKey Your BunnyCDN API key used for authentication.
      */
 
