@@ -5,4 +5,7 @@ public class BunnyConnectionFailedException extends RuntimeException {
     public BunnyConnectionFailedException(Throwable throwable){
         super(throwable);
     }
+    public BunnyConnectionFailedException(String message,Throwable throwable){
+        super(message,throwable);
+    }
 }
