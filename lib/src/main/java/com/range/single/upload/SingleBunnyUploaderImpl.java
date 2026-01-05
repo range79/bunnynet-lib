@@ -14,20 +14,20 @@ class SingleBunnyUploaderImpl implements SingleBunnyUploader {
 
     public SingleBunnyUploaderImpl(SingleBunnyNetClient singleBunnyNetClient, int connectionTimeout, int readTimeout) {
         this.singleBunnyNetClient = singleBunnyNetClient;
-        httpClient = new BunnyHttpClient(singleBunnyNetClient.getApiKey(), connectionTimeout, readTimeout);
+        httpClient = new BunnyHttpClient(singleBunnyNetClient.apiKey(), connectionTimeout, readTimeout);
     }
 
     @Override
     public PutObjectResponse uploadFile(PutObjectRequest putObjectRequest) {
-        String url = singleBunnyNetClient.getRegion().getEndpoint() + "/"
-                + singleBunnyNetClient.getStorageZone() + "/" + putObjectRequest.getKey();
+        String url = singleBunnyNetClient.region().getEndpoint() + "/"
+                + singleBunnyNetClient.storageZone() + "/" + putObjectRequest.getKey();
         var connection = httpClient.createPutConnection(url, putObjectRequest.getContentType(), putObjectRequest.getMetadata());
         httpClient.uploadData(connection, putObjectRequest);
         int code = httpClient.getResponseCode(connection);
         if (code == 404) throw new BunnyInvalidCredentialsException(null);
         if (code != 200 && code != 201) throw new BunnyFileUploadFailedException("BunnyCDN upload failed: HTTP " + code);
-        return new PutObjectResponse(singleBunnyNetClient.getStorageZone(),
+        return new PutObjectResponse(singleBunnyNetClient.storageZone(),
                 putObjectRequest.getKey(),
-                "https://"+singleBunnyNetClient.getStorageZone()+".b-cdn.net/" + putObjectRequest.getKey());
+                "https://"+singleBunnyNetClient.storageZone()+".b-cdn.net/" + putObjectRequest.getKey());
     }
 }

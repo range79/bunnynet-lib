@@ -13,7 +13,7 @@ class MultiBunnyUploaderImpl implements MultiBunnyUploader {
 
 
     public MultiBunnyUploaderImpl(MultiBunnyNetClient multiBunnyNetClient, int connectionTimeout, int readTimeout) {
-        this.httpClient = new BunnyHttpClient(multiBunnyNetClient.getApiKey(), connectionTimeout, readTimeout);
+        this.httpClient = new BunnyHttpClient(multiBunnyNetClient.apiKey(), connectionTimeout, readTimeout);
     }
 
 
