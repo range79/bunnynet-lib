@@ -10,10 +10,22 @@ import com.range.common.exception.BunnyInvalidCredentialsException;
 
 
 public interface MultiBunnyUploader {
+    /**
+     * Creates a SingleBunnyUploader with custom timeout settings.
+     * @param multiBunnyNetClient The configuration containing API key.
+     * @param connectionTimeout    Maximum time in milliseconds to wait for establishing the connection.
+     * @param connectionReadTimeout          Maximum time in milliseconds to wait for reading data from the connection.
+     */
 
-    static MultiBunnyUploader create(MultiBunnyNetClient multiBunnyNetClient, int connectionTimeOut, int connectionReadTimeOut) {
-        return new MultiBunnyUploaderImpl(multiBunnyNetClient, connectionTimeOut, connectionReadTimeOut);
+    static MultiBunnyUploader create(MultiBunnyNetClient multiBunnyNetClient, int connectionTimeout, int connectionReadTimeout) {
+        return new MultiBunnyUploaderImpl(multiBunnyNetClient, connectionTimeout, connectionReadTimeout);
     }
+
+
+    /**
+     * Creates a SingleBunnyUploader with custom timeout settings.\
+     * @param multiBunnyNetClient The configuration containing API key, storage zone, and region.
+     */
 
     static MultiBunnyUploader create(MultiBunnyNetClient multiBunnyNetClient) {
         return new MultiBunnyUploaderImpl(multiBunnyNetClient, 15_000, 60_000);

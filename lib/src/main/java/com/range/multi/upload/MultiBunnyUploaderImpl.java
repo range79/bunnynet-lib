@@ -25,7 +25,7 @@ class MultiBunnyUploaderImpl implements MultiBunnyUploader {
         httpClient.uploadData(connection, request);
         int code = httpClient.getResponseCode(connection);
 
-        if (code == 401) throw new BunnyInvalidCredentialsException("Invalid credentials");
+        if (code == 401) throw new BunnyInvalidCredentialsException(null);
 
         if (code != 200 && code != 201) {
             throw new BunnyFileUploadFailedException("BunnyCDN upload failed: HTTP " + code);

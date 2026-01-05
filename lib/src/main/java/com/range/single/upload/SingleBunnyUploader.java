@@ -1,5 +1,6 @@
 package com.range.single.upload;
 
+import com.range.common.http.BunnyHttpClient;
 import com.range.single.config.SingleBunnyNetClient;
 import com.range.common.dto.PutObjectRequest;
 import com.range.common.dto.PutObjectResponse;
@@ -15,13 +16,14 @@ public interface SingleBunnyUploader {
     }
 
     /**
-     * a customConstructor for SingleBunnyUploader
-     * @param singleBunnyNetClient for config
-     * @param connectionTimeOut for connection time out (don't make it so long )
-     * @param connectionReadTimeOut for connection read time out (also don't make it )
+     * Creates a SingleBunnyUploader with custom timeout settings.
+     *
+     * @param singleBunnyNetClient The configuration containing API key, storage zone, and region.
+     * @param connectionTimeout    Maximum time in milliseconds to wait for establishing the connection.
+     * @param readTimeout          Maximum time in milliseconds to wait for reading data from the connection.
      */
-    static SingleBunnyUploader create(SingleBunnyNetClient singleBunnyNetClient,int connectionTimeOut,int connectionReadTimeOut){
-        return new SingleBunnyUploaderImpl(singleBunnyNetClient,connectionTimeOut,connectionReadTimeOut);
+    static SingleBunnyUploader create(SingleBunnyNetClient singleBunnyNetClient,int connectionTimeout,int readTimeout ){
+        return new SingleBunnyUploaderImpl(singleBunnyNetClient,connectionTimeout,readTimeout);
     }
 
     PutObjectResponse uploadFile(PutObjectRequest putObjectRequest);
