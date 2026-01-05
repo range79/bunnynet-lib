@@ -1,4 +1,4 @@
-package com.range.dto;
+package com.range.common.dto;
 
 public class PutObjectResponse {
     private final String bucket;

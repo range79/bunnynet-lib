@@ -1,4 +1,4 @@
-package com.range.exception;
+package com.range.common.exception;
 
 public class BunnyFileUploadFailedException extends RuntimeException {
     public BunnyFileUploadFailedException(String message) {

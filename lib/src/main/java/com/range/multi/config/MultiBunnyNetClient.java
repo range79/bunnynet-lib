@@ -1,4 +1,4 @@
-package com.range.config;
+package com.range.multi.config;
 
 /**
  * MultiBunnyNetClient is a lightweight configuration holder for the BunnyCDN Storage API.
@@ -20,6 +20,9 @@ public class MultiBunnyNetClient {
      * @param apiKey The BunnyCDN API key used for authentication.
      */
     public MultiBunnyNetClient(String apiKey) {
+        if (apiKey == null || apiKey.isBlank()) {
+            throw new IllegalArgumentException("API key cannot be null or empty");
+        }
         this.apiKey = apiKey;
     }
 

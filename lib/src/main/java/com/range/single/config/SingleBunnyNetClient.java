@@ -1,6 +1,6 @@
-package com.range.config;
+package com.range.single.config;
 
-import com.range.enums.Region;
+import com.range.common.enums.Region;
 
 /**
  * SingleBunnyNetClient is a configuration holder for the BunnyCDN Storage API.

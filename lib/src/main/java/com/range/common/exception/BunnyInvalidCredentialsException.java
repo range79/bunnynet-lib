@@ -1,4 +1,4 @@
-package com.range.exception;
+package com.range.common.exception;
 
 public class BunnyInvalidCredentialsException extends RuntimeException {
     public BunnyInvalidCredentialsException(String message){

@@ -1,4 +1,4 @@
-package com.range.dto;
+package com.range.common.dto;
 
 import java.io.InputStream;
 import java.util.Map;

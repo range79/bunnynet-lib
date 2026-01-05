@@ -1,11 +1,12 @@
-package com.range.upload;
+package com.range.multi.upload;
 
-import com.range.config.MultiBunnyNetClient;
-import com.range.dto.PutObjectRequest;
-import com.range.dto.PutObjectResponse;
-import com.range.enums.Region;
-import com.range.exception.BunnyFileUploadFailedException;
-import com.range.exception.BunnyInvalidCredentialsException;
+import com.range.multi.config.MultiBunnyNetClient;
+import com.range.common.dto.PutObjectRequest;
+import com.range.common.dto.PutObjectResponse;
+import com.range.common.enums.Region;
+import com.range.common.exception.BunnyFileUploadFailedException;
+import com.range.common.exception.BunnyInvalidCredentialsException;
+
 
 
 public interface MultiBunnyUploader {

@@ -1,4 +1,4 @@
-package com.range.enums;
+package com.range.common.enums;
 
 /**
  * Represents the available BunnyCDN storage regions.

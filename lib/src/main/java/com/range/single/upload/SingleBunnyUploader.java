@@ -1,8 +1,8 @@
-package com.range.upload;
+package com.range.single.upload;
 
-import com.range.config.SingleBunnyNetClient;
-import com.range.dto.PutObjectRequest;
-import com.range.dto.PutObjectResponse;
+import com.range.single.config.SingleBunnyNetClient;
+import com.range.common.dto.PutObjectRequest;
+import com.range.common.dto.PutObjectResponse;
 
 public interface SingleBunnyUploader {
 
