@@ -1,4 +1,8 @@
 package com.range.common.dto;
 
-public class SingleDownloadObjectRequest {
+public record SingleDownloadObjectRequest (
+    String key,
+    String bucket
+){
 }
+

@@ -8,11 +8,7 @@ import com.range.common.enums.Region;
  * Use this class when:
  * You always upload to the same region and storage zone.
  */
-public class SingleBunnyNetClient {
-
-    private final String apiKey;
-    private final Region region;
-    private final String storageZone;
+public record SingleBunnyNetClient(String apiKey, Region region, String storageZone) {
 
     /**
      * Creates a new SingleBunnyNetClient instance with all configuration parameters.
@@ -21,30 +17,39 @@ public class SingleBunnyNetClient {
      * @param region      The target BunnyCDN storage region.
      * @param storageZone The name of the storage zone.
      */
-    public SingleBunnyNetClient(String apiKey, Region region, String storageZone) {
-        this.apiKey = apiKey;
-        this.region = region;
-        this.storageZone = storageZone;
+    public SingleBunnyNetClient {
+        if (apiKey == null || apiKey.isBlank()) {
+            throw new IllegalArgumentException("API key cannot be null or empty");
+        }
+        if (region == null) {
+            throw new IllegalArgumentException("Region cannot be null");
+        }
+        if (storageZone == null || storageZone.isBlank()) {
+            throw new IllegalArgumentException("Storage zone cannot be null or empty");
+        }
     }
 
     /**
      * @return The configured BunnyCDN storage region.
      */
-    public Region getRegion() {
+    @Override
+    public Region region() {
         return region;
     }
 
     /**
      * @return The BunnyCDN API key.
      */
-    public String getApiKey() {
+    @Override
+    public String apiKey() {
         return apiKey;
     }
 
     /**
      * @return The name of the configured BunnyCDN storage zone.
      */
-    public String getStorageZone() {
+    @Override
+    public String storageZone() {
         return storageZone;
     }
 

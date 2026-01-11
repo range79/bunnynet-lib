@@ -13,6 +13,10 @@ public class PutObjectRequest {
     private final InputStream inputStream;
 
     public PutObjectRequest(String bucket, String key, String contentType, Map<String, String> metadata, InputStream inputStream) {
+        if (bucket == null || bucket.isBlank()) throw new IllegalArgumentException("Bucket cannot be empty");
+        if (key == null || key.isBlank()) throw new IllegalArgumentException("Key cannot be empty");
+        if (contentType == null || contentType.isBlank()) throw new IllegalArgumentException("ContentType cannot be empty");
+        if (inputStream == null) throw new IllegalArgumentException("InputStream cannot be null");
         this.bucket = bucket;
         this.key = key;
         this.contentType = contentType;
