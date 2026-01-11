@@ -24,7 +24,7 @@ class SingleBunnyUploaderImpl implements SingleBunnyUploader {
         var connection = httpClient.createPutConnection(url, putObjectRequest.getContentType(), putObjectRequest.getMetadata());
         httpClient.uploadData(connection, putObjectRequest);
         int code = httpClient.getResponseCode(connection);
-        if (code == 404) throw new BunnyInvalidCredentialsException(null);
+        if (code == 401) throw new BunnyInvalidCredentialsException("Invalid AccessKey, region hostname, or file passed in a non raw binary format.");
         if (code != 200 && code != 201) throw new BunnyFileUploadFailedException("BunnyCDN upload failed: HTTP " + code);
         return new PutObjectResponse(singleBunnyNetClient.storageZone(),
                 putObjectRequest.getKey(),

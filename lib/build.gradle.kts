@@ -17,6 +17,8 @@ repositories {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp-bom
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:5.3.2"))
 }
 
 testing {
