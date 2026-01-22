@@ -26,5 +26,10 @@ class SingleBunnyStorageImpl implements SingleBunnyStorage{
         return singleBunnyUploader.uploadFile(putObjectRequest);
     }
 
+    @Override
+    public void delete() {
+
+    }
+
 
 }

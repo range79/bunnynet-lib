@@ -14,7 +14,7 @@ public interface SingleBunnyStorage {
 
     InputStream download(SingleDownloadObjectRequest singleDownloadObjectRequest);
     PutObjectResponse uploadFile(PutObjectRequest putObjectRequest);
-  //  void delete();
+   void delete();
 
 
 
