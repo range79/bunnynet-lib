@@ -1,4 +1,4 @@
-package com.range.common.dto;
+package com.range.single.dto;
 
 public record SingleDownloadObjectRequest (
     String key,

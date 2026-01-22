@@ -1,6 +1,6 @@
 package com.range.single.downloader;
 
-import com.range.common.dto.SingleDownloadObjectRequest;
+import com.range.single.dto.SingleDownloadObjectRequest;
 import com.range.single.config.SingleBunnyNetConfig;
 
 import java.io.InputStream;

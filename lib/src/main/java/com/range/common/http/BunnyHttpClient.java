@@ -8,6 +8,7 @@ import okio.Okio;
 import okio.Source;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -59,4 +60,54 @@ public class BunnyHttpClient {
             throw new BunnyConnectionFailedException("Failed to execute upload to: " + request.url(), e);
         }
     }
+    public InputStream downloadAsStream(String url) {
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .addHeader("AccessKey", apiKey)
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+
+            if (!response.isSuccessful()) {
+                response.close();
+                throw new BunnyConnectionFailedException(
+                        "Download failed. HTTP " + response.code() + " from: " + url
+                );
+            }
+
+            ResponseBody body = response.body();
+
+            return body.byteStream();
+
+        } catch (IOException e) {
+            throw new BunnyConnectionFailedException("Failed to download from: " + url, e);
+        }
+    }
+    public int deleteObject(String url) {
+        Request request = new Request.Builder()
+                .url(url)
+                .delete()
+                .addHeader("AccessKey", apiKey)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+
+            if (!response.isSuccessful()) {
+                throw new BunnyConnectionFailedException(
+                        "Delete failed. HTTP " + response.code() + " from: " + url
+                );
+            }
+
+            return response.code();
+
+        } catch (IOException e) {
+            throw new BunnyConnectionFailedException(
+                    "Failed to delete object at: " + url, e
+            );
+        }
+    }
+
+
 }

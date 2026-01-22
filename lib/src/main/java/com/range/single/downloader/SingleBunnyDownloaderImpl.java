@@ -1,6 +1,6 @@
 package com.range.single.downloader;
 
-import com.range.common.dto.SingleDownloadObjectRequest;
+import com.range.single.dto.SingleDownloadObjectRequest;
 import com.range.common.http.BunnyHttpClient;
 import com.range.single.config.SingleBunnyNetConfig;
 
@@ -17,6 +17,6 @@ class SingleBunnyDownloaderImpl implements SingleBunnyDownloader{
     @Override
     public InputStream download(SingleDownloadObjectRequest singleDownloadObjectRequest) {
 return null;
-//        bunnyHttpClient.
+bunnyHttpClient.downloadAsStream()
     }
 }
