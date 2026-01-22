@@ -3,21 +3,21 @@ package com.range.single.config;
 import com.range.common.enums.Region;
 
 /**
- * SingleBunnyNetClient is a configuration holder for the BunnyCDN Storage API.
+ * SingleBunnyNetConfig is a configuration holder for the BunnyCDN Storage API.
  * It stores a single API key, a storage zone, and a specific region.
  * Use this class when:
  * You always upload to the same region and storage zone.
  */
-public record SingleBunnyNetClient(String apiKey, Region region, String storageZone) {
+public record SingleBunnyNetConfig(String apiKey, Region region, String storageZone) {
 
     /**
-     * Creates a new SingleBunnyNetClient instance with all configuration parameters.
+     * Creates a new SingleBunnyNetConfig instance with all configuration parameters.
      *
      * @param apiKey      Your BunnyCDN API key used for authentication.
      * @param region      The target BunnyCDN storage region.
      * @param storageZone The name of the storage zone.
      */
-    public SingleBunnyNetClient {
+    public SingleBunnyNetConfig {
         if (apiKey == null || apiKey.isBlank()) {
             throw new IllegalArgumentException("API key cannot be null or empty");
         }

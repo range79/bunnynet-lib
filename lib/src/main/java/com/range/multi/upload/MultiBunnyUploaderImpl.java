@@ -5,11 +5,11 @@ import com.range.common.dto.PutObjectResponse;
 import com.range.common.enums.Region;
 import com.range.common.http.BunnyHttpClient;
 import com.range.common.upload.AbstractBunnyUploader;
-import com.range.multi.config.MultiBunnyNetClient;
+import com.range.multi.config.MultiBunnyNetConfig;
 
 public class MultiBunnyUploaderImpl extends AbstractBunnyUploader implements MultiBunnyUploader {
 
-    public MultiBunnyUploaderImpl(MultiBunnyNetClient config, int connectionTimeout, int readTimeout) {
+    public MultiBunnyUploaderImpl(MultiBunnyNetConfig config, int connectionTimeout, int readTimeout) {
         super(new BunnyHttpClient(config.apiKey(), connectionTimeout, readTimeout));
     }
 
