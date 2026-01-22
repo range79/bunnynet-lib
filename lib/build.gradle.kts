@@ -3,6 +3,7 @@ version = "1.0.0"
 
 plugins {
     `java-library`
+    `maven-publish`
 }
 
 repositories {
@@ -25,5 +26,15 @@ testing {
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
+    }
+    withSourcesJar()
+    withJavadocJar()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+        }
     }
 }
