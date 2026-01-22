@@ -6,17 +6,27 @@ import com.range.single.config.SingleBunnyNetConfig;
 
 import java.io.InputStream;
 
-class SingleBunnyDownloaderImpl implements SingleBunnyDownloader{
+class SingleBunnyDownloaderImpl implements SingleBunnyDownloader {
     private final SingleBunnyNetConfig singleBunnyNetConfig;
     private final BunnyHttpClient bunnyHttpClient;
-    public SingleBunnyDownloaderImpl(SingleBunnyNetConfig singleBunnyNetConfig, int connectionTimeout, int connectionReadTimeout){
+
+    public SingleBunnyDownloaderImpl(SingleBunnyNetConfig singleBunnyNetConfig, int connectionTimeout, int connectionReadTimeout) {
         this.singleBunnyNetConfig = singleBunnyNetConfig;
-        bunnyHttpClient=new BunnyHttpClient(singleBunnyNetConfig.apiKey(),connectionTimeout,connectionReadTimeout);
+        bunnyHttpClient = new BunnyHttpClient(singleBunnyNetConfig.apiKey(), connectionTimeout, connectionReadTimeout);
     }
 
     @Override
-    public InputStream download(SingleDownloadObjectRequest singleDownloadObjectRequest) {
-return null;
-bunnyHttpClient.downloadAsStream()
-    }
+    public InputStream download(SingleDownloadObjectRequest request) {
+
+        String url = "https://storage.bunnycdn.com/";
+
+        if (request.storageZone() != null && !request.storageZone().isBlank()) {
+            url += request.storageZone() + "/";
+        }
+
+        if (request.key() != null && !request.key().isBlank()) {
+            url += request.key();
+        }
+        return bunnyHttpClient.downloadAsStream(url);
+        }
 }

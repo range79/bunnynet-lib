@@ -10,6 +10,7 @@ import java.io.InputStream;
 
 public class MultiBunnyStorageImpl implements MultiBunnyStorage {
     private final MultiBunnyUploader uploader;
+
     //private final MultiBunnyDelete delete;
     public MultiBunnyStorageImpl(MultiBunnyNetConfig config){
         this.uploader=MultiBunnyUploader.create(config);
