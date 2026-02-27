@@ -15,6 +15,8 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp")
     // Source: https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
     testImplementation("org.junit.jupiter:junit-jupiter-api:6.0.3")
+    // Source: https://mvnrepository.com/artifact/com.squareup.okhttp3/mockwebserver
+    testImplementation("com.squareup.okhttp3:mockwebserver:5.3.2")
 }
 
 java {
