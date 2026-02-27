@@ -1,4 +1,5 @@
 # Unofficial BunnyNet Library by Range
+latest version: [![](https://jitpack.io/v/range79/bunnynet-lib.svg)](https://jitpack.io/#range79/bunnynet-lib)
 
 Listen up, I just had to drop this because somebody had to fix the mess.
 
