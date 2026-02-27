@@ -56,7 +56,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.range79:bunnynetlib:1.1.0")
+   implementation("com.github.range79:bunnynet-lib:Version")
 }
 ```
 
