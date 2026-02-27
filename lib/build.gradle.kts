@@ -13,6 +13,8 @@ repositories {
 dependencies {
     implementation(platform("com.squareup.okhttp3:okhttp-bom:5.3.2"))
     implementation("com.squareup.okhttp3:okhttp")
+    // Source: https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
+    testImplementation("org.junit.jupiter:junit-jupiter-api:6.0.3")
 }
 
 java {
