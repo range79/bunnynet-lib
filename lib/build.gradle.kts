@@ -1,5 +1,5 @@
 group = "com.github.range79"
-version = "1.0.0"
+version = "1.1.0"
 
 plugins {
     `java-library`
@@ -15,20 +15,11 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp")
 }
 
-testing {
-    suites {
-        val test by getting(JvmTestSuite::class) {
-            useJUnitJupiter("5.12.1")
-        }
-    }
-}
-
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
     withSourcesJar()
-    withJavadocJar()
 }
 
 publishing {

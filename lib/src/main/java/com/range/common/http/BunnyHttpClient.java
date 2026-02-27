@@ -1,5 +1,6 @@
 package com.range.common.http;
 
+import com.range.common.dto.GetObjectResponse;
 import com.range.common.dto.PutObjectRequest;
 import com.range.common.exception.BunnyConnectionFailedException;
 import okhttp3.*;
@@ -8,8 +9,8 @@ import okio.Okio;
 import okio.Source;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class BunnyHttpClient {
@@ -25,11 +26,18 @@ public class BunnyHttpClient {
                 .build();
     }
 
-    public Request createPutRequest(String url, String contentType, Map<String, String> metadata, PutObjectRequest request) {
+
+
+    public Request createPutRequest(
+            String url,
+            String contentType,
+            Map<String, String> metadata,
+            PutObjectRequest request
+    ) {
         RequestBody body = new RequestBody() {
             @Override
             public MediaType contentType() {
-                return MediaType.parse(contentType);
+                return contentType != null ? MediaType.parse(contentType) : null;
             }
 
             @Override
@@ -54,37 +62,78 @@ public class BunnyHttpClient {
 
     public int executeUpload(Request request) {
         try (Response response = client.newCall(request).execute()) {
-
             return response.code();
         } catch (IOException e) {
-            throw new BunnyConnectionFailedException("Failed to execute upload to: " + request.url(), e);
+            throw new BunnyConnectionFailedException(
+                    "Failed to execute upload to: " + request.url(), e
+            );
         }
     }
-    public InputStream downloadAsStream(String url) {
+
+
+
+    public GetObjectResponse downloadObject(
+            String storageZone,
+            String endpoint,
+            String key
+    ) {
+
+        String url = endpoint + "/" + storageZone + "/" + key;
+
         Request request = new Request.Builder()
                 .url(url)
                 .get()
                 .addHeader("AccessKey", apiKey)
                 .build();
 
+        final Response response;
+
         try {
-            Response response = client.newCall(request).execute();
-
-            if (!response.isSuccessful()) {
-                response.close();
-                throw new BunnyConnectionFailedException(
-                        "Download failed. HTTP " + response.code() + " from: " + url
-                );
-            }
-
-            ResponseBody body = response.body();
-
-            return body.byteStream();
-
+            response = client.newCall(request).execute();
         } catch (IOException e) {
-            throw new BunnyConnectionFailedException("Failed to download from: " + url, e);
+            throw new BunnyConnectionFailedException(
+                    "Failed to download from: " + url, e
+            );
         }
+
+        int code = response.code();
+
+        if (code == 401) {
+            response.close();
+            throw new BunnyConnectionFailedException("Invalid AccessKey.");
+        }
+
+        if (code == 404) {
+            response.close();
+            throw new BunnyConnectionFailedException("Object not found: " + key);
+        }
+
+        if (!response.isSuccessful()) {
+            response.close();
+            throw new BunnyConnectionFailedException(
+                    "Download failed. HTTP " + code + " from: " + url
+            );
+        }
+
+        ResponseBody body = response.body();
+
+
+        MediaType mediaType = body.contentType();
+        String contentType = mediaType != null ? mediaType.toString() : null;
+
+        return new GetObjectResponse(
+                storageZone,
+                key,
+                "https://" + storageZone + ".b-cdn.net/" + key,
+                contentType,
+                body.contentLength(),
+                response.headers(),
+                response,
+                body.byteStream()
+        );
     }
+
+
     public int deleteObject(String url) {
         Request request = new Request.Builder()
                 .url(url)
@@ -108,6 +157,4 @@ public class BunnyHttpClient {
             );
         }
     }
-
-
 }
