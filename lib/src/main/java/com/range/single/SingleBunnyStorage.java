@@ -12,7 +12,7 @@ public interface SingleBunnyStorage {
 
     GetObjectResponse download(String key);
     PutObjectResponse uploadFile(PutObjectRequest putObjectRequest);
-   void delete();
+   void delete(String key);
 
 
 

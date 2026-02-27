@@ -5,20 +5,19 @@ import com.range.common.dto.PutObjectRequest;
 import com.range.common.dto.PutObjectResponse;
 import com.range.common.enums.Region;
 import com.range.multi.config.MultiBunnyNetConfig;
+import com.range.multi.delete.MultiBunnyDeleter;
 import com.range.multi.downloader.MultiBunnyDownloader;
 import com.range.multi.upload.MultiBunnyUploader;
-
-import java.io.InputStream;
 
 public class MultiBunnyStorageImpl implements MultiBunnyStorage {
     private final MultiBunnyUploader uploader;
     private final MultiBunnyDownloader downloader;
 
-    //private final MultiBunnyDelete delete;
+  private final MultiBunnyDeleter deleter;
     public MultiBunnyStorageImpl(MultiBunnyNetConfig config) {
         this.uploader = MultiBunnyUploader.create(config);
         this.downloader = MultiBunnyDownloader.create(config);
-        //    this.delete=MultiBunnyDelete;
+        this.deleter =MultiBunnyDeleter.create(config);
     }
 
     public PutObjectResponse uploadFile(PutObjectRequest putObjectRequest, String storageZoneName,
@@ -28,6 +27,7 @@ public class MultiBunnyStorageImpl implements MultiBunnyStorage {
 
     @Override
     public void deleteFile(String storageZoneName, String key, Region storageRegion) {
+        deleter.delete(storageZoneName, key, storageRegion);
 
     }
 
