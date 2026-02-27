@@ -1,5 +1,6 @@
 package com.range.multi;
 
+import com.range.common.dto.GetObjectResponse;
 import com.range.common.dto.PutObjectRequest;
 import com.range.common.dto.PutObjectResponse;
 import com.range.common.enums.Region;
@@ -31,7 +32,7 @@ public class MultiBunnyStorageImpl implements MultiBunnyStorage {
     }
 
     @Override
-    public InputStream downloadFile(String storageZoneName, String key, Region storageRegion) {
+    public GetObjectResponse downloadFile(String storageZoneName, String key, Region storageRegion) {
 
         return downloader.download(storageZoneName,key,storageRegion) ;
     }

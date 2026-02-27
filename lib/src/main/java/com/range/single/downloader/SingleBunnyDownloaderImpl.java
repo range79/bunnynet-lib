@@ -1,32 +1,47 @@
 package com.range.single.downloader;
 
-import com.range.single.dto.SingleDownloadObjectRequest;
+import com.range.common.download.AbstractBunnyDownloader;
+import com.range.common.dto.GetObjectResponse;
 import com.range.common.http.BunnyHttpClient;
 import com.range.single.config.SingleBunnyNetConfig;
 
-import java.io.InputStream;
+class SingleBunnyDownloaderImpl
+        extends AbstractBunnyDownloader
+        implements SingleBunnyDownloader {
 
-class SingleBunnyDownloaderImpl implements SingleBunnyDownloader {
-    private final SingleBunnyNetConfig singleBunnyNetConfig;
-    private final BunnyHttpClient bunnyHttpClient;
+    private final SingleBunnyNetConfig config;
 
-    public SingleBunnyDownloaderImpl(SingleBunnyNetConfig singleBunnyNetConfig, int connectionTimeout, int connectionReadTimeout) {
-        this.singleBunnyNetConfig = singleBunnyNetConfig;
-        bunnyHttpClient = new BunnyHttpClient(singleBunnyNetConfig.apiKey(), connectionTimeout, connectionReadTimeout);
+    public SingleBunnyDownloaderImpl(
+            SingleBunnyNetConfig config,
+            int connectionTimeout,
+            int readTimeout
+    ) {
+        super(new BunnyHttpClient(
+                requireConfig(config).apiKey(),
+                connectionTimeout,
+                readTimeout
+        ));
+        this.config = config;
     }
 
     @Override
-    public InputStream download(SingleDownloadObjectRequest request) {
+    public GetObjectResponse download(String key) {
 
-        String url = "https://storage.bunnycdn.com/";
-
-        if (request.storageZone() != null && !request.storageZone().isBlank()) {
-            url += request.storageZone() + "/";
+        if (key == null || key.isBlank()) {
+            throw new IllegalArgumentException("Key cannot be null or empty");
         }
 
-        if (request.key() != null && !request.key().isBlank()) {
-            url += request.key();
+        return internalDownload(
+                config.storageZone(),
+                config.region().getEndpoint(),
+                key
+        );
+    }
+
+    private static SingleBunnyNetConfig requireConfig(SingleBunnyNetConfig config) {
+        if (config == null) {
+            throw new IllegalArgumentException("SingleBunnyNetConfig cannot be null");
         }
-        return bunnyHttpClient.downloadAsStream(url);
-        }
+        return config;
+    }
 }

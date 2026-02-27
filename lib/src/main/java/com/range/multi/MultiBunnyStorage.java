@@ -1,5 +1,6 @@
 package com.range.multi;
 
+import com.range.common.dto.GetObjectResponse;
 import com.range.common.dto.PutObjectRequest;
 import com.range.common.dto.PutObjectResponse;
 import com.range.common.enums.Region;
@@ -27,7 +28,7 @@ public interface MultiBunnyStorage {
     void deleteFile(String storageZoneName, String key, Region storageRegion);
 
     /**
-     * Downloads a file and returns it as an InputStream.
+     * Downloads a file and returns it as an GetObjectResponse.
      */
-    InputStream downloadFile(String storageZoneName, String key, Region storageRegion);
+    GetObjectResponse downloadFile(String storageZoneName, String key, Region storageRegion);
 }

@@ -96,30 +96,18 @@ public class BunnyHttpClient {
             );
         }
 
-        int code = response.code();
-
-        if (code == 401) {
-            response.close();
-            throw new BunnyConnectionFailedException("Invalid AccessKey.");
-        }
-
-        if (code == 404) {
-            response.close();
-            throw new BunnyConnectionFailedException("Object not found: " + key);
-        }
-
-        if (!response.isSuccessful()) {
+        ResponseBody body = response.body();
+        if (body == null) {
             response.close();
             throw new BunnyConnectionFailedException(
-                    "Download failed. HTTP " + code + " from: " + url
+                    "Empty body from: " + url
             );
         }
 
-        ResponseBody body = response.body();
-
-
         MediaType mediaType = body.contentType();
-        String contentType = mediaType != null ? mediaType.toString() : null;
+        String contentType = mediaType != null
+                ? mediaType.toString()
+                : "application/octet-stream";
 
         return new GetObjectResponse(
                 storageZone,
@@ -129,12 +117,15 @@ public class BunnyHttpClient {
                 body.contentLength(),
                 response.headers(),
                 response,
-                body.byteStream()
+                body.byteStream(),
+                response.code()
         );
     }
 
+    public int deleteObject(String storageZone, String endpoint, String key) {
 
-    public int deleteObject(String url) {
+        String url = endpoint + "/" + storageZone + "/" + key;
+
         Request request = new Request.Builder()
                 .url(url)
                 .delete()
@@ -142,15 +133,7 @@ public class BunnyHttpClient {
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
-
-            if (!response.isSuccessful()) {
-                throw new BunnyConnectionFailedException(
-                        "Delete failed. HTTP " + response.code() + " from: " + url
-                );
-            }
-
             return response.code();
-
         } catch (IOException e) {
             throw new BunnyConnectionFailedException(
                     "Failed to delete object at: " + url, e

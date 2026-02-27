@@ -19,6 +19,11 @@ public class GetObjectResponse implements Closeable {
 
     private final Response response;
     private final InputStream stream;
+    private final int httpStatus;
+
+    public int getHttpStatus() {
+        return httpStatus;
+    }
 
     public GetObjectResponse(
             String storageZone,
@@ -28,7 +33,7 @@ public class GetObjectResponse implements Closeable {
             long contentLength,
             Headers headers,
             Response response,
-            InputStream stream
+            InputStream stream, int httpStatus
     ) {
         this.storageZone = storageZone;
         this.key = key;
@@ -38,6 +43,7 @@ public class GetObjectResponse implements Closeable {
         this.headers = headers;
         this.response = response;
         this.stream = stream;
+        this.httpStatus = httpStatus;
     }
 
     public String getStorageZone() {
