@@ -1,24 +1,26 @@
 package com.range.single;
 
+import com.range.common.dto.GetObjectResponse;
 import com.range.common.dto.PutObjectRequest;
 import com.range.common.dto.PutObjectResponse;
 import com.range.single.config.SingleBunnyNetConfig;
+import com.range.single.delete.SingleBunnyDeleter;
 import com.range.single.downloader.SingleBunnyDownloader;
-import com.range.single.dto.SingleDownloadObjectRequest;
-import com.range.single.upload.SingleBunnyUploader;
 
-import java.io.InputStream;
+import com.range.single.upload.SingleBunnyUploader;
 
 class SingleBunnyStorageImpl implements SingleBunnyStorage{
     private final SingleBunnyDownloader singleBunnyDownloader;
     private final SingleBunnyUploader singleBunnyUploader;
+    private final SingleBunnyDeleter singleBunnyDeleter;
     public SingleBunnyStorageImpl(SingleBunnyNetConfig singleBunnyNetConfig){
         singleBunnyUploader= SingleBunnyUploader.create(singleBunnyNetConfig);
         singleBunnyDownloader = SingleBunnyDownloader.create(singleBunnyNetConfig);
+        singleBunnyDeleter=SingleBunnyDeleter.create(singleBunnyNetConfig);
     }
     @Override
-    public InputStream download(SingleDownloadObjectRequest singleDownloadObjectRequest) {
-        return  singleBunnyDownloader.download(singleDownloadObjectRequest);
+    public GetObjectResponse download(String key) {
+        return  singleBunnyDownloader.download(key);
     }
 
     @Override
@@ -27,7 +29,8 @@ class SingleBunnyStorageImpl implements SingleBunnyStorage{
     }
 
     @Override
-    public void delete() {
+    public void delete(String key) {
+        singleBunnyDeleter.delete(key);
 
     }
 

@@ -1,20 +1,18 @@
 package com.range.single;
 
+import com.range.common.dto.GetObjectResponse;
 import com.range.common.dto.PutObjectRequest;
 import com.range.common.dto.PutObjectResponse;
 import com.range.single.config.SingleBunnyNetConfig;
-import com.range.single.dto.SingleDownloadObjectRequest;
-
-import java.io.InputStream;
 
 public interface SingleBunnyStorage {
     static SingleBunnyStorage create(SingleBunnyNetConfig singleBunnyNetConfig){
         return new SingleBunnyStorageImpl(singleBunnyNetConfig);
     }
 
-    InputStream download(SingleDownloadObjectRequest singleDownloadObjectRequest);
+    GetObjectResponse download(String key);
     PutObjectResponse uploadFile(PutObjectRequest putObjectRequest);
-   void delete();
+   void delete(String key);
 
 
 
