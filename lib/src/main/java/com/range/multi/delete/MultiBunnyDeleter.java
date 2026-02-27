@@ -2,7 +2,7 @@ package com.range.multi.delete;
 
 import com.range.common.enums.Region;
 import com.range.multi.config.MultiBunnyNetConfig;
-import com.range.multi.deleter.impl.MultiBunnyDeleterImpl;
+
 
 
 public interface MultiBunnyDeleter {
