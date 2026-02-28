@@ -14,6 +14,9 @@ public interface MultiBunnyStorage {
      * Factory method to create a new instance of MultiBunnyStorage.
      */
     static MultiBunnyStorage create(MultiBunnyNetConfig config) {
+        if (config == null) {
+            throw new IllegalArgumentException("MultiBunnyNetConfig cannot be null");
+        }
         return new MultiBunnyStorageImpl(config);
     }
 

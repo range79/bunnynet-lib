@@ -12,10 +12,16 @@ public interface MultiBunnyDeleter {
             int connectionTimeout,
             int readTimeout
     ) {
+        if (config == null) {
+            throw new IllegalArgumentException("MultiBunnyNetConfig cannot be null");
+        }
         return new MultiBunnyDeleterImpl(config, connectionTimeout, readTimeout);
     }
 
     static MultiBunnyDeleter create(MultiBunnyNetConfig config) {
+        if (config == null) {
+            throw new IllegalArgumentException("MultiBunnyNetConfig cannot be null");
+        }
         return create(config, 15_000, 45_000);
     }
 

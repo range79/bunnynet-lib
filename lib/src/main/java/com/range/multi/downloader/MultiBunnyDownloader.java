@@ -15,6 +15,7 @@ public interface MultiBunnyDownloader {
             throw new IllegalArgumentException("MultiBunnyNetConfig cannot be null");
         }
 
+
         return new MultiBunnyDownloaderImpl(
                 config,
                 connectionTimeout,

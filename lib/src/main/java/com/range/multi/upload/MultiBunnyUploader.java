@@ -11,23 +11,30 @@ import com.range.common.exception.BunnyInvalidCredentialsException;
 public interface MultiBunnyUploader {
     /**
      * Creates a SingleBunnyUploader with custom timeout settings.
-     * @param multiBunnyNetConfig The configuration containing API key.
+     * @param config The configuration containing API key.
      * @param connectionTimeout    Maximum time in milliseconds to wait for establishing the connection.
      * @param connectionReadTimeout          Maximum time in milliseconds to wait for reading data from the connection.
      */
 
-    static MultiBunnyUploader create(MultiBunnyNetConfig multiBunnyNetConfig, int connectionTimeout, int connectionReadTimeout) {
-        return new MultiBunnyUploaderImpl(multiBunnyNetConfig, connectionTimeout, connectionReadTimeout);
+    static MultiBunnyUploader create(MultiBunnyNetConfig config, int connectionTimeout, int connectionReadTimeout) {
+
+        if (config == null) {
+            throw new IllegalArgumentException("MultiBunnyNetConfig cannot be null");
+        }
+        return new MultiBunnyUploaderImpl(config, connectionTimeout, connectionReadTimeout);
     }
 
 
     /**
      * Creates a SingleBunnyUploader with custom timeout settings.\
-     * @param multiBunnyNetConfig The configuration containing API key, storage zone, and region.
+     * @param config The configuration containing API key, storage zone, and region.
      */
 
-    static MultiBunnyUploader create(MultiBunnyNetConfig multiBunnyNetConfig) {
-        return new MultiBunnyUploaderImpl(multiBunnyNetConfig, 15_000, 60_000);
+    static MultiBunnyUploader create(MultiBunnyNetConfig config) {
+        if (config == null) {
+            throw new IllegalArgumentException("MultiBunnyNetConfig cannot be null");
+        }
+        return new MultiBunnyUploaderImpl(config, 15_000, 60_000);
     }
 
     /**

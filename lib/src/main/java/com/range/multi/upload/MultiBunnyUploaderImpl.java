@@ -6,6 +6,7 @@ import com.range.common.enums.Region;
 import com.range.common.http.BunnyHttpClient;
 import com.range.common.upload.AbstractBunnyUploader;
 import com.range.multi.config.MultiBunnyNetConfig;
+import com.range.multi.validator.MultiStorageValidator;
 
 public class MultiBunnyUploaderImpl extends AbstractBunnyUploader implements MultiBunnyUploader {
 
@@ -15,11 +16,13 @@ public class MultiBunnyUploaderImpl extends AbstractBunnyUploader implements Mul
 
     @Override
     public PutObjectResponse uploadFileBunny(PutObjectRequest request, String storageZone, Region region) {
+;
         return internalUpload(request, storageZone, region.getEndpoint());
     }
 
     @Override
     public PutObjectResponse uploadFileBunnyWithDefaultRegion(PutObjectRequest putObjectRequest, String storageZoneName) {
+
         return uploadFileBunny(putObjectRequest, storageZoneName, Region.FRANKFURT_DE);
     }
 }
