@@ -1,2 +1,2 @@
 rootProject.name = "Bunny-net-Unofficial"
-include("core", "single")
+include("core", "single","multi")
