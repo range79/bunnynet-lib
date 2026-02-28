@@ -1,13 +1,13 @@
-package com.range.multi;
+package com.range;
 
 import com.range.common.dto.GetObjectResponse;
 import com.range.common.dto.PutObjectRequest;
 import com.range.common.dto.PutObjectResponse;
 import com.range.common.enums.Region;
-import com.range.multi.config.MultiBunnyNetConfig;
-import com.range.multi.delete.MultiBunnyDeleter;
-import com.range.multi.downloader.MultiBunnyDownloader;
-import com.range.multi.upload.MultiBunnyUploader;
+import com.range.config.MultiBunnyNetConfig;
+import com.range.delete.MultiBunnyDeleter;
+import com.range.downloader.MultiBunnyDownloader;
+import com.range.upload.MultiBunnyUploader;
 
 public class MultiBunnyStorageImpl implements MultiBunnyStorage {
     private final MultiBunnyUploader uploader;

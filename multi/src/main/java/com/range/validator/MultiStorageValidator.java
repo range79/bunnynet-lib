@@ -1,7 +1,7 @@
-package com.range.multi.validator;
+package com.range.validator;
 
 import com.range.common.enums.Region;
-import com.range.multi.config.MultiBunnyNetConfig;
+import com.range.config.MultiBunnyNetConfig;
 
 public final class MultiStorageValidator {
 

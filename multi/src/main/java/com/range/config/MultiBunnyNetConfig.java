@@ -1,4 +1,4 @@
-package com.range.multi.config;
+package com.range.config;
 
 /**
  * MultiBunnyNetConfig is a lightweight configuration holder for the BunnyCDN Storage API.

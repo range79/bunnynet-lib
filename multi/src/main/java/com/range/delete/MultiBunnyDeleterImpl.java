@@ -1,10 +1,10 @@
-package com.range.multi.delete;
+package com.range.delete;
 
 import com.range.common.delete.AbstractBunnyDeleter;
 import com.range.common.enums.Region;
 import com.range.common.http.BunnyHttpClient;
-import com.range.multi.config.MultiBunnyNetConfig;
-import com.range.multi.validator.MultiStorageValidator;
+import com.range.config.MultiBunnyNetConfig;
+import com.range.validator.MultiStorageValidator;
 
 
 public class MultiBunnyDeleterImpl

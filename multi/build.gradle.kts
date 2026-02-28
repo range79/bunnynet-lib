@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-
+    implementation(project(":core"))
 
 }
 
