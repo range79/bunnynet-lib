@@ -6,6 +6,7 @@ import com.range.common.dto.PutObjectResponse;
 import com.range.common.enums.Region;
 import com.range.common.exception.BunnyFileUploadFailedException;
 import com.range.common.exception.BunnyInvalidCredentialsException;
+import com.range.multi.validator.MultiStorageValidator;
 
 
 public interface MultiBunnyUploader {
@@ -18,9 +19,7 @@ public interface MultiBunnyUploader {
 
     static MultiBunnyUploader create(MultiBunnyNetConfig config, int connectionTimeout, int connectionReadTimeout) {
 
-        if (config == null) {
-            throw new IllegalArgumentException("MultiBunnyNetConfig cannot be null");
-        }
+        MultiStorageValidator.validateConfig(config);
         return new MultiBunnyUploaderImpl(config, connectionTimeout, connectionReadTimeout);
     }
 
@@ -31,9 +30,7 @@ public interface MultiBunnyUploader {
      */
 
     static MultiBunnyUploader create(MultiBunnyNetConfig config) {
-        if (config == null) {
-            throw new IllegalArgumentException("MultiBunnyNetConfig cannot be null");
-        }
+        MultiStorageValidator.validateConfig(config);
         return new MultiBunnyUploaderImpl(config, 15_000, 60_000);
     }
 

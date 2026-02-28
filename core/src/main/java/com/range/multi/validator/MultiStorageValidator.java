@@ -1,9 +1,16 @@
 package com.range.multi.validator;
 
 import com.range.common.enums.Region;
+import com.range.multi.config.MultiBunnyNetConfig;
 
 public final class MultiStorageValidator {
 
+
+    public static void validateConfig(MultiBunnyNetConfig config) {
+        if (config == null) {
+            throw new IllegalArgumentException("MultiBunnyNetConfig cannot be null");
+        }
+    }
 
     public static void validate(String storageZoneName, String key, Region region) {
 

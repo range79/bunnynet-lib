@@ -5,6 +5,7 @@ import com.range.common.dto.PutObjectRequest;
 import com.range.common.dto.PutObjectResponse;
 import com.range.common.enums.Region;
 import com.range.multi.config.MultiBunnyNetConfig;
+import com.range.multi.validator.MultiStorageValidator;
 
 import java.io.InputStream;
 
@@ -14,9 +15,7 @@ public interface MultiBunnyStorage {
      * Factory method to create a new instance of MultiBunnyStorage.
      */
     static MultiBunnyStorage create(MultiBunnyNetConfig config) {
-        if (config == null) {
-            throw new IllegalArgumentException("MultiBunnyNetConfig cannot be null");
-        }
+        MultiStorageValidator.validateConfig(config);
         return new MultiBunnyStorageImpl(config);
     }
 

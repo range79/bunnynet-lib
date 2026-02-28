@@ -2,7 +2,7 @@ package com.range.multi.delete;
 
 import com.range.common.enums.Region;
 import com.range.multi.config.MultiBunnyNetConfig;
-
+import com.range.multi.validator.MultiStorageValidator;
 
 
 public interface MultiBunnyDeleter {
@@ -12,16 +12,12 @@ public interface MultiBunnyDeleter {
             int connectionTimeout,
             int readTimeout
     ) {
-        if (config == null) {
-            throw new IllegalArgumentException("MultiBunnyNetConfig cannot be null");
-        }
+        MultiStorageValidator.validateConfig(config);
         return new MultiBunnyDeleterImpl(config, connectionTimeout, readTimeout);
     }
 
     static MultiBunnyDeleter create(MultiBunnyNetConfig config) {
-        if (config == null) {
-            throw new IllegalArgumentException("MultiBunnyNetConfig cannot be null");
-        }
+        MultiStorageValidator.validateConfig(config);
         return create(config, 15_000, 45_000);
     }
 

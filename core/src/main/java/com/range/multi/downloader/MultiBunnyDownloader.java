@@ -3,6 +3,7 @@ package com.range.multi.downloader;
 import com.range.common.dto.GetObjectResponse;
 import com.range.common.enums.Region;
 import com.range.multi.config.MultiBunnyNetConfig;
+import com.range.multi.validator.MultiStorageValidator;
 
 public interface MultiBunnyDownloader {
 
@@ -11,10 +12,7 @@ public interface MultiBunnyDownloader {
             int connectionTimeout,
             int readTimeout
     ) {
-        if (config == null) {
-            throw new IllegalArgumentException("MultiBunnyNetConfig cannot be null");
-        }
-
+        MultiStorageValidator.validateConfig(config);
 
         return new MultiBunnyDownloaderImpl(
                 config,
@@ -24,6 +22,8 @@ public interface MultiBunnyDownloader {
     }
 
     static MultiBunnyDownloader create(MultiBunnyNetConfig config) {
+
+        MultiStorageValidator.validateConfig(config);
         return create(config, 15_000, 45_000);
     }
 
