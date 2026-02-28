@@ -76,6 +76,10 @@ public class GetObjectResponse implements Closeable {
 
     @Override
     public void close() {
+        try {
+            if (stream != null) stream.close();
+        } catch (Exception ignored) {
+        }
         if (response != null) {
             response.close();
         }

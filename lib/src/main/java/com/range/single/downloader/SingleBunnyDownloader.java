@@ -10,10 +10,23 @@ public interface SingleBunnyDownloader {
             int connectionTimeout,
             int readTimeout
     ) {
+        if (config == null) {
+            throw new IllegalArgumentException("SingleBunnyNetConfig cannot be null");
+        }
+        if (connectionTimeout <= 0) {
+            throw new IllegalArgumentException("connectionTimeout must be positive");
+        }
+
+        if (readTimeout <= 0) {
+            throw new IllegalArgumentException("readTimeout must be positive");
+        }
         return new SingleBunnyDownloaderImpl(config, connectionTimeout, readTimeout);
     }
 
     static SingleBunnyDownloader create(SingleBunnyNetConfig config) {
+        if (config == null) {
+            throw new IllegalArgumentException("SingleBunnyNetConfig cannot be null");
+        }
         return create(config, 15_000, 45_000);
     }
 

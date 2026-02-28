@@ -18,7 +18,7 @@ public class SingleBunnyDeleterImpl
             int readTimeout
     ) {
         super(new BunnyHttpClient(
-                requireConfig(config).apiKey(),
+                config.apiKey(),
                 connectionTimeout,
                 readTimeout
         ));
@@ -37,12 +37,5 @@ public class SingleBunnyDeleterImpl
                 config.region().getEndpoint(),
                 key
         );
-    }
-
-    private static SingleBunnyNetConfig requireConfig(SingleBunnyNetConfig config) {
-        if (config == null) {
-            throw new IllegalArgumentException("SingleBunnyNetConfig cannot be null");
-        }
-        return config;
     }
 }

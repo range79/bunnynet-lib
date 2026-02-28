@@ -10,13 +10,16 @@ import okio.Source;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class BunnyHttpClient {
 
     private final String apiKey;
     private final OkHttpClient client;
+    public BunnyHttpClient(String apiKey, OkHttpClient client) {
+        this.apiKey = apiKey;
+        this.client = client;
+    }
 
     public BunnyHttpClient(String apiKey, int connectionTimeout, int readTimeout) {
         this.apiKey = apiKey;
@@ -97,12 +100,6 @@ public class BunnyHttpClient {
         }
 
         ResponseBody body = response.body();
-        if (body == null) {
-            response.close();
-            throw new BunnyConnectionFailedException(
-                    "Empty body from: " + url
-            );
-        }
 
         MediaType mediaType = body.contentType();
         String contentType = mediaType != null
