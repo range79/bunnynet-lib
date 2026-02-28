@@ -1,2 +1,2 @@
-rootProject.name = "chris-meilisearch-startup-validator"
+rootProject.name = "Bunny-net-Unofficial"
 include("core", "single")
