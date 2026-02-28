@@ -1,9 +1,8 @@
 package com.range.upload;
 
-import com.range.config.SingleBunnyNetConfig;
-import org.example.config.SingleBunnyNetConfig;
 import com.range.common.dto.PutObjectRequest;
 import com.range.common.dto.PutObjectResponse;
+import com.range.config.SingleBunnyNetConfig;
 
 public interface SingleBunnyUploader {
 
