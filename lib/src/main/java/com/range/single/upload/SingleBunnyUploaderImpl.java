@@ -18,7 +18,7 @@ public class SingleBunnyUploaderImpl
             int readTimeout
     ) {
         super(new BunnyHttpClient(
-                requireConfig(config).apiKey(),
+                config.apiKey(),
                 connectionTimeout,
                 readTimeout
         ));
@@ -39,10 +39,5 @@ public class SingleBunnyUploaderImpl
         );
     }
 
-    private static SingleBunnyNetConfig requireConfig(SingleBunnyNetConfig config) {
-        if (config == null) {
-            throw new IllegalArgumentException("SingleBunnyNetConfig cannot be null");
-        }
-        return config;
-    }
+
 }

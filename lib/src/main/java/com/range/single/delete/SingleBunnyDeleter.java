@@ -13,6 +13,13 @@ public interface SingleBunnyDeleter {
         if (config == null) {
             throw new IllegalArgumentException("SingleBunnyNetConfig cannot be null");
         }
+        if (connectionTimeout <= 0) {
+            throw new IllegalArgumentException("connectionTimeout must be positive");
+        }
+
+        if (readTimeout <= 0) {
+            throw new IllegalArgumentException("readTimeout must be positive");
+        }
         return new SingleBunnyDeleterImpl(config, connectionTimeout, readTimeout);
     }
 
