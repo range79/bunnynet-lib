@@ -1,11 +1,11 @@
-package com.range.single.downloader;
+package com.range.delete;
 
-import com.range.common.dto.GetObjectResponse;
-import com.range.single.config.SingleBunnyNetConfig;
 
-public interface SingleBunnyDownloader {
+import com.range.config.SingleBunnyNetConfig;
 
-    static SingleBunnyDownloader create(
+public interface SingleBunnyDeleter {
+
+    static SingleBunnyDeleter create(
             SingleBunnyNetConfig config,
             int connectionTimeout,
             int readTimeout
@@ -20,15 +20,12 @@ public interface SingleBunnyDownloader {
         if (readTimeout <= 0) {
             throw new IllegalArgumentException("readTimeout must be positive");
         }
-        return new SingleBunnyDownloaderImpl(config, connectionTimeout, readTimeout);
+        return new SingleBunnyDeleterImpl(config, connectionTimeout, readTimeout);
     }
 
-    static SingleBunnyDownloader create(SingleBunnyNetConfig config) {
-        if (config == null) {
-            throw new IllegalArgumentException("SingleBunnyNetConfig cannot be null");
-        }
+    static SingleBunnyDeleter create(SingleBunnyNetConfig config) {
         return create(config, 15_000, 45_000);
     }
 
-    GetObjectResponse download(String key);
+    void delete(String key);
 }

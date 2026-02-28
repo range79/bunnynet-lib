@@ -1,13 +1,12 @@
-package com.range.single;
+package com.range;
 
 import com.range.common.dto.GetObjectResponse;
 import com.range.common.dto.PutObjectRequest;
 import com.range.common.dto.PutObjectResponse;
-import com.range.single.config.SingleBunnyNetConfig;
-import com.range.single.delete.SingleBunnyDeleter;
-import com.range.single.downloader.SingleBunnyDownloader;
-
-import com.range.single.upload.SingleBunnyUploader;
+import com.range.config.SingleBunnyNetConfig;
+import com.range.delete.SingleBunnyDeleter;
+import com.range.downloader.SingleBunnyDownloader;
+import com.range.upload.SingleBunnyUploader;
 
 class SingleBunnyStorageImpl implements SingleBunnyStorage{
     private final SingleBunnyDownloader singleBunnyDownloader;

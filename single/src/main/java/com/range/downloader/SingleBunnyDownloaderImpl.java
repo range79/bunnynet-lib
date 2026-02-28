@@ -1,9 +1,10 @@
-package com.range.single.downloader;
+package com.range.downloader;
 
 import com.range.common.download.AbstractBunnyDownloader;
 import com.range.common.dto.GetObjectResponse;
 import com.range.common.http.BunnyHttpClient;
-import com.range.single.config.SingleBunnyNetConfig;
+import com.range.config.SingleBunnyNetConfig;
+import org.example.config.SingleBunnyNetConfig;
 
 class SingleBunnyDownloaderImpl
         extends AbstractBunnyDownloader

@@ -1,10 +1,10 @@
-package com.range.single.delete;
+package com.range.delete;
 
 
 import com.range.common.delete.AbstractBunnyDeleter;
 import com.range.common.http.BunnyHttpClient;
-import com.range.single.config.SingleBunnyNetConfig;
-import com.range.single.delete.SingleBunnyDeleter;
+import com.range.config.SingleBunnyNetConfig;
+
 
 public class SingleBunnyDeleterImpl
         extends AbstractBunnyDeleter

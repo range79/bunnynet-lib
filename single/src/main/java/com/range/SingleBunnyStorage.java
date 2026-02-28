@@ -1,9 +1,9 @@
-package com.range.single;
+package com.range;
 
 import com.range.common.dto.GetObjectResponse;
 import com.range.common.dto.PutObjectRequest;
 import com.range.common.dto.PutObjectResponse;
-import com.range.single.config.SingleBunnyNetConfig;
+import com.range.config.SingleBunnyNetConfig;
 
 public interface SingleBunnyStorage {
     static SingleBunnyStorage create(SingleBunnyNetConfig singleBunnyNetConfig){
