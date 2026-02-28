@@ -10,6 +10,9 @@ public interface SingleBunnyDeleter {
             int connectionTimeout,
             int readTimeout
     ) {
+        if (config == null) {
+            throw new IllegalArgumentException("SingleBunnyNetConfig cannot be null");
+        }
         return new SingleBunnyDeleterImpl(config, connectionTimeout, readTimeout);
     }
 

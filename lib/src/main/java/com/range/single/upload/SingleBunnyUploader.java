@@ -10,10 +10,12 @@ public interface SingleBunnyUploader {
      * a default constructor for SingleBunnyUploader
      * @param singleBunnyNetConfig for config
      */
-    static SingleBunnyUploader create(SingleBunnyNetConfig singleBunnyNetConfig){
-        return new SingleBunnyUploaderImpl(singleBunnyNetConfig,15_000,45_000);
+    static SingleBunnyUploader create(SingleBunnyNetConfig singleBunnyNetConfig) {
+        if (singleBunnyNetConfig == null) {
+            throw new IllegalArgumentException("SingleBunnyNetConfig cannot be null");
+        }
+        return new SingleBunnyUploaderImpl(singleBunnyNetConfig, 15_000, 45_000);
     }
-
     /**
      * Creates a SingleBunnyUploader with custom timeout settings.
      *
@@ -22,6 +24,9 @@ public interface SingleBunnyUploader {
      * @param readTimeout          Maximum time in milliseconds to wait for reading data from the connection.
      */
     static SingleBunnyUploader create(SingleBunnyNetConfig singleBunnyNetConfig, int connectionTimeout, int readTimeout ){
+        if (singleBunnyNetConfig == null) {
+            throw new IllegalArgumentException("SingleBunnyNetConfig cannot be null");
+        }
         return new SingleBunnyUploaderImpl(singleBunnyNetConfig,connectionTimeout,readTimeout);
     }
 
