@@ -20,6 +20,8 @@ dependencies {
     // Source: https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine
     testImplementation("org.junit.jupiter:junit-jupiter-engine:6.0.3")
     testImplementation("org.junit.platform:junit-platform-launcher:6.0.3")
+    testImplementation("org.mockito:mockito-core:5.12.0")
+
 }
 
 java {
