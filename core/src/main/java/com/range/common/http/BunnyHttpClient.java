@@ -33,14 +33,14 @@ public class BunnyHttpClient {
 
     public Request createPutRequest(
             String url,
-            String contentType,
+            MediaType contentType,
             Map<String, String> metadata,
             PutObjectRequest request
     ) {
         RequestBody body = new RequestBody() {
             @Override
             public MediaType contentType() {
-                return contentType != null ? MediaType.parse(contentType) : null;
+                return contentType;
             }
 
             @Override

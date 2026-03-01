@@ -3,6 +3,7 @@ package com.range.common.http;
 import com.range.common.dto.GetObjectResponse;
 import com.range.common.dto.PutObjectRequest;
 import com.range.common.exception.BunnyConnectionFailedException;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.mockwebserver.MockResponse;
@@ -50,7 +51,7 @@ class BunnyHttpClientTest {
 
         PutObjectRequest req = new PutObjectRequest(
                 "file.txt",
-                "text/plain",
+                MediaType.get("text/plain"),
                 Map.of("Foo", "Bar"),
                 new ByteArrayInputStream(data)
         );
@@ -80,7 +81,7 @@ class BunnyHttpClientTest {
     void upload_whenConnectionFails_shouldThrow() {
         PutObjectRequest req = new PutObjectRequest(
                 "file.txt",
-                "text/plain",
+                MediaType.get("text/plain"),
                 null,
                 new ByteArrayInputStream("x".getBytes(StandardCharsets.UTF_8))
         );

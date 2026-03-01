@@ -15,8 +15,11 @@ public abstract class AbstractBunnyUploader {
     }
 
     protected PutObjectResponse internalUpload(PutObjectRequest request, String storageZone, String endpoint) {
-        String url = endpoint + "/" + storageZone + "/" + request.getKey();
-
+        String url = String.format("%s/%s/%s",
+                endpoint,
+                storageZone,
+                request.getKey()
+        );
         Request httpRequest = httpClient.createPutRequest(
                 url,
                 request.getContentType(),
