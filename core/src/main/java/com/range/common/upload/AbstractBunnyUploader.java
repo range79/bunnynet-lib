@@ -18,12 +18,12 @@ public abstract class AbstractBunnyUploader {
         String url = String.format("%s/%s/%s",
                 endpoint,
                 storageZone,
-                request.getKey()
+                request.key()
         );
         Request httpRequest = httpClient.createPutRequest(
                 url,
-                request.getContentType(),
-                request.getMetadata(),
+                request.contentType(),
+                request.metadata(),
                 request
         );
 
@@ -41,8 +41,8 @@ public abstract class AbstractBunnyUploader {
 
         return new PutObjectResponse(
                 storageZone,
-                request.getKey(),
-                "https://" + storageZone + ".b-cdn.net/" + request.getKey()
+                request.key(),
+                "https://" + storageZone + ".b-cdn.net/" + request.key()
         );
     }
 }

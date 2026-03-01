@@ -60,8 +60,8 @@ class BunnyHttpClientTest {
 
         Request request = http.createPutRequest(
                 url,
-                req.getContentType(),
-                req.getMetadata(),
+                req.contentType(),
+                req.metadata(),
                 req
         );
 
@@ -88,8 +88,8 @@ class BunnyHttpClientTest {
 
         Request request = http.createPutRequest(
                 "http://127.0.0.1:1/upload",
-                req.getContentType(),
-                req.getMetadata(),
+                req.contentType(),
+                req.metadata(),
                 req
         );
 

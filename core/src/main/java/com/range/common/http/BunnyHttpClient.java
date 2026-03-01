@@ -45,7 +45,7 @@ public class BunnyHttpClient {
 
             @Override
             public void writeTo(BufferedSink sink) throws IOException {
-                try (Source source = Okio.source(request.getInputStream())) {
+                try (Source source = Okio.source(request.inputStream())) {
                     sink.writeAll(source);
                 }
             }
