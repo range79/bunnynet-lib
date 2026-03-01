@@ -12,15 +12,15 @@ import java.util.Map;
  * <p>This record is immutable in structure. However, note that the provided
  * {@link InputStream} itself may be mutable and is not managed by this class.</p>
  *
- * <h3>Default Behavior</h3>
+ * <p><strong>Default behavior:</strong></p>
  * <ul>
  *     <li>If {@code contentType} is {@code null}, it defaults to
  *     {@code application/octet-stream}.</li>
  *     <li>If {@code metadata} is {@code null}, an empty unmodifiable map is used.</li>
  * </ul>
  *
- * <h3>Important</h3>
- * <p>The caller is responsible for closing the provided {@link InputStream}
+ * <p><strong>Important:</strong>
+ * The caller is responsible for closing the provided {@link InputStream}
  * after the upload operation completes.</p>
  *
  * <p>Basic usage example:</p>
