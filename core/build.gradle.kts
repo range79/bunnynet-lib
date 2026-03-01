@@ -1,3 +1,4 @@
+group = "com.range"
 
 plugins {
     `java-library`

@@ -4,6 +4,7 @@
  * This generated file contains a sample Java library project to get you started.
  * For more details on building Java & JVM projects, please refer to https://docs.gradle.org/9.3.1/userguide/building_java_projects.html in the Gradle documentation.
  */
+group = "com.range"
 
 plugins {
     // Apply the java-library plugin for API and implementation separation.
