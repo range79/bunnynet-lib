@@ -24,11 +24,11 @@ dependencies {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion.set(JavaLanguageVersion.of(17))
     }
     withSourcesJar()
+    withJavadocJar()
 }
-
 
 tasks.test {
     useJUnitPlatform()
