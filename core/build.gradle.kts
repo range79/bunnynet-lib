@@ -1,5 +1,3 @@
-group = "com.github.range79"
-version = "1.1.0"
 
 plugins {
     `java-library`
