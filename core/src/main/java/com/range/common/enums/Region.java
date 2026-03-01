@@ -2,17 +2,21 @@ package com.range.common.enums;
 
 /**
  * Represents the available BunnyCDN storage regions.
- * <p>
- * Each enum constant maps to its corresponding storage endpoint.
- * For example, selecting {@link Region#LONDON_UK} will use:
- * <pre>uk.storage.bunnycdn.com</pre>
- * </p>
  *
- * <p>
- * If you need to define a custom storage endpoint that is not listed,
- * use {@link Region#CUSTOM} and set the endpoint manually via:
- * <pre>Region.CUSTOM.setCustomEndpoint("my.custom.host");</pre>
- * </p>
+ * <p>Each enum constant maps to its corresponding storage endpoint.</p>
+ *
+ * <p>For example, selecting {@link Region#LONDON_UK} will use:</p>
+ *
+ * <pre>
+ * uk.storage.bunnycdn.com
+ * </pre>
+ *
+ * <p>If you need to define a custom storage endpoint that is not listed,
+ * use {@link Region#CUSTOM} and set the endpoint manually via:</p>
+ *
+ * <pre>
+ * Region.CUSTOM.setCustomEndpoint("my.custom.host");
+ * </pre>
  */
 public enum Region {
 
