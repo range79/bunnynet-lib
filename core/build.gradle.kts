@@ -2,7 +2,7 @@ group = "com.range"
 
 plugins {
     `java-library`
-    `maven-publish`
+
 }
 
 repositories {
@@ -34,10 +34,4 @@ java {
 tasks.test {
     useJUnitPlatform()
 }
-publishing {
-    publications {
-        create<MavenPublication>("mavenJava") {
-            from(components["java"])
-        }
-    }
-}
+

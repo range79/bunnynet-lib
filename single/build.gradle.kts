@@ -18,10 +18,6 @@ repositories {
 
 dependencies {
     implementation(project(":core"))
-
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-
 }
 
 java {

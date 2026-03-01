@@ -1,2 +1,2 @@
-rootProject.name = "Bunny-net-Unofficial"
+rootProject.name = "bunny-net-Unofficial"
 include(":core", ":single", ":multi")
