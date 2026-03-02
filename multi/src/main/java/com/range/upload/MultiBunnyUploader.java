@@ -1,66 +1,90 @@
 package com.range.upload;
 
-import com.range.config.MultiBunnyNetConfig;
 import com.range.common.dto.PutObjectRequest;
 import com.range.common.dto.PutObjectResponse;
 import com.range.common.enums.Region;
 import com.range.common.exception.BunnyFileUploadFailedException;
-import com.range.common.exception.BunnyInvalidCredentialsException;
+import com.range.config.MultiBunnyNetConfig;
 import com.range.validator.MultiStorageValidator;
 
-
+/**
+ * Abstraction for uploading objects to multiple Bunny.net storage zones.
+ *
+ * <p>This interface is intended for multi-zone scenarios where the
+ * storage zone and region are provided per upload operation.</p>
+ *
+ * @since 2.1.0
+ */
 public interface MultiBunnyUploader {
+
     /**
-     * Creates a SingleBunnyUploader with custom timeout settings.
-     * @param config The configuration containing API key.
-     * @param connectionTimeout    Maximum time in milliseconds to wait for establishing the connection.
-     * @param connectionReadTimeout          Maximum time in milliseconds to wait for reading data from the connection.
+     * Creates a {@code MultiBunnyUploader} with custom timeout settings.
+     *
+     * @param config                configuration containing the shared API key;
+     *                              must not be null
+     * @param connectionTimeout     maximum time in milliseconds to establish a connection
+     * @param connectionReadTimeout maximum time in milliseconds to read data
+     * @return a configured {@code MultiBunnyUploader} instance
+     * @throws IllegalArgumentException if configuration is invalid
      */
-
-    static MultiBunnyUploader create(MultiBunnyNetConfig config, int connectionTimeout, int connectionReadTimeout) {
-
+    static MultiBunnyUploader create(
+            MultiBunnyNetConfig config,
+            int connectionTimeout,
+            int connectionReadTimeout
+    ) {
         MultiStorageValidator.validateConfig(config);
         return new MultiBunnyUploaderImpl(config, connectionTimeout, connectionReadTimeout);
     }
 
-
     /**
-     * Creates a SingleBunnyUploader with custom timeout settings.\
-     * @param config The configuration containing API key, storage zone, and region.
+     * Creates a {@code MultiBunnyUploader} with default timeout settings.
+     *
+     * <p>Default values:</p>
+     * <ul>
+     *     <li>Connection timeout: 15,000 ms</li>
+     *     <li>Read timeout: 60,000 ms</li>
+     * </ul>
+     *
+     * @param config configuration containing the shared API key;
+     *               must not be null
+     * @return a configured {@code MultiBunnyUploader} instance
+     * @throws IllegalArgumentException if configuration is invalid
      */
-
     static MultiBunnyUploader create(MultiBunnyNetConfig config) {
         MultiStorageValidator.validateConfig(config);
         return new MultiBunnyUploaderImpl(config, 15_000, 60_000);
     }
 
     /**
-     * Uploads a file to a specific Bunny.net Storage Zone.
+     * Uploads an object to the specified storage zone and region.
      *
-     * @param putObjectRequest The request object containing the file data (InputStream),
-     *                         target path (key), and content type.
-     * @param storageZoneName  The unique name of your Storage Zone (acts as the username).
-     * @param storageRegion    The geographical region where the storage zone is located.
-     * @return {@link PutObjectResponse} containing the upload metadata and the public file URL.
-     * @throws BunnyFileUploadFailedException if the upload fails due to network issues, or server errors.
+     * @param putObjectRequest the upload request containing object data and metadata;
+     *                         must not be null
+     * @param storageZoneName  the name of the storage zone;
+     *                         must not be null or blank
+     * @param storageRegion    the target storage region; must not be null
+     * @return a {@link PutObjectResponse} describing the uploaded object
+     * @throws BunnyFileUploadFailedException if the upload operation fails
      */
-    PutObjectResponse uploadFileBunny(PutObjectRequest putObjectRequest,
-                                      String storageZoneName,
-                                      Region storageRegion)
-            throws BunnyFileUploadFailedException;
+    PutObjectResponse uploadFileBunny(
+            PutObjectRequest putObjectRequest,
+            String storageZoneName,
+            Region storageRegion
+    ) throws BunnyFileUploadFailedException;
 
     /**
-     * Uploads a file to a specific Bunny.net Storage Zone.
+     * Uploads an object to the specified storage zone using
+     * the default region defined by the implementation.
      *
-     * @param putObjectRequest The request object containing the file data (InputStream),
-     *                         target path (key), and content type.
-     * @param storageZoneName  The unique name of your Storage Zone (acts as the username).
-     *                         storageRegion  is default selected.FRANKFURT_DE
-     * @return {@link PutObjectResponse} containing the upload metadata and the public file URL.
-     * @throws BunnyFileUploadFailedException   if the upload fails due to network issues, or server errors.
-     * @throws BunnyInvalidCredentialsException if invalid credentials
+     * @param putObjectRequest the upload request containing object data and metadata;
+     *                         must not be null
+     * @param storageZoneName  the name of the storage zone;
+     *                         must not be null or blank
+     * @return a {@link PutObjectResponse} describing the uploaded object
+     * @throws BunnyFileUploadFailedException if the upload operation fails
      */
-    PutObjectResponse uploadFileBunnyWithDefaultRegion(PutObjectRequest putObjectRequest,
-                                                       String storageZoneName)
-            throws BunnyFileUploadFailedException;
+    PutObjectResponse uploadFileBunnyWithDefaultRegion(
+            PutObjectRequest putObjectRequest,
+            String storageZoneName
+    ) throws BunnyFileUploadFailedException;
 }

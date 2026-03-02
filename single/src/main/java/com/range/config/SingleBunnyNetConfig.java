@@ -3,19 +3,29 @@ package com.range.config;
 import com.range.common.enums.Region;
 
 /**
- * SingleBunnyNetConfig is a configuration holder for the BunnyCDN Storage API.
- * It stores a single API key, a storage zone, and a specific region.
- * Use this class when:
- * You always upload to the same region and storage zone.
+ * Configuration holder for a single Bunny.net storage zone.
+ *
+ * <p>This configuration is intended for use cases where all operations
+ * target the same storage zone and region.</p>
+ *
+ * @param apiKey      the Bunny.net API key used for authentication;
+ *                    must not be null or blank
+ * @param region      the target storage region; must not be null
+ * @param storageZone the name of the storage zone;
+ *                    must not be null or blank
+ *
+ * @since 2.1.0
  */
-public record SingleBunnyNetConfig(String apiKey, Region region, String storageZone) {
+public record SingleBunnyNetConfig(
+        String apiKey,
+        Region region,
+        String storageZone
+) {
 
     /**
-     * Creates a new SingleBunnyNetConfig instance with all configuration parameters.
+     * Canonical constructor with validation.
      *
-     * @param apiKey      Your BunnyCDN API key used for authentication.
-     * @param region      The target BunnyCDN storage region.
-     * @param storageZone The name of the storage zone.
+     * @throws IllegalArgumentException if any required value is null or blank
      */
     public SingleBunnyNetConfig {
         if (apiKey == null || apiKey.isBlank()) {
@@ -28,29 +38,4 @@ public record SingleBunnyNetConfig(String apiKey, Region region, String storageZ
             throw new IllegalArgumentException("Storage zone cannot be null or empty");
         }
     }
-
-    /**
-     * @return The configured BunnyCDN storage region.
-     */
-    @Override
-    public Region region() {
-        return region;
-    }
-
-    /**
-     * @return The BunnyCDN API key.
-     */
-    @Override
-    public String apiKey() {
-        return apiKey;
-    }
-
-    /**
-     * @return The name of the configured BunnyCDN storage zone.
-     */
-    @Override
-    public String storageZone() {
-        return storageZone;
-    }
-
 }
