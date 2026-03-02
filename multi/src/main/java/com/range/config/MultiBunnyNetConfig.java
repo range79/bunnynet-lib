@@ -1,21 +1,26 @@
 package com.range.config;
 
 /**
- * MultiBunnyNetConfig is a lightweight configuration holder for the BunnyCDN Storage API.
- * <p>
- * It stores only the API key and is designed for scenarios where you need to upload
- * files to multiple storage zones or regions using the same API key.
- * <p>
- * Use this class when:
- * - You manage multiple BunnyCDN storage zones.
- * - You upload to different regions but share a single API key.
- * - You want a simple, reusable configuration object for various uploader implementations.
+ * Configuration holder for multi-zone Bunny.net operations.
+ *
+ * <p>This configuration is intended for use cases where multiple storage zones
+ * or regions are used with a single shared API key.</p>
+ *
+ * <p>Unlike the single-zone configuration, this class does not bind
+ * a fixed storage zone or region. The storage zone and region must be
+ * provided at operation time.</p>
+ *
+ * @param apiKey the Bunny.net API key used for authentication;
+ *               must not be null or blank
+ *
+ * @since 2.1.0
  */
 public record MultiBunnyNetConfig(String apiKey) {
+
     /**
-     * Creates a new MultiBunnyNetConfig instance.
+     * Canonical constructor with validation.
      *
-     * @param apiKey The BunnyCDN API key used for authentication.
+     * @throws IllegalArgumentException if {@code apiKey} is null or blank
      */
     public MultiBunnyNetConfig {
         if (apiKey == null || apiKey.isBlank()) {
@@ -24,11 +29,13 @@ public record MultiBunnyNetConfig(String apiKey) {
     }
 
     /**
-     * @return The stored BunnyCDN API key.
+     * Returns a masked string representation to prevent accidental
+     * exposure of the API key in logs.
+     *
+     * @return a safe string representation of this configuration
      */
     @Override
-    public String apiKey() {
-        return apiKey;
+    public String toString() {
+        return "MultiBunnyNetConfig[apiKey=****]";
     }
-
 }
