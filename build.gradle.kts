@@ -5,13 +5,12 @@ import org.gradle.api.plugins.JavaPluginExtension
 
 plugins {
     id("com.palantir.git-version") version "3.0.0"
-    id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
+    id("org.jreleaser") version "1.13.0"
     `maven-publish`
     signing
 }
 
 group = "io.github.range79"
-
 
 val gitVersion: groovy.lang.Closure<String> by extra
 val rawVersion = gitVersion()
@@ -78,22 +77,35 @@ subprojects {
 
     extensions.configure<SigningExtension> {
         useInMemoryPgpKeys(
-            System.getenv("GPG_PRIVATE_KEY"),
-            System.getenv("GPG_PASSPHRASE")
+            System.getenv("JRELEASER_GPG_SECRET_KEY"),
+            System.getenv("JRELEASER_GPG_PASSPHRASE")
         )
         sign(extensions.getByType<PublishingExtension>().publications)
     }
 }
 
+jreleaser {
+    project {
+        name.set("bunnynet-lib")
+        description.set("Unofficial Bunny.net Java SDK")
+        website.set("https://github.com/range79/bunnynet-lib")
+    }
 
-nexusPublishing {
-    repositories {
-        sonatype {
-            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
-            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+    signing {
+        active.set(org.jreleaser.model.Active.ALWAYS)
+        armored.set(true)
+    }
 
-            username.set(System.getenv("OSSRH_USERNAME"))
-            password.set(System.getenv("OSSRH_PASSWORD"))
+    deploy {
+        maven {
+            mavenCentral {
+                create("sonatype") {
+                    active.set(org.jreleaser.model.Active.ALWAYS)
+                    url.set("https://central.sonatype.com/api/v1/publisher")
+                    username.set(System.getenv("OSSRH_USERNAME"))
+                    password.set(System.getenv("OSSRH_PASSWORD"))
+                }
+            }
         }
     }
 }
