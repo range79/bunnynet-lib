@@ -6,11 +6,11 @@ on:
       - 'v*'
 
 jobs:
-  release:
+  publish:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write
+      contents: read
 
     steps:
       - name: Checkout
@@ -25,14 +25,10 @@ jobs:
           java-version: 17
           cache: gradle
 
-      - name: Release to Maven Central
-        run: ./gradlew jreleaserFullRelease --no-daemon --no-configuration-cache
+      - name: Publish to Maven Central
+        run: ./gradlew publish --no-daemon --no-configuration-cache
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-
-          JRELEASER_GPG_SECRET_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-          JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
-          JRELEASER_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-
-          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
