@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  packages: write
 
 jobs:
   release:
@@ -23,20 +24,25 @@ jobs:
           java-version: 17
           cache: gradle
 
-      # 1) Artifacts -> build/staging-deploy (root build.gradle.kts içindeki staging repo)
+
       - name: Publish to staging directory
-        run: ./gradlew publishAllPublicationsToStagingRepository --no-daemon --no-configuration-cache
+        run: ./gradlew publishAllPublicationsToStagingRepository --no-daemon
         env:
           JRELEASER_GPG_SECRET_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           JRELEASER_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
-      # 2) Central Publisher API'ye deploy + publish (JReleaser)
+
       - name: Release with JReleaser
-        run: ./gradlew jreleaserFullRelease --no-daemon --no-configuration-cache
+        run: ./gradlew jreleaserFullRelease --no-daemon
         env:
-          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+
+          JRELEASER_MAVENCENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
+          JRELEASER_MAVENCENTRAL_PASSWORD: ${{ secrets.CENTRAL_TOKEN }}
+
+
           JRELEASER_GPG_SECRET_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
           JRELEASER_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

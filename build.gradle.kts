@@ -114,7 +114,7 @@ jreleaser {
 
     release {
         github {
-            token.set(System.getenv("JRELEASER_GITHUB_TOKEN"))
+            enabled.set(true)
         }
     }
 }
