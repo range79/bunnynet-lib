@@ -1,5 +1,5 @@
 # Unofficial BunnyNet Library by Range
-latest version: [![](https://jitpack.io/v/range79/bunnynet-lib.svg)](https://jitpack.io/#range79/bunnynet-lib)
+![Maven Central](https://img.shields.io/maven-central/v/io.github.range79/core)
 
 Listen up, I just had to drop this because somebody had to fix the mess.
 
@@ -45,14 +45,14 @@ Because the official one couldn't even dream of this level.
 - Blazing fast BunnyHttpClient running on OkHttp 5.3.2.
 - Java 17+ with proper toolchain setup.
 - Ready for Maven publishing.
-- One-liner JitPack install, no fuss.
+- One-liner Maven central install, no fuss.
 
 ## Installation
 
 Gradle (Kotlin DSL):
 ```kotlin
 repositories {
-    maven { url = uri("https://jitpack.io") }
+       mavenCentral()
 }
 
 dependencies {
