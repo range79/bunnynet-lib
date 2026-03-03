@@ -32,10 +32,40 @@ subprojects {
         withJavadocJar()
     }
 
-    extensions.configure<org.gradle.api.publish.PublishingExtension> {
+    publishing {
         publications {
             create<MavenPublication>("mavenJava") {
                 from(components["java"])
+
+                pom {
+                    // ✅ ZORUNLU
+                    name.set("bunnynet-lib-${project.name}")
+                    description.set("Unofficial Bunny.net Java SDK (${project.name} module)")
+                    url.set("https://github.com/range79/bunnynet-lib")
+
+                    licenses {
+                        license {
+                            name.set("Apache License 2.0")
+                            url.set("https://www.apache.org/licenses/LICENSE-2.0")
+                            distribution.set("repo")
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id.set("range79")
+                            name.set("Azad Dadasov")
+                            email.set("darkrange6@gmail.com")
+                        }
+                    }
+
+                    scm {
+                        url.set("https://github.com/range79/bunnynet-lib")
+                        connection.set("scm:git:https://github.com/range79/bunnynet-lib.git")
+                        developerConnection.set("scm:git:ssh://git@github.com/range79/bunnynet-lib.git")
+                        tag.set(rawVersion) // v1.0.0-beta.1 gibi
+                    }
+                }
             }
         }
 
@@ -47,20 +77,21 @@ subprojects {
         }
     }
 
-    extensions.configure<org.gradle.plugins.signing.SigningExtension> {
+    signing {
         useInMemoryPgpKeys(
-            System.getenv("JRELEASER_GPG_SECRET_KEY") ?: System.getenv("GPG_PRIVATE_KEY"),
-            System.getenv("JRELEASER_GPG_PASSPHRASE") ?: System.getenv("GPG_PASSPHRASE")
+            System.getenv("JRELEASER_GPG_SECRET_KEY"),
+            System.getenv("JRELEASER_GPG_PASSPHRASE")
         )
-        sign(extensions.getByType<org.gradle.api.publish.PublishingExtension>().publications)
+        sign(publishing.publications)
     }
 }
 
 jreleaser {
+    gitRootSearch.set(false)
+
     signing {
         active.set(Active.ALWAYS)
         armored.set(true)
-
     }
 
     deploy {
@@ -71,7 +102,6 @@ jreleaser {
                     url.set("https://central.sonatype.com/api/v1/publisher")
                     username.set(System.getenv("OSSRH_USERNAME"))
                     password.set(System.getenv("OSSRH_PASSWORD"))
-
                     stagingRepositories.add(stagingDir.get().asFile.absolutePath)
                 }
             }
