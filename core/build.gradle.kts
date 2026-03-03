@@ -1,5 +1,4 @@
-group = "com.range"
-
+group = "io.github.range79"
 plugins {
     `java-library`
 
