@@ -31,16 +31,56 @@ subprojects {
     group = rootProject.group
     version = rootProject.version
 
-    // 🔥 Java extension doğru şekilde configure
     extensions.configure<JavaPluginExtension> {
         withSourcesJar()
         withJavadocJar()
     }
 
     publishing {
+
         publications {
             create<MavenPublication>("mavenJava") {
                 from(components["java"])
+
+                pom {
+                    name.set(project.name)
+                    description.set("Unofficial Bunny.net Java SDK")
+                    url.set("https://github.com/range79/bunnynet-lib")
+
+                    licenses {
+                        license {
+                            name.set("Apache License 2.0")
+                            url.set("https://www.apache.org/licenses/LICENSE-2.0")
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id.set("range79")
+                            name.set("Azad Dadasov")
+                            email.set("darkrange6@gmail.com")
+                        }
+                    }
+
+                    scm {
+                        connection.set("scm:git:git://github.com/range79/bunnynet-lib.git")
+                        developerConnection.set("scm:git:ssh://github.com/range79/bunnynet-lib.git")
+                        url.set("https://github.com/range79/bunnynet-lib")
+                    }
+                }
+            }
+        }
+
+        // 🔥 BURASI KRİTİK
+        repositories {
+            maven {
+                name = "central"
+                url = uri("https://central.sonatype.com/api/v1/publisher")
+
+                credentials {
+                    username = System.getenv("OSSRH_USERNAME")
+                    password = System.getenv("OSSRH_PASSWORD")
+                }
             }
         }
     }
