@@ -20,6 +20,7 @@ version = if (rawVersion.matches(semverRegex)) rawVersion.removePrefix("v") else
 val stagingDir = layout.buildDirectory.dir("staging-deploy")
 
 subprojects {
+
     apply(plugin = "java-library")
     apply(plugin = "maven-publish")
     apply(plugin = "signing")
@@ -37,9 +38,10 @@ subprojects {
             create<MavenPublication>("mavenJava") {
                 from(components["java"])
 
+                artifactId = "bunnynetunofficial-${project.name}"
+
                 pom {
-                    // ✅ ZORUNLU
-                    name.set("bunnynet-lib-${project.name}")
+                    name.set("bunnynetunofficial-${project.name}")
                     description.set("Unofficial Bunny.net Java SDK (${project.name} module)")
                     url.set("https://github.com/range79/bunnynet-lib")
 
@@ -63,7 +65,7 @@ subprojects {
                         url.set("https://github.com/range79/bunnynet-lib")
                         connection.set("scm:git:https://github.com/range79/bunnynet-lib.git")
                         developerConnection.set("scm:git:ssh://git@github.com/range79/bunnynet-lib.git")
-                        tag.set(rawVersion) // v1.0.0-beta.1 gibi
+                        tag.set(rawVersion)
                     }
                 }
             }
@@ -72,17 +74,19 @@ subprojects {
         repositories {
             maven {
                 name = "staging"
-                url = uri(stagingDir.get().asFile.toURI())
+                url = uri(stagingDir.get().asFile)
             }
         }
     }
 
     signing {
-        useInMemoryPgpKeys(
-            System.getenv("JRELEASER_GPG_SECRET_KEY"),
-            System.getenv("JRELEASER_GPG_PASSPHRASE")
-        )
-        sign(publishing.publications)
+        val key = System.getenv("JRELEASER_GPG_SECRET_KEY")
+        val pass = System.getenv("JRELEASER_GPG_PASSPHRASE")
+
+        if (key != null && pass != null) {
+            useInMemoryPgpKeys(key, pass)
+            sign(publishing.publications)
+        }
     }
 }
 
