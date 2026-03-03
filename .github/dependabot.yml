@@ -5,7 +5,11 @@
 
 version: 2
 updates:
-
+  # main module
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
   # Core module
   - package-ecosystem: "gradle"
     directory: "/core"
