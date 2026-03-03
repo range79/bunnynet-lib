@@ -1,28 +1,25 @@
-name: Release
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
-on:
-  push:
-    tags:
-      - 'v*'
+version: 2
+updates:
 
-jobs:
-  release:
-    runs-on: ubuntu-latest
+  # Core module
+  - package-ecosystem: "gradle"
+    directory: "/core"
+    schedule:
+      interval: "weekly"
 
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+  # Multi module
+  - package-ecosystem: "gradle"
+    directory: "/multi"
+    schedule:
+      interval: "weekly"
 
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 17
-
-      - name: Release to Maven Central
-        run: ./gradlew jreleaserFullRelease --no-daemon --no-configuration-cache
-        env:
-          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-          JRELEASER_GPG_SECRET_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-          JRELEASER_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+  # Single module
+  - package-ecosystem: "gradle"
+    directory: "/single"
+    schedule:
+      interval: "weekly"
