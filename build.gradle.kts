@@ -11,6 +11,7 @@ plugins {
 
 group = "io.github.range79"
 
+// ---------- TAG BASED VERSION ----------
 val gitVersion: groovy.lang.Closure<String> by extra
 val rawVersion = gitVersion()
 
@@ -24,6 +25,7 @@ if (!rawVersion.matches(semverRegex)) {
 
 version = rawVersion.removePrefix("v")
 
+// ---------- SUBMODULE CONFIG ----------
 subprojects {
 
     apply(plugin = "java-library")
@@ -39,20 +41,58 @@ subprojects {
     }
 
     extensions.configure<PublishingExtension> {
+
         publications {
             create<MavenPublication>("mavenJava") {
                 from(components["java"])
+
+                pom {
+                    name.set(project.name)
+                    description.set("Unofficial Bunny.net Java SDK")
+                    url.set("https://github.com/range79/Bunny-net-Unofficial")
+
+                    licenses {
+                        license {
+                            name.set("Apache License 2.0")
+                            url.set("https://www.apache.org/licenses/LICENSE-2.0")
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id.set("range79")
+                            name.set("Azad Dadasov")
+                            email.set("darkrange6@gmail.com")
+                        }
+                    }
+
+                    scm {
+                        connection.set("scm:git:git://github.com/range79/Bunny-net-Unofficial.git")
+                        developerConnection.set("scm:git:ssh://github.com/range79/Bunny-net-Unofficial.git")
+                        url.set("https://github.com/range79/Bunny-net-Unofficial")
+                    }
+                }
+            }
+        }
+
+        repositories {
+            maven {
+                name = "central"
+                url = uri("https://central.sonatype.com/api/v1/publisher")
+                credentials {
+                    username = System.getenv("OSSRH_USERNAME")
+                    password = System.getenv("OSSRH_PASSWORD")
+                }
             }
         }
     }
 
     extensions.configure<SigningExtension> {
 
-        val signingKey: String? by project
-        val signingPassword: String? by project
+        val signingKey: String? = System.getenv("GPG_PRIVATE_KEY")
+        val signingPassword: String? = System.getenv("GPG_PASSPHRASE")
 
         useInMemoryPgpKeys(signingKey, signingPassword)
-
         sign(extensions.getByType<PublishingExtension>().publications)
     }
 }
