@@ -17,10 +17,12 @@ val rawVersion = gitVersion()
 
 val semverRegex = Regex("^v?\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z.-]+)?$")
 
-if (!rawVersion.matches(semverRegex)) {
-    throw GradleException(
-        "Build must be triggered from a git tag like v1.2.3 or v1.2.3-m1. Current version: $rawVersion"
-    )
+val isTagBuild = rawVersion.matches(semverRegex)
+
+version = if (isTagBuild) {
+    rawVersion.removePrefix("v")
+} else {
+    "0.0.0-SNAPSHOT"
 }
 
 version = rawVersion.removePrefix("v")
