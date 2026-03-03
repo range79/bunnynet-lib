@@ -8,8 +8,15 @@ plugins {
     `maven-publish`
     signing
     base
+
 }
 
+configurations.all {
+    resolutionStrategy {
+        force("org.apache.tika:tika-core:3.2.2")
+        force("org.apache.tika:tika-parsers:3.2.2")
+    }
+}
 group = "io.github.range79"
 
 val gitVersion: groovy.lang.Closure<String> by extra
