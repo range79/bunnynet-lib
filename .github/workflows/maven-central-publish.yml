@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -19,8 +21,10 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Publish to Maven Central
-        run: ./gradlew publish --no-daemon
+      - name: Publish to Sonatype Nexus
+        run: |
+          ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository \
+          --no-daemon --no-configuration-cache
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}

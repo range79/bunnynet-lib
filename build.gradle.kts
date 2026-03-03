@@ -5,18 +5,18 @@ import org.gradle.api.plugins.JavaPluginExtension
 
 plugins {
     id("com.palantir.git-version") version "3.0.0"
+    id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
     `maven-publish`
     signing
 }
 
 group = "io.github.range79"
 
-// ---------- TAG BASED VERSION ----------
+
 val gitVersion: groovy.lang.Closure<String> by extra
 val rawVersion = gitVersion()
 
 val semverRegex = Regex("^v?\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z.-]+)?$")
-
 val isTagBuild = rawVersion.matches(semverRegex)
 
 version = if (isTagBuild) {
@@ -25,9 +25,7 @@ version = if (isTagBuild) {
     "0.0.0-SNAPSHOT"
 }
 
-version = rawVersion.removePrefix("v")
 
-// ---------- SUBMODULE CONFIG ----------
 subprojects {
 
     apply(plugin = "java-library")
@@ -51,7 +49,7 @@ subprojects {
                 pom {
                     name.set(project.name)
                     description.set("Unofficial Bunny.net Java SDK")
-                    url.set("https://github.com/range79/Bunny-net-Unofficial")
+                    url.set("https://github.com/range79/bunnynet-lib")
 
                     licenses {
                         license {
@@ -69,32 +67,33 @@ subprojects {
                     }
 
                     scm {
-                        connection.set("scm:git:git://github.com/range79/Bunny-net-Unofficial.git")
-                        developerConnection.set("scm:git:ssh://github.com/range79/Bunny-net-Unofficial.git")
-                        url.set("https://github.com/range79/Bunny-net-Unofficial")
+                        connection.set("scm:git:git://github.com/range79/bunnynet-lib.git")
+                        developerConnection.set("scm:git:ssh://github.com/range79/bunnynet-lib.git")
+                        url.set("https://github.com/range79/bunnynet-lib")
                     }
-                }
-            }
-        }
-
-        repositories {
-            maven {
-                name = "central"
-                url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-                credentials {
-                    username = System.getenv("OSSRH_USERNAME")
-                    password = System.getenv("OSSRH_PASSWORD")
                 }
             }
         }
     }
 
     extensions.configure<SigningExtension> {
-
-        val signingKey: String? = System.getenv("GPG_PRIVATE_KEY")
-        val signingPassword: String? = System.getenv("GPG_PASSPHRASE")
-
-        useInMemoryPgpKeys(signingKey, signingPassword)
+        useInMemoryPgpKeys(
+            System.getenv("GPG_PRIVATE_KEY"),
+            System.getenv("GPG_PASSPHRASE")
+        )
         sign(extensions.getByType<PublishingExtension>().publications)
+    }
+}
+
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+
+            username.set(System.getenv("OSSRH_USERNAME"))
+            password.set(System.getenv("OSSRH_PASSWORD"))
+        }
     }
 }
