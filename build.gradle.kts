@@ -1,48 +1,38 @@
-import org.gradle.api.publish.PublishingExtension
-import org.gradle.api.publish.maven.MavenPublication
-import org.gradle.plugins.signing.SigningExtension
-import org.gradle.api.plugins.JavaPluginExtension
-
 plugins {
     id("com.palantir.git-version") version "3.0.0"
     id("org.jreleaser") version "1.13.0"
     `maven-publish`
-    signing
 }
 
 group = "io.github.range79"
 
+// -------- TAG BASED VERSION --------
 val gitVersion: groovy.lang.Closure<String> by extra
 val rawVersion = gitVersion()
 
 val semverRegex = Regex("^v?\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z.-]+)?$")
-val isTagBuild = rawVersion.matches(semverRegex)
-
-version = if (isTagBuild) {
+version = if (rawVersion.matches(semverRegex)) {
     rawVersion.removePrefix("v")
 } else {
     "0.0.0-SNAPSHOT"
 }
 
-
+// -------- SUBPROJECTS --------
 subprojects {
-
     apply(plugin = "java-library")
     apply(plugin = "maven-publish")
-    apply(plugin = "signing")
 
     group = rootProject.group
     version = rootProject.version
 
-    extensions.configure<JavaPluginExtension> {
+    extensions.configure<org.gradle.api.plugins.JavaPluginExtension> {
         withSourcesJar()
         withJavadocJar()
     }
 
-    extensions.configure<PublishingExtension> {
-
+    extensions.configure<org.gradle.api.publish.PublishingExtension> {
         publications {
-            create<MavenPublication>("mavenJava") {
+            create<org.gradle.api.publish.maven.MavenPublication>("mavenJava") {
                 from(components["java"])
 
                 pom {
@@ -74,22 +64,10 @@ subprojects {
             }
         }
     }
-
-    extensions.configure<SigningExtension> {
-        useInMemoryPgpKeys(
-            System.getenv("JRELEASER_GPG_SECRET_KEY"),
-            System.getenv("JRELEASER_GPG_PASSPHRASE")
-        )
-        sign(extensions.getByType<PublishingExtension>().publications)
-    }
 }
 
+// -------- JRELEASER --------
 jreleaser {
-    project {
-        name.set("bunnynet-lib")
-        description.set("Unofficial Bunny.net Java SDK")
-        website.set("https://github.com/range79/bunnynet-lib")
-    }
 
     signing {
         active.set(org.jreleaser.model.Active.ALWAYS)
@@ -102,6 +80,7 @@ jreleaser {
                 create("sonatype") {
                     active.set(org.jreleaser.model.Active.ALWAYS)
                     url.set("https://central.sonatype.com/api/v1/publisher")
+
                     username.set(System.getenv("OSSRH_USERNAME"))
                     password.set(System.getenv("OSSRH_PASSWORD"))
                 }
