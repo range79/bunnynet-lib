@@ -3,7 +3,7 @@ import org.gradle.api.plugins.JavaPluginExtension
 import org.jreleaser.model.Active
 
 plugins {
-    id("com.palantir.git-version") version "3.0.0"
+    id("com.palantir.git-version") version "5.0.0"
     id("org.jreleaser") version "1.13.0"
     `maven-publish`
     signing
