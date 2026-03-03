@@ -64,4 +64,4 @@ dependencies {
 Still cooking them, but they'll be up once I'm done roasting the official one.
 
 ## Version
-2.0.0 test version
+1.0.0-beta test version
