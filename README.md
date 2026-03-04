@@ -1,5 +1,5 @@
 # Unofficial BunnyNet Library by Range
-![Maven Central](https://img.shields.io/maven-central/v/io.github.range79/core)
+![Maven Central](https://img.shields.io/maven-central/v/io.github.range79/bunnynetunofficial-core)
 
 Listen up, I just had to drop this because somebody had to fix the mess.
 
