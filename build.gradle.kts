@@ -111,8 +111,10 @@ jreleaser {
                 create("sonatype") {
                     active.set(Active.ALWAYS)
                     url.set("https://central.sonatype.com/api/v1/publisher")
-                    username.set(System.getenv("OSSRH_USERNAME"))
-                    password.set(System.getenv("OSSRH_PASSWORD"))
+
+                    username.set(System.getenv("JRELEASER_MAVENCENTRAL_USERNAME"))
+                    password.set(System.getenv("JRELEASER_MAVENCENTRAL_PASSWORD"))
+
                     stagingRepositories.add(stagingDir.get().asFile.absolutePath)
                 }
             }
