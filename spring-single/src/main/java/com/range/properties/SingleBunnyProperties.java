@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 
 
-@ConfigurationProperties(prefix = "bunny")
+@ConfigurationProperties(prefix = "single.bunny")
 public record SingleBunnyProperties (
     String apiKey,
     Region region,
