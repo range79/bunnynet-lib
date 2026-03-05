@@ -13,8 +13,8 @@ plugins {
 
 configurations.all {
     resolutionStrategy {
-        force("org.apache.tika:tika-core:3.2.2")
-        force("org.apache.tika:tika-parsers:3.2.2")
+        force("org.apache.tika:tika-core:3.2.3")
+        force("org.apache.tika:tika-parsers:3.2.3")
     }
 }
 group = "io.github.range79"
