@@ -4,7 +4,7 @@ import com.range.common.dto.PutObjectRequest;
 import com.range.common.dto.PutObjectResponse;
 import com.range.common.http.BunnyHttpClient;
 import com.range.common.upload.AbstractBunnyUploader;
-import com.range.config.SingleBunnyNetConfig;
+import com.range.properties.SingleBunnyNetConfig;
 
 class SingleBunnyUploaderImpl
         extends AbstractBunnyUploader

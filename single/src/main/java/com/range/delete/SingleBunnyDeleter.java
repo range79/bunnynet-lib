@@ -1,6 +1,6 @@
 package com.range.delete;
 
-import com.range.config.SingleBunnyNetConfig;
+import com.range.properties.SingleBunnyNetConfig;
 
 /**
  * Abstraction for deleting objects from a single Bunny.net storage zone.

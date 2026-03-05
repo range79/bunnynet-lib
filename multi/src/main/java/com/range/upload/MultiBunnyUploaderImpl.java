@@ -5,8 +5,7 @@ import com.range.common.dto.PutObjectResponse;
 import com.range.common.enums.Region;
 import com.range.common.http.BunnyHttpClient;
 import com.range.common.upload.AbstractBunnyUploader;
-import com.range.config.MultiBunnyNetConfig;
-import com.range.validator.MultiStorageValidator;
+import com.range.properties.MultiBunnyNetConfig;
 
 public class MultiBunnyUploaderImpl extends AbstractBunnyUploader implements MultiBunnyUploader {
 

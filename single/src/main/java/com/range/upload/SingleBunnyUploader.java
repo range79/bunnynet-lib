@@ -2,7 +2,7 @@ package com.range.upload;
 
 import com.range.common.dto.PutObjectRequest;
 import com.range.common.dto.PutObjectResponse;
-import com.range.config.SingleBunnyNetConfig;
+import com.range.properties.SingleBunnyNetConfig;
 
 /**
  * Abstraction for uploading objects to a single Bunny.net storage zone.

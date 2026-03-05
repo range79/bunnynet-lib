@@ -3,7 +3,7 @@ package com.range;
 import com.range.common.dto.GetObjectResponse;
 import com.range.common.dto.PutObjectRequest;
 import com.range.common.dto.PutObjectResponse;
-import com.range.config.SingleBunnyNetConfig;
+import com.range.properties.SingleBunnyNetConfig;
 import com.range.delete.SingleBunnyDeleter;
 import com.range.downloader.SingleBunnyDownloader;
 import com.range.upload.SingleBunnyUploader;

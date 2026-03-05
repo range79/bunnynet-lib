@@ -3,7 +3,7 @@ package com.range.delete;
 
 import com.range.common.delete.AbstractBunnyDeleter;
 import com.range.common.http.BunnyHttpClient;
-import com.range.config.SingleBunnyNetConfig;
+import com.range.properties.SingleBunnyNetConfig;
 
 
 public class SingleBunnyDeleterImpl
