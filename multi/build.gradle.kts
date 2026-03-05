@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    api(project(":multi"))
+    api(project(":core"))
 
 }
 
