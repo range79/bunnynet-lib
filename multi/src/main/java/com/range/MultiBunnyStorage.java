@@ -4,7 +4,7 @@ import com.range.common.dto.GetObjectResponse;
 import com.range.common.dto.PutObjectRequest;
 import com.range.common.dto.PutObjectResponse;
 import com.range.common.enums.Region;
-import com.range.config.MultiBunnyNetConfig;
+import com.range.properties.MultiBunnyNetConfig;
 import com.range.validator.MultiStorageValidator;
 
 /**

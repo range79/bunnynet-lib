@@ -1,4 +1,4 @@
-package com.range.config;
+package com.range.properties;
 
 /**
  * Configuration holder for multi-zone Bunny.net operations.

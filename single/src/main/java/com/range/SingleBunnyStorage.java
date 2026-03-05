@@ -3,7 +3,7 @@ package com.range;
 import com.range.common.dto.GetObjectResponse;
 import com.range.common.dto.PutObjectRequest;
 import com.range.common.dto.PutObjectResponse;
-import com.range.config.SingleBunnyNetConfig;
+import com.range.properties.SingleBunnyNetConfig;
 
 /**
  * High-level abstraction for interacting with a single Bunny.net storage zone.

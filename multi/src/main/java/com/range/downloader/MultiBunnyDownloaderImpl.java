@@ -5,7 +5,7 @@ import com.range.common.dto.GetObjectResponse;
 import com.range.common.enums.Region;
 import com.range.common.http.BunnyHttpClient;
 import com.range.validator.MultiStorageValidator;
-import com.range.config.MultiBunnyNetConfig;
+import com.range.properties.MultiBunnyNetConfig;
 
 class MultiBunnyDownloaderImpl
         extends AbstractBunnyDownloader

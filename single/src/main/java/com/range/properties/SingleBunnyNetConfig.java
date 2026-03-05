@@ -1,4 +1,4 @@
-package com.range.config;
+package com.range.properties;
 
 import com.range.common.enums.Region;
 

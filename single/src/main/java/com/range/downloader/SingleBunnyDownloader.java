@@ -1,7 +1,7 @@
 package com.range.downloader;
 
 import com.range.common.dto.GetObjectResponse;
-import com.range.config.SingleBunnyNetConfig;
+import com.range.properties.SingleBunnyNetConfig;
 
 /**
  * Abstraction for downloading objects from a single Bunny.net storage zone.
