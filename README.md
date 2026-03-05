@@ -46,6 +46,7 @@ Because the official one couldn't even dream of this level.
 - Java 17+ with proper toolchain setup.
 - Ready for Maven publishing.
 - One-liner Maven central install, no fuss.
+- spring starter for easy spring integration
 
 ## Installation
 
