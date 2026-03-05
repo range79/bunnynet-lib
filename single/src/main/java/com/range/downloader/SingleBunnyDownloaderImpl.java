@@ -11,7 +11,7 @@ class SingleBunnyDownloaderImpl
 
     private final SingleBunnyNetConfig config;
 
-    public SingleBunnyDownloaderImpl(
+    SingleBunnyDownloaderImpl(
             SingleBunnyNetConfig config,
             int connectionTimeout,
             int readTimeout

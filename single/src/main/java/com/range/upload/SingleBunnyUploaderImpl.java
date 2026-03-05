@@ -6,13 +6,13 @@ import com.range.common.http.BunnyHttpClient;
 import com.range.common.upload.AbstractBunnyUploader;
 import com.range.config.SingleBunnyNetConfig;
 
-public class SingleBunnyUploaderImpl
+class SingleBunnyUploaderImpl
         extends AbstractBunnyUploader
         implements SingleBunnyUploader {
 
     private final SingleBunnyNetConfig config;
 
-    public SingleBunnyUploaderImpl(
+    SingleBunnyUploaderImpl(
             SingleBunnyNetConfig config,
             int connectionTimeout,
             int readTimeout

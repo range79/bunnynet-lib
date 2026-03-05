@@ -12,7 +12,7 @@ class SingleBunnyStorageImpl implements SingleBunnyStorage{
     private final SingleBunnyDownloader singleBunnyDownloader;
     private final SingleBunnyUploader singleBunnyUploader;
     private final SingleBunnyDeleter singleBunnyDeleter;
-    public SingleBunnyStorageImpl(SingleBunnyNetConfig singleBunnyNetConfig){
+    protected SingleBunnyStorageImpl(SingleBunnyNetConfig singleBunnyNetConfig){
         singleBunnyUploader= SingleBunnyUploader.create(singleBunnyNetConfig);
         singleBunnyDownloader = SingleBunnyDownloader.create(singleBunnyNetConfig);
         singleBunnyDeleter=SingleBunnyDeleter.create(singleBunnyNetConfig);
