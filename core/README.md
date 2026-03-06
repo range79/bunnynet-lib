@@ -18,6 +18,7 @@ Used by:
 ---
 
 # Purpose
+[![Version](https://img.shields.io/maven-central/v/io.github.range79/bunnynetunofficial-core)](https://search.maven.org/artifact/io.github.range79/bunnynetunofficial-core)
 
 The core module exists to provide reusable components that are shared across the entire library.
 
