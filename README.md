@@ -1,4 +1,4 @@
-# Unofficial BunnyNet Library by Range
+_# Unofficial BunnyNet Library by Range
 ![Maven Central](https://img.shields.io/maven-central/v/io.github.range79/bunnynetunofficial-core)
 
 Listen up, I just had to drop this because somebody had to fix the mess.
@@ -65,4 +65,4 @@ dependencies {
 Still cooking them, but they'll be up once I'm done roasting the official one.
 
 ## Version
-1.0.0-beta test version
+1.0.0-beta test version_
