@@ -12,8 +12,7 @@ Internally uses:
 ---
 
 # Installation
-
-[![Version](https://img.shields.io/maven-central/v/io.github.range79/bunnynetunofficial-spring-multi)](https://search.maven.org/artifact/io.github.range79/bunnynetunofficial-spring-multi)
+[![Version](https://img.shields.io/maven-central/v/io.github.range79/bunnynetunofficial-multi)](https://search.maven.org/artifact/io.github.range79/bunnynetunofficial-multi)
 
 ### Gradle
 
