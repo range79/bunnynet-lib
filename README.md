@@ -1,5 +1,8 @@
 _# Unofficial BunnyNet Library by Range
 ![Maven Central](https://img.shields.io/maven-central/v/io.github.range79/bunnynetunofficial-core)
+![Java](https://img.shields.io/badge/java-17+-blue)
+![License](https://img.shields.io/github/license/range79/bunnynetunofficial)
+![Build](https://img.shields.io/github/actions/workflow/status/range79/bunnynetunofficial/build.yml)
 
 Listen up, I just had to drop this because somebody had to fix the mess.
 
@@ -48,21 +51,32 @@ Because the official one couldn't even dream of this level.
 - One-liner Maven central install, no fuss.
 - spring starter for easy spring integration
 
-## Installation
 
-Gradle (Kotlin DSL):
-```kotlin
-repositories {
-       mavenCentral()
-}
+# Modules
 
-dependencies {
-   implementation("com.github.range79:bunnynet-lib:Version")
-}
+The project is split into multiple modules so developers can include **only what they need**.
+
+| Module | Description |
+|------|-------------|
+| [core](./core/README.md) | Core infrastructure used by all modules |
+| [single](./single/README.md) | Client for single region storage |
+| [multi](./multi/README.md) | Client for multi-region storage |
+| [spring-single](./spring-single/README.md) | Spring Boot integration for single storage |
+| [spring-multi](./spring-multi/README.md) | Spring Boot integration for multi storage |
+
+Each module contains its own README with documentation and usage examples.
+---
+
+# Architecture
+
 ```
-
-## Examples
-Still cooking them, but they'll be up once I'm done roasting the official one.
-
-## Version
-1.0.0-beta test version_
+Spring Boot Starters
+        ↓
+   Single / Multi Clients
+        ↓
+        Core
+        ↓
+     HTTP Client
+        ↓
+   Bunny Storage API
+```
