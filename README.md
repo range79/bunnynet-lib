@@ -56,14 +56,15 @@ Because the official one couldn't even dream of this level.
 
 The project is split into multiple modules so developers can include **only what they need**.
 
-| Module        | Description                                |
-| ------------- | ------------------------------------------ |
-| core          | Core infrastructure used by all modules    |
-| single        | Client for single region storage           |
-| multi         | Client for multi-region storage            |
-| spring-single | Spring Boot integration for single storage |
-| spring-multi  | Spring Boot integration for multi storage  |
+| Module | Description |
+|------|-------------|
+| [core](./core/README.md) | Core infrastructure used by all modules |
+| [single](./single/README.md) | Client for single region storage |
+| [multi](./multi/README.md) | Client for multi-region storage |
+| [spring-single](./spring-single/README.md) | Spring Boot integration for single storage |
+| [spring-multi](./spring-multi/README.md) | Spring Boot integration for multi storage |
 
+Each module contains its own README with documentation and usage examples.
 ---
 
 # Architecture
