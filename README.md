@@ -3,6 +3,9 @@
 ![Java](https://img.shields.io/badge/java-17+-blue)
 ![License](https://img.shields.io/github/license/range79/bunnynet-lib)
 ![Build](https://img.shields.io/github/actions/workflow/status/range79/bunnynet-lib/build.yml)
+![GitHub stars](https://img.shields.io/github/stars/range79/bunnynet-lib)
+![GitHub issues](https://img.shields.io/github/issues/range79/bunnynet-lib)
+![GitHub last commit](https://img.shields.io/github/last-commit/range79/bunnynet-lib)
 
 Listen up, I just had to drop this because somebody had to fix the mess.
 
