@@ -40,13 +40,13 @@ Add the dependency from **Maven Central**.
 ### Gradle (Kotlin DSL)
 
 ```kotlin
-implementation("io.github.range79:bunnynetunofficial-core:2.1.1")
+implementation("io.github.range79:bunnynetunofficial-core:VERSION")
 ```
 
 ### Gradle (Groovy)
 
 ```groovy
-implementation "io.github.range79:bunnynetunofficial-core:2.1.1"
+implementation "io.github.range79:bunnynetunofficial-core:VERSION"
 ```
 
 ### Maven
@@ -55,7 +55,7 @@ implementation "io.github.range79:bunnynetunofficial-core:2.1.1"
 <dependency>
     <groupId>io.github.range79</groupId>
     <artifactId>bunnynetunofficial-core</artifactId>
-    <version>2.1.1</version>
+    <version>VERSION</version>
 </dependency>
 ```
 
