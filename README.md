@@ -1,8 +1,8 @@
-_# Unofficial BunnyNet Library by Range
-![Maven Central](https://img.shields.io/maven-central/v/io.github.range79/bunnynetunofficial-core)
+# Unofficial BunnyNet Library by Range
+[![Version](https://img.shields.io/maven-central/v/io.github.range79/bunnynetunofficial-core)](https://search.maven.org/artifact/io.github.range79/bunnynetunofficial-core)
 ![Java](https://img.shields.io/badge/java-17+-blue)
-![License](https://img.shields.io/github/license/range79/bunnynetunofficial)
-![Build](https://img.shields.io/github/actions/workflow/status/range79/bunnynetunofficial/build.yml)
+![License](https://img.shields.io/github/license/range79/bunnynet-lib)
+![Build](https://img.shields.io/github/actions/workflow/status/range79/bunnynet-lib/build.yml)
 
 Listen up, I just had to drop this because somebody had to fix the mess.
 
