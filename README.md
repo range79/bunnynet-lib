@@ -88,6 +88,7 @@ Each module contains its own README with documentation and usage examples.
 | Maven Central publishing | ❌ | ✅ |
 | Java 17+ modern toolchain | ❌ | ✅ |
 | Active development | ❌ | ✅ |
+| Available on Maven Central | ❌ | ✅ |
 
 # Architecture
 
