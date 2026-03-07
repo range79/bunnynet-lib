@@ -51,10 +51,10 @@ Because the official one couldn't even dream of this level.
 - Full support for single files, entire folders, downloads, deletes, the lot.
 - Blazing fast BunnyHttpClient running on OkHttp 5.3.2.
 - Java 17+ with proper toolchain setup.
-- Ready for Maven publishing.
 - One-liner Maven central install, no fuss.
 - spring starter for easy spring integration
-
+- Unlike the official BunnyCDN Java library, this project is published on Maven Central.
+Instead of manually downloading and adding a JAR file, you can install it with a single dependency.
 
 # Modules
 
