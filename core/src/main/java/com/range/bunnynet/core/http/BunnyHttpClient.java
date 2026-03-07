@@ -10,6 +10,7 @@ import okio.Source;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public final class BunnyHttpClient {
@@ -63,7 +64,7 @@ public final class BunnyHttpClient {
         return builder.build();
     }
 
-    public int executeUpload(Request request) {
+    public int executeUpload(Request request) throws BunnyConnectionFailedException {
         try (Response response = client.newCall(request).execute()) {
             return response.code();
         } catch (IOException e) {
@@ -79,9 +80,13 @@ public final class BunnyHttpClient {
             String storageZone,
             String endpoint,
             String key
-    ) {
+    ) throws BunnyConnectionFailedException {
 
-        String url = endpoint + "/" + storageZone + "/" + key;
+        HttpUrl url = Objects.requireNonNull(HttpUrl.parse(endpoint))
+                .newBuilder()
+                .addPathSegment(storageZone)
+                .addPathSegments(key)
+                .build();
 
         Request request = new Request.Builder()
                 .url(url)
@@ -99,7 +104,7 @@ public final class BunnyHttpClient {
             );
         }
 
-        ResponseBody body = response.body();
+        ResponseBody body = Objects.requireNonNull(response.body(), "Response body is null");
 
         MediaType mediaType = body.contentType();
         String contentType = mediaType != null
@@ -119,9 +124,13 @@ public final class BunnyHttpClient {
         );
     }
 
-    public int deleteObject(String storageZone, String endpoint, String key) {
+    public int deleteObject(String storageZone, String endpoint, String key) throws BunnyConnectionFailedException {
 
-        String url = endpoint + "/" + storageZone + "/" + key;
+        HttpUrl url = Objects.requireNonNull(HttpUrl.parse(endpoint))
+                .newBuilder()
+                .addPathSegment(storageZone)
+                .addPathSegments(key)
+                .build();
 
         Request request = new Request.Builder()
                 .url(url)

@@ -1,6 +1,8 @@
 package com.range.bunnynet.core.exception;
 
-public class BunnyConnectionFailedException extends RuntimeException {
+import java.io.IOException;
+
+public class BunnyConnectionFailedException extends BunnyException {
     public BunnyConnectionFailedException(String message) {super(message);}
     public BunnyConnectionFailedException(Throwable throwable){
         super(throwable);

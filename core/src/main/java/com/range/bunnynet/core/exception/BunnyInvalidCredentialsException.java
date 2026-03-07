@@ -1,6 +1,6 @@
 package com.range.bunnynet.core.exception;
 
-public class BunnyInvalidCredentialsException extends RuntimeException {
+public class BunnyInvalidCredentialsException extends BunnyException {
 
     public BunnyInvalidCredentialsException(String message) {
 

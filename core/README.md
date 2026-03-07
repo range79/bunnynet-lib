@@ -2,11 +2,11 @@
 
 ⬅ Back to [Main README](../README.md)
 
-The **core module** provides the internal infrastructure used by all BunnyNet storage clients.
+The **core module** contains the internal infrastructure used by all BunnyNet storage clients.
 
-It contains the low-level components required to communicate with the **Bunny Storage API**.
+It provides the low-level building blocks required to communicate with the **Bunny Storage API**.
 
-Most developers **do not need to use this module directly**, as it is automatically included by higher-level modules.
+Most developers **do not need to use this module directly**, because it is automatically included by higher-level modules.
 
 Used by:
 
@@ -18,19 +18,20 @@ Used by:
 ---
 
 # Purpose
+
 [![Version](https://img.shields.io/maven-central/v/io.github.range79/bunnynetunofficial-core)](https://search.maven.org/artifact/io.github.range79/bunnynetunofficial-core)
 
-The core module exists to provide reusable components that are shared across the entire library.
+The core module centralizes the shared infrastructure used by the entire library.
 
-It centralizes:
+It contains:
 
-* HTTP communication
-* DTO models
-* exception handling
+* HTTP communication layer
+* request / response models
+* exception hierarchy
 * region configuration
-* internal storage operations
+* abstract storage operation logic
 
-This keeps higher level modules clean and focused.
+Keeping these components in one place allows higher-level modules to remain simple and focused.
 
 ---
 
@@ -54,33 +55,34 @@ implementation "io.github.range79:bunnynetunofficial-core:VERSION"
 
 ```xml
 <dependency>
-    <groupId>io.github.range79</groupId>
-    <artifactId>bunnynetunofficial-core</artifactId>
-    <version>VERSION</version>
+  <groupId>io.github.range79</groupId>
+  <artifactId>bunnynetunofficial-core</artifactId>
+  <version>VERSION</version>
 </dependency>
 ```
 
-In most cases you **do not need to add this module manually**, since it is already included by higher level modules such as `single` and `multi`.
+In most cases you **do not need to include this module manually**, since it is already pulled in by higher-level modules such as `single` or `multi`.
 
 ---
 
 # Package Structure
 
 ```
-com.range.common
+com.range.bunnynet.core
 │
 ├── http
 │   └── BunnyHttpClient
 │
-├── dto
+├── model
 │   ├── PutObjectRequest
 │   ├── PutObjectResponse
 │   └── GetObjectResponse
 │
-├── enums
+├── region
 │   └── Region
 │
 ├── exception
+│   ├── BunnyException
 │   ├── BunnyConnectionFailedException
 │   ├── BunnyFileUploadFailedException
 │   ├── BunnyFileDownloadFailedException
@@ -88,21 +90,16 @@ com.range.common
 │   ├── BunnyInvalidCredentialsException
 │   └── BunnyObjectNotFoundException
 │
-├── upload
-│   └── AbstractBunnyUploader
-│
-├── download
-│   └── AbstractBunnyDownloader
-│
-└── delete
-    └── AbstractBunnyDeleter
+├── AbstractBunnyUploader
+├── AbstractBunnyDownloader
+└── AbstractBunnyDeleter
 ```
 
 ---
 
 # HTTP Client
 
-The core module contains a lightweight HTTP client used to communicate with the Bunny Storage API.
+The core module includes a lightweight HTTP client responsible for communicating with the Bunny Storage API.
 
 Main class:
 
@@ -112,24 +109,25 @@ BunnyHttpClient
 
 Responsibilities:
 
-* sending HTTP requests
-* handling authentication headers
-* managing connections
-* processing responses
+* building HTTP requests
+* sending requests to Bunny Storage
+* attaching authentication headers
+* streaming uploads and downloads
+* processing HTTP responses
 
-The HTTP client is built on top of **OkHttp**, a widely used and reliable HTTP client for Java.
+The client is implemented using **OkHttp**, a widely used and reliable HTTP client for Java.
 
-OkHttp is included **internally as a dependency**, so users of the library do not need to add it manually.
+OkHttp is included as an internal dependency, so users of the library **do not need to add it manually**.
 
 ---
 
-# DTO Models
+# Data Models
 
-The following data models represent request and response objects used by the storage API.
+The core module provides request and response models used by the Bunny Storage API.
 
 ### PutObjectRequest
 
-Represents a file upload request.
+Represents an upload request.
 
 Contains:
 
@@ -140,17 +138,17 @@ Contains:
 
 ### PutObjectResponse
 
-Returned after a successful upload.
+Represents the result of a successful upload.
 
 ### GetObjectResponse
 
-Represents a downloaded object.
+Represents a downloaded object and exposes the response stream.
 
 ---
 
-# Region Enum
+# Region Configuration
 
-The library provides a strongly typed `Region` enum.
+The library provides a strongly typed `Region` class with predefined constants.
 
 Example:
 
@@ -163,12 +161,16 @@ Each region maps to a specific Bunny Storage endpoint.
 Example mapping:
 
 ```
-LONDON_UK -> uk.storage.bunnycdn.com
-FRANKFURT_DE -> storage.bunnycdn.com
-NEW_YORK_US -> ny.storage.bunnycdn.com
+LONDON_UK     -> uk.storage.bunnycdn.com
+FRANKFURT_DE  -> storage.bunnycdn.com
+NEW_YORK_US   -> ny.storage.bunnycdn.com
 ```
 
-Custom endpoints are also supported.
+Custom endpoints are also supported:
+
+```java
+Region custom = new Region("my.storage.endpoint");
+```
 
 ---
 
@@ -176,42 +178,61 @@ Custom endpoints are also supported.
 
 Instead of throwing generic exceptions, the core module defines a clear exception hierarchy.
 
-Examples:
+Base type:
 
-* `BunnyConnectionFailedException`
-* `BunnyFileUploadFailedException`
-* `BunnyFileDownloadFailedException`
-* `BunnyFileDeleteFailedException`
-* `BunnyInvalidCredentialsException`
-* `BunnyObjectNotFoundException`
+```
+BunnyException
+```
 
-This allows applications to handle specific error scenarios cleanly.
+Hierarchy:
+
+```
+BunnyException
+ ├─ BunnyConnectionFailedException
+ ├─ BunnyFileUploadFailedException
+ ├─ BunnyFileDownloadFailedException
+ ├─ BunnyFileDeleteFailedException
+ ├─ BunnyInvalidCredentialsException
+ └─ BunnyObjectNotFoundException
+```
+
+This allows applications to catch either specific errors or all Bunny-related errors.
+
+Example:
+
+```java
+try {
+    storage.downloadFile(...);
+} catch (BunnyException e) {
+    // handle bunny storage error
+}
+```
 
 ---
 
-# Storage Operations
+# Storage Operation Abstractions
 
-The core module provides abstract implementations for the main storage operations.
+The core module provides abstract implementations for storage operations.
 
 ### AbstractBunnyUploader
 
-Handles file uploads.
+Handles upload logic.
 
 ### AbstractBunnyDownloader
 
-Handles file downloads.
+Handles download logic.
 
 ### AbstractBunnyDeleter
 
-Handles file deletion.
+Handles deletion logic.
 
-These classes are extended by higher level modules.
+These classes are extended by higher-level modules.
 
 Example:
 
 ```
 single module -> SingleBunnyUploaderImpl
-multi module -> MultiBunnyUploaderImpl
+multi module  -> MultiBunnyUploaderImpl
 ```
 
 ---
@@ -232,12 +253,12 @@ Uploader / Downloader / Deleter
 
 Normally you **should not depend on this module directly**.
 
-Instead use one of the higher level clients:
+Instead use one of the higher-level clients:
 
 * [`single`](../single/README.md)
 * [`multi`](../multi/README.md)
 
-They already include the core module internally.
+These modules already include the core module internally.
 
 ---
 

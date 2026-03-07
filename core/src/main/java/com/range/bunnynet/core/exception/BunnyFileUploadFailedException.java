@@ -1,6 +1,6 @@
 package com.range.bunnynet.core.exception;
 
-public class BunnyFileUploadFailedException extends RuntimeException {
+public class BunnyFileUploadFailedException extends BunnyException {
     public BunnyFileUploadFailedException(String message) {
         super(message);
     }

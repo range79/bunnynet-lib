@@ -4,7 +4,7 @@
 
 Client for interacting with **multiple Bunny Storage regions**.
 
-Designed for systems requiring **multi-region redundancy or backups**.
+This module is designed for applications that require **multi-region storage strategies**, such as redundancy, backups, or geographic distribution.
 
 Internally uses:
 
@@ -16,10 +16,16 @@ Internally uses:
 
 [![Version](https://img.shields.io/maven-central/v/io.github.range79/bunnynetunofficial-multi)](https://search.maven.org/artifact/io.github.range79/bunnynetunofficial-multi)
 
-### Gradle
+### Gradle (Kotlin DSL)
 
 ```kotlin
 implementation("io.github.range79:bunnynetunofficial-multi:VERSION")
+```
+
+### Gradle (Groovy)
+
+```groovy
+implementation "io.github.range79:bunnynetunofficial-multi:VERSION"
 ```
 
 ### Maven
@@ -36,14 +42,20 @@ implementation("io.github.range79:bunnynetunofficial-multi:VERSION")
 
 # Quick Start
 
-### Configuration
+## Configuration
+
+Create a configuration object using your Bunny Storage API key.
 
 ```java
 MultiBunnyNetConfig config =
         new MultiBunnyNetConfig("API_KEY");
 ```
 
-### Create Client
+---
+
+## Create Client
+
+Instantiate the storage client.
 
 ```java
 MultiBunnyStorage storage =
@@ -53,6 +65,8 @@ MultiBunnyStorage storage =
 ---
 
 # Upload File
+
+Upload a file to a specific storage zone and region.
 
 ```java
 storage.uploadFile(
@@ -65,6 +79,8 @@ storage.uploadFile(
 ---
 
 # Download File
+
+Download an object from a specific region.
 
 ```java
 GetObjectResponse response =
@@ -79,6 +95,8 @@ GetObjectResponse response =
 
 # Delete File
 
+Delete an object from storage.
+
 ```java
 storage.deleteFile(
         "storage-zone",
@@ -89,14 +107,46 @@ storage.deleteFile(
 
 ---
 
-# When to Use
+# Multi-Region Usage
 
-Use this module when:
+This module allows your application to operate across multiple Bunny Storage regions.
 
-* multiple regions must store the same data
-* redundancy is required
-* disaster recovery is needed
-* global storage distribution is needed
+Typical use cases include:
+
+* replicating files across regions
+* disaster recovery setups
+* geo-distributed storage architectures
+* multi-region backup strategies
+
+---
+
+# Module Architecture
+
+```text
+Application
+      ↓
+MultiBunnyStorage
+      ↓
+ BunnyNet Core
+      ↓
+Bunny Storage API
+```
+
+---
+
+# When Should You Use This Module?
+
+Use the **multi client** when your system needs to interact with **multiple storage regions**.
+
+If your application only uses a **single storage region**, consider using:
+
+* [`single`](../single/README.md)
+
+---
+
+# Requirements
+
+* Java 17 or newer
 
 ---
 
