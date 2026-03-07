@@ -2,7 +2,7 @@ package com.range.downloader;
 
 import com.range.common.download.AbstractBunnyDownloader;
 import com.range.common.dto.GetObjectResponse;
-import com.range.common.enums.Region;
+import com.range.common.region.Region;
 import com.range.common.http.BunnyHttpClient;
 import com.range.validator.MultiStorageValidator;
 import com.range.properties.MultiBunnyNetConfig;

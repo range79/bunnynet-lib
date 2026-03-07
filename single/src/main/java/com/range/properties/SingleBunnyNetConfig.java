@@ -1,6 +1,6 @@
 package com.range.properties;
 
-import com.range.common.enums.Region;
+import com.range.common.region.Region;
 
 /**
  * Configuration holder for a single Bunny.net storage zone.

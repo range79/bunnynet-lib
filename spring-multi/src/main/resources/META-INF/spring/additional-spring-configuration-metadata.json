@@ -1,0 +1,24 @@
+{
+  "properties": [
+    {
+      "name": "bunnynet.region",
+      "type": "java.lang.String",
+      "description": "BunnyNet storage region endpoint."
+    }
+  ],
+  "hints": [
+    {
+      "name": "bunnynet.region",
+      "values": [
+        { "value": "storage.bunnycdn.com", "description": "Frankfurt, Germany" },
+        { "value": "uk.storage.bunnycdn.com", "description": "London, United Kingdom" },
+        { "value": "ny.storage.bunnycdn.com", "description": "New York, United States" },
+        { "value": "la.storage.bunnycdn.com", "description": "Los Angeles, United States" },
+        { "value": "sg.storage.bunnycdn.com", "description": "Singapore" },
+        { "value": "se.storage.bunnycdn.com", "description": "Stockholm, Sweden" },
+        { "value": "br.storage.bunnycdn.com", "description": "São Paulo, Brazil" },
+        { "value": "jh.storage.bunnycdn.com", "description": "Johannesburg, South Africa" }
+      ]
+    }
+  ]
+}

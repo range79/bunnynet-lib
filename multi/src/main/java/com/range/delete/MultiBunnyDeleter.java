@@ -1,6 +1,6 @@
 package com.range.delete;
 
-import com.range.common.enums.Region;
+import com.range.common.region.Region;
 import com.range.properties.MultiBunnyNetConfig;
 import com.range.validator.MultiStorageValidator;
 
