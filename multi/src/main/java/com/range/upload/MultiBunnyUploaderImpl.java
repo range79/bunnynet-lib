@@ -7,7 +7,7 @@ import com.range.common.http.BunnyHttpClient;
 import com.range.common.upload.AbstractBunnyUploader;
 import com.range.properties.MultiBunnyNetConfig;
 
-public class MultiBunnyUploaderImpl extends AbstractBunnyUploader implements MultiBunnyUploader {
+class MultiBunnyUploaderImpl extends AbstractBunnyUploader implements MultiBunnyUploader {
 
     public MultiBunnyUploaderImpl(MultiBunnyNetConfig config, int connectionTimeout, int readTimeout) {
         super(new BunnyHttpClient(config.apiKey(), connectionTimeout, readTimeout));

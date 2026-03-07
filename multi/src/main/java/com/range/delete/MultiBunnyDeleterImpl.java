@@ -7,7 +7,7 @@ import com.range.properties.MultiBunnyNetConfig;
 import com.range.validator.MultiStorageValidator;
 
 
-public class MultiBunnyDeleterImpl
+class MultiBunnyDeleterImpl
         extends AbstractBunnyDeleter
         implements MultiBunnyDeleter {
 

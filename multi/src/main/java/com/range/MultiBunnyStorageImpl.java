@@ -9,7 +9,7 @@ import com.range.delete.MultiBunnyDeleter;
 import com.range.downloader.MultiBunnyDownloader;
 import com.range.upload.MultiBunnyUploader;
 
-public class MultiBunnyStorageImpl implements MultiBunnyStorage {
+class MultiBunnyStorageImpl implements MultiBunnyStorage {
     private final MultiBunnyUploader uploader;
     private final MultiBunnyDownloader downloader;
 

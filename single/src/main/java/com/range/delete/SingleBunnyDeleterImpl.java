@@ -6,7 +6,7 @@ import com.range.common.http.BunnyHttpClient;
 import com.range.properties.SingleBunnyNetConfig;
 
 
-public class SingleBunnyDeleterImpl
+class SingleBunnyDeleterImpl
         extends AbstractBunnyDeleter
         implements SingleBunnyDeleter {
 
