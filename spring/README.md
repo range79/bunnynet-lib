@@ -1,40 +1,37 @@
-# BunnyNet Spring Boot Starter (Multi)
+# BunnyNet Spring Boot Integration
 
 ⬅ Back to [Main README](../README.md)
 
-Spring Boot integration for the **multi-region storage client**.
+Spring Boot integration for the **BunnyNet Java client**.
 
-This starter automatically configures the **MultiBunnyStorage** client and integrates it with the Spring Boot dependency injection system.
+This module provides **auto-configuration and property binding** for Bunny Storage clients, allowing applications to easily integrate with Bunny Storage using Spring Boot.
 
-Internally uses:
-
-* [`multi`](../multi/README.md)
-* [`core`](../core/README.md)
+Both **single-region** and **multi-region** storage clients are supported.
 
 ---
 
 # Installation
 
-[![Version](https://img.shields.io/maven-central/v/io.github.range79/bunnynetunofficial-spring-multi)](https://search.maven.org/artifact/io.github.range79/bunnynetunofficial-spring-multi)
+Add the Spring module dependency.
 
 ### Gradle (Kotlin DSL)
 
-```kotlin id="85mpgg"
-implementation("io.github.range79:bunnynetunofficial-spring-multi:VERSION")
+```kotlin
+implementation("io.github.range79:bunnynetunofficial-spring:VERSION")
 ```
 
 ### Gradle (Groovy)
 
-```groovy id="6i8szl"
-implementation "io.github.range79:bunnynetunofficial-spring-multi:VERSION"
+```groovy
+implementation "io.github.range79:bunnynetunofficial-spring:VERSION"
 ```
 
 ### Maven
 
-```xml id="v7yhrh"
+```xml
 <dependency>
   <groupId>io.github.range79</groupId>
-  <artifactId>bunnynetunofficial-spring-multi</artifactId>
+  <artifactId>bunnynetunofficial-spring</artifactId>
   <version>VERSION</version>
 </dependency>
 ```
@@ -43,58 +40,104 @@ implementation "io.github.range79:bunnynetunofficial-spring-multi:VERSION"
 
 # Configuration
 
-Configure the client using **Spring Boot configuration properties**.
+Spring Boot automatically binds configuration properties.
 
-```yaml id="1t6kt3"
-multi:
-  bunny:
-    apiKey: YOUR_API_KEY
+Example:
+
+```yaml
+bunnynet:
+  api-key: YOUR_API_KEY
+  storage-zone: your-storage-zone
+  region: LONDON_UK
 ```
 
 ---
 
-# Usage
+# Single Storage Client
 
-Once configured, the `MultiBunnyStorage` client is automatically available through Spring's dependency injection.
+For applications using **one storage zone and region**, the starter automatically creates a `SingleBunnyStorage` bean.
 
-```java id="m31h2n"
-@Autowired
-private MultiBunnyStorage storage;
+Example usage:
+
+```java
+@Service
+public class StorageService {
+
+    private final SingleBunnyStorage storage;
+
+    public StorageService(SingleBunnyStorage storage) {
+        this.storage = storage;
+    }
+
+    public void upload(PutObjectRequest request) {
+        storage.uploadFile(request);
+    }
+}
 ```
 
-Spring Boot will automatically create and configure the client.
-
 ---
 
-# Example
+# Multi Storage Client
 
-```java id="g1ggdo"
-storage.uploadFile(
-        request,
-        "storage-zone",
-        Region.LONDON_UK
-);
+If your application interacts with **multiple storage zones or regions**, you can inject `MultiBunnyStorage`.
+
+Example:
+
+```java
+@Service
+public class MultiStorageService {
+
+    private final MultiBunnyStorage storage;
+
+    public MultiStorageService(MultiBunnyStorage storage) {
+        this.storage = storage;
+    }
+
+    public void upload(PutObjectRequest request) {
+        storage.uploadFile(
+                request,
+                "storage-zone",
+                Region.LONDON_UK
+        );
+    }
+}
 ```
 
 ---
 
-# Features
+# Available Properties
 
-* Spring Boot auto-configuration
-* configuration properties binding
-* dependency injection support
-* seamless integration with Spring applications
+| Property                | Description            |
+| ----------------------- | ---------------------- |
+| `bunnynet.api-key`      | Bunny Storage API key  |
+| `bunnynet.storage-zone` | Default storage zone   |
+| `bunnynet.region`       | Default storage region |
 
 ---
 
-# Module Architecture
+# Auto Configuration
 
-```text id="tkpd0v"
-Spring Boot Application
+The Spring module provides auto-configuration classes that automatically register storage clients as Spring beans.
+
+Internal configuration classes:
+
+```
+SingleBunnyStorageConfig
+MultiBunnyStorageConfig
+```
+
+These classes create and configure the storage clients based on Spring Boot properties.
+
+---
+
+# Architecture
+
+```
+Spring Application
         ↓
-Spring Starter (Multi)
+BunnyNet Spring AutoConfig
         ↓
-MultiBunnyStorage Client
+SingleBunnyStorage / MultiBunnyStorage
         ↓
 BunnyNet Core
         ↓
@@ -103,27 +146,13 @@ Bunny Storage API
 
 ---
 
-# When Should You Use This Module?
-
-Use this starter if your application:
-
-* uses **Spring Boot**
-* requires **multi-region storage**
-* needs **automatic configuration and dependency injection**
-
-If you only need **single-region storage**, consider using:
-
-* [`spring-single`](../spring-single/README.md)
-
----
-
 # Requirements
 
-* Java 17 or newer
+* Java 17+
 * Spring Boot 3+
 
 ---
 
 # License
 
-This project is licensed under the [Apache License 2.0](../LICENSE).
+This project is licensed under the **Apache License 2.0**.

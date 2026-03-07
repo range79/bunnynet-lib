@@ -2,66 +2,143 @@
 
 ⬅ Back to [Main README](../README.md)
 
-The **core module** contains the internal infrastructure used by all BunnyNet storage clients.
+The **core module** contains the main implementation of the BunnyNet Java client.
 
-It provides the low-level building blocks required to communicate with the **Bunny Storage API**.
+It provides the infrastructure required to interact with the **Bunny Storage API**, including HTTP communication, request models, region configuration, and storage clients.
 
-Most developers **do not need to use this module directly**, because it is automatically included by higher-level modules.
+The module includes support for both:
 
-Used by:
-
-* [`single`](../single/README.md)
-* [`multi`](../multi/README.md)
-* [`spring-single`](../spring-single/README.md)
-* [`spring-multi`](../spring-multi/README.md)
+* **Single-region storage**
+* **Multi-region storage**
 
 ---
 
-# Purpose
+# Storage Clients
 
-[![Version](https://img.shields.io/maven-central/v/io.github.range79/bunnynetunofficial-core)](https://search.maven.org/artifact/io.github.range79/bunnynetunofficial-core)
+Two storage clients are available inside this module.
 
-The core module centralizes the shared infrastructure used by the entire library.
-
-It contains:
-
-* HTTP communication layer
-* request / response models
-* exception hierarchy
-* region configuration
-* abstract storage operation logic
-
-Keeping these components in one place allows higher-level modules to remain simple and focused.
+| Client               | Description                                                                    |
+| -------------------- | ------------------------------------------------------------------------------ |
+| `SingleBunnyStorage` | Use when your application stores files in **one storage zone and region**      |
+| `MultiBunnyStorage`  | Use when your application interacts with **multiple storage zones or regions** |
 
 ---
 
-# Installation
+# Single Storage Client
 
-Add the dependency from **Maven Central**.
+## Configuration
 
-### Gradle (Kotlin DSL)
-
-```kotlin
-implementation("io.github.range79:bunnynetunofficial-core:VERSION")
+```java
+SingleBunnyNetConfig config =
+        new SingleBunnyNetConfig(
+                "API_KEY",
+                Region.LONDON_UK,
+                "storage-zone"
+        );
 ```
 
-### Gradle (Groovy)
+## Create Client
 
-```groovy
-implementation "io.github.range79:bunnynetunofficial-core:VERSION"
+```java
+SingleBunnyStorage storage =
+        SingleBunnyStorage.create(config);
 ```
 
-### Maven
+---
 
-```xml
-<dependency>
-  <groupId>io.github.range79</groupId>
-  <artifactId>bunnynetunofficial-core</artifactId>
-  <version>VERSION</version>
-</dependency>
+## Upload File
+
+```java
+PutObjectRequest request =
+        new PutObjectRequest(
+                "images/photo.png",
+                contentType,
+                metadata,
+                inputStream
+        );
+
+storage.uploadFile(request);
 ```
 
-In most cases you **do not need to include this module manually**, since it is already pulled in by higher-level modules such as `single` or `multi`.
+---
+
+## Download File
+
+```java
+GetObjectResponse response =
+        storage.downloadFile("images/photo.png");
+```
+
+You can access the file stream from the response:
+
+```java
+InputStream stream = response.inputStream();
+```
+
+---
+
+## Delete File
+
+```java
+storage.deleteFile("images/photo.png");
+```
+
+---
+
+# Multi Storage Client
+
+Use the multi client when your application needs to interact with **multiple storage zones or regions**.
+
+## Configuration
+
+```java
+MultiBunnyNetConfig config =
+        new MultiBunnyNetConfig("API_KEY");
+```
+
+## Create Client
+
+```java
+MultiBunnyStorage storage =
+        MultiBunnyStorage.create(config);
+```
+
+---
+
+## Upload File
+
+```java
+storage.uploadFile(
+        request,
+        "storage-zone",
+        Region.LONDON_UK
+);
+```
+
+---
+
+## Download File
+
+```java
+GetObjectResponse response =
+        storage.downloadFile(
+                "storage-zone",
+                "images/photo.png",
+                Region.LONDON_UK
+        );
+```
+
+---
+
+## Delete File
+
+```java
+storage.deleteFile(
+        "storage-zone",
+        "images/photo.png",
+        Region.LONDON_UK
+);
+```
 
 ---
 
@@ -90,18 +167,18 @@ com.range.bunnynet.core
 │   ├── BunnyInvalidCredentialsException
 │   └── BunnyObjectNotFoundException
 │
-├── AbstractBunnyUploader
-├── AbstractBunnyDownloader
-└── AbstractBunnyDeleter
+├── single
+│   └── SingleBunnyStorage
+│
+└── multi
+    └── MultiBunnyStorage
 ```
 
 ---
 
 # HTTP Client
 
-The core module includes a lightweight HTTP client responsible for communicating with the Bunny Storage API.
-
-Main class:
+The library internally uses:
 
 ```
 BunnyHttpClient
@@ -110,75 +187,17 @@ BunnyHttpClient
 Responsibilities:
 
 * building HTTP requests
-* sending requests to Bunny Storage
 * attaching authentication headers
 * streaming uploads and downloads
-* processing HTTP responses
+* handling Bunny Storage API responses
 
-The client is implemented using **OkHttp**, a widely used and reliable HTTP client for Java.
-
-OkHttp is included as an internal dependency, so users of the library **do not need to add it manually**.
+The client is implemented using **OkHttp**.
 
 ---
 
-# Data Models
+# Exception Hierarchy
 
-The core module provides request and response models used by the Bunny Storage API.
-
-### PutObjectRequest
-
-Represents an upload request.
-
-Contains:
-
-* object key
-* content type
-* metadata
-* input stream
-
-### PutObjectResponse
-
-Represents the result of a successful upload.
-
-### GetObjectResponse
-
-Represents a downloaded object and exposes the response stream.
-
----
-
-# Region Configuration
-
-The library provides a strongly typed `Region` class with predefined constants.
-
-Example:
-
-```java
-Region.LONDON_UK
-```
-
-Each region maps to a specific Bunny Storage endpoint.
-
-Example mapping:
-
-```
-LONDON_UK     -> uk.storage.bunnycdn.com
-FRANKFURT_DE  -> storage.bunnycdn.com
-NEW_YORK_US   -> ny.storage.bunnycdn.com
-```
-
-Custom endpoints are also supported:
-
-```java
-Region custom = new Region("my.storage.endpoint");
-```
-
----
-
-# Exception System
-
-Instead of throwing generic exceptions, the core module defines a clear exception hierarchy.
-
-Base type:
+All library exceptions extend:
 
 ```
 BunnyException
@@ -196,13 +215,11 @@ BunnyException
  └─ BunnyObjectNotFoundException
 ```
 
-This allows applications to catch either specific errors or all Bunny-related errors.
-
-Example:
+Example usage:
 
 ```java
 try {
-    storage.downloadFile(...);
+    storage.downloadFile("file.png");
 } catch (BunnyException e) {
     // handle bunny storage error
 }
@@ -210,64 +227,12 @@ try {
 
 ---
 
-# Storage Operation Abstractions
-
-The core module provides abstract implementations for storage operations.
-
-### AbstractBunnyUploader
-
-Handles upload logic.
-
-### AbstractBunnyDownloader
-
-Handles download logic.
-
-### AbstractBunnyDeleter
-
-Handles deletion logic.
-
-These classes are extended by higher-level modules.
-
-Example:
-
-```
-single module -> SingleBunnyUploaderImpl
-multi module  -> MultiBunnyUploaderImpl
-```
-
----
-
-# Internal Architecture
-
-```
-Uploader / Downloader / Deleter
-            ↓
-      BunnyHttpClient
-            ↓
-      Bunny Storage API
-```
-
----
-
-# When Should You Use This Module?
-
-Normally you **should not depend on this module directly**.
-
-Instead use one of the higher-level clients:
-
-* [`single`](../single/README.md)
-* [`multi`](../multi/README.md)
-
-These modules already include the core module internally.
-
----
-
 # Requirements
 
-* Java 17 or newer
+* Java 17+
 
 ---
 
 # License
 
-This project is licensed under the [Apache License 2.0](../LICENSE).
+This project is licensed under the **Apache License 2.0**.
