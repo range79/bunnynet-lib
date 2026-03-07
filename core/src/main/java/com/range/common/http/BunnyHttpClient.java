@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public class BunnyHttpClient {
+public final class BunnyHttpClient {
 
     private final String apiKey;
     private final OkHttpClient client;
