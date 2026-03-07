@@ -5,7 +5,7 @@ import com.range.bunnynet.core.region.Region;
 import com.range.bunnynet.core.http.BunnyHttpClient;
 
 
-final class MultiBunnyDeleterImpl
+ final class MultiBunnyDeleterImpl
         extends AbstractBunnyDeleter
         implements MultiBunnyDeleter {
 

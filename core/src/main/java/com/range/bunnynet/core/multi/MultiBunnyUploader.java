@@ -13,7 +13,7 @@ import com.range.bunnynet.core.exception.BunnyFileUploadFailedException;
  *
  * @since 2.1.0
  */
-interface MultiBunnyUploader {
+sealed interface MultiBunnyUploader permits MultiBunnyUploaderImpl{
 
     /**
      * Creates a {@code MultiBunnyUploader} with custom timeout settings.

@@ -15,7 +15,7 @@ import com.range.bunnynet.core.region.Region;
  *
  * @since 2.1.0
  */
- interface MultiBunnyDownloader {
+sealed interface MultiBunnyDownloader permits MultiBunnyDownloaderImpl{
 
     /**
      * Creates a {@code MultiBunnyDownloader} with custom timeout settings.

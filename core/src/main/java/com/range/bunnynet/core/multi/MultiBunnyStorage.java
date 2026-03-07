@@ -17,7 +17,7 @@ import com.range.bunnynet.core.region.Region;
  *
  * @since 2.1.0
  */
-public interface MultiBunnyStorage {
+public sealed interface MultiBunnyStorage permits MultiBunnyStorageImpl {
 
     /**
      * Creates a new {@code MultiBunnyStorage} instance.

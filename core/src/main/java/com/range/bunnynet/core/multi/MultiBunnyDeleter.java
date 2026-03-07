@@ -12,7 +12,7 @@ import com.range.bunnynet.core.region.Region;
  *
  * @since 2.1.0
  */
-interface MultiBunnyDeleter {
+sealed interface MultiBunnyDeleter permits MultiBunnyDeleterImpl {
 
     /**
      * Creates a {@code MultiBunnyDeleter} with custom timeout settings.

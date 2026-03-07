@@ -2,7 +2,7 @@ package com.range.bunnynet.core.multi;
 
 import com.range.bunnynet.core.region.Region;
 
-public final class MultiStorageValidator {
+final class MultiStorageValidator {
 
 
     public static void validateConfig(MultiBunnyNetConfig config) {
