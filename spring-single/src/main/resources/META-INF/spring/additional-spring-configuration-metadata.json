@@ -1,14 +1,14 @@
 {
   "properties": [
     {
-      "name": "bunnynet.region",
+      "name": "single.bunny.region",
       "type": "java.lang.String",
       "description": "BunnyNet storage region endpoint."
     }
   ],
   "hints": [
     {
-      "name": "bunnynet.region",
+      "name": "single.bunny.region",
       "values": [
         { "value": "storage.bunnycdn.com", "description": "Frankfurt, Germany" },
         { "value": "uk.storage.bunnycdn.com", "description": "London, United Kingdom" },
