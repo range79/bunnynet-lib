@@ -6,13 +6,14 @@
 ![GitHub stars](https://img.shields.io/github/stars/range79/bunnynet-lib)
 ![GitHub issues](https://img.shields.io/github/issues/range79/bunnynet-lib)
 ![GitHub last commit](https://img.shields.io/github/last-commit/range79/bunnynet-lib)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-support-yellow?logo=buy-me-a-coffee)](https://buymeacoffee.com/darkrange6s)
 
 Listen up, I just had to drop this because somebody had to fix the mess.
 
 ## Why did I even write this library?
 
-1. Because I can do whatever the fuck I want, that's why.
-
+1. because the official library is outdated and poorly designed.
+   
 2. I opened the official BunnyCDN Java library, stared at it for three seconds, and straight-up lost it laughing. That thing is so bad it feels like some 2008 intern lied his way into the job saying "yeah I know Java" and nobody ever code-reviewed a single line.
 
    - The main class extends Exception. Yeah, the whole library is literally an exception.
@@ -70,6 +71,24 @@ The project is split into multiple modules so developers can include **only what
 Each module contains its own README with documentation and usage examples.
 ---
 
+# Comparison with official SDK
+
+| Feature | Official BunnyCDN Java Library | BunnyNet Unofficial |
+|--------|--------------------------------|---------------------|
+| Modern Java API | ❌ | ✅ |
+| Clean architecture | ❌ | ✅ |
+| DTO request/response model | ❌ | ✅ |
+| Custom typed exceptions | ❌ | ✅ |
+| Region enum support | ❌ | ✅ |
+| Single storage client | ⚠️ Basic | ✅ |
+| Multi-region storage support | ❌ | ✅ |
+| Spring Boot integration | ❌ | ✅ |
+| OkHttp based HTTP client | ❌ | ✅ |
+| Modular project structure | ❌ | ✅ |
+| Maven Central publishing | ❌ | ✅ |
+| Java 17+ modern toolchain | ❌ | ✅ |
+| Active development | ❌ | ✅ |
+
 # Architecture
 
 ```
@@ -83,3 +102,9 @@ Spring Boot Starters
         ↓
    Bunny Storage API
 ```
+# Support
+
+If you find this project useful, you can support development here:
+
+☕ Buy me a coffee  
+https://buymeacoffee.com/darkrange6s
