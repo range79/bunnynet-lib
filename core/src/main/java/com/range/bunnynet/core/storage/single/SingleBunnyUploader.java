@@ -1,4 +1,4 @@
-package com.range.bunnynet.core.single;
+package com.range.bunnynet.core.storage.single;
 
 import com.range.bunnynet.core.model.PutObjectRequest;
 import com.range.bunnynet.core.model.PutObjectResponse;
@@ -10,7 +10,7 @@ import com.range.bunnynet.core.model.PutObjectResponse;
  *
  * @since 2.1.0
  */
-interface SingleBunnyUploader {
+sealed interface SingleBunnyUploader permits SingleBunnyUploaderImpl {
 
     /**
      * Creates a {@code SingleBunnyUploader} with default timeout settings.

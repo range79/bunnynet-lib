@@ -1,9 +1,9 @@
-package com.range.bunnynet.core.single;
+package com.range.bunnynet.core.storage.single;
 
 import com.range.bunnynet.core.model.PutObjectRequest;
 import com.range.bunnynet.core.model.PutObjectResponse;
 import com.range.bunnynet.core.http.BunnyHttpClient;
-import com.range.bunnynet.core.AbstractBunnyUploader;
+import com.range.bunnynet.core.http.AbstractBunnyUploader;
 
 final class SingleBunnyUploaderImpl
         extends AbstractBunnyUploader

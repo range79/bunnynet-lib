@@ -1,7 +1,7 @@
 package com.range.bunnynet.spring.multi;
 
-import com.range.bunnynet.core.multi.MultiBunnyStorage;
-import com.range.bunnynet.core.multi.MultiBunnyNetConfig;
+import com.range.bunnynet.core.storage.multi.MultiBunnyStorage;
+import com.range.bunnynet.core.storage.multi.MultiBunnyNetConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

@@ -1,4 +1,4 @@
-package com.range.bunnynet.core.single;
+package com.range.bunnynet.core.storage.single;
 
 import com.range.bunnynet.core.region.Region;
 

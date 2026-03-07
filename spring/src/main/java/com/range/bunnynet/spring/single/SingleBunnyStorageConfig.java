@@ -1,7 +1,7 @@
 package com.range.bunnynet.spring.single;
 
-import com.range.bunnynet.core.single.SingleBunnyStorage;
-import com.range.bunnynet.core.single.SingleBunnyNetConfig;
+import com.range.bunnynet.core.storage.single.SingleBunnyStorage;
+import com.range.bunnynet.core.storage.single.SingleBunnyNetConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

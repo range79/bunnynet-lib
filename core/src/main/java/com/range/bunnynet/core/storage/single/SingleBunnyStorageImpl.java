@@ -1,14 +1,14 @@
-package com.range.bunnynet.core.single;
+package com.range.bunnynet.core.storage.single;
 
 import com.range.bunnynet.core.model.GetObjectResponse;
 import com.range.bunnynet.core.model.PutObjectRequest;
 import com.range.bunnynet.core.model.PutObjectResponse;
 
-class SingleBunnyStorageImpl implements SingleBunnyStorage{
+final class SingleBunnyStorageImpl implements SingleBunnyStorage{
     private final SingleBunnyDownloader singleBunnyDownloader;
     private final SingleBunnyUploader singleBunnyUploader;
     private final SingleBunnyDeleter singleBunnyDeleter;
-    protected SingleBunnyStorageImpl(SingleBunnyNetConfig singleBunnyNetConfig){
+    SingleBunnyStorageImpl(SingleBunnyNetConfig singleBunnyNetConfig){
         singleBunnyUploader= SingleBunnyUploader.create(singleBunnyNetConfig);
         singleBunnyDownloader = SingleBunnyDownloader.create(singleBunnyNetConfig);
         singleBunnyDeleter=SingleBunnyDeleter.create(singleBunnyNetConfig);

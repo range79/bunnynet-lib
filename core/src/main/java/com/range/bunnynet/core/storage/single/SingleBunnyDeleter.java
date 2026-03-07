@@ -1,18 +1,16 @@
-package com.range.bunnynet.core.single;
-
-import com.range.bunnynet.core.model.GetObjectResponse;
+package com.range.bunnynet.core.storage.single;
 
 /**
- * Abstraction for downloading objects from a single Bunny.net storage zone.
+ * Abstraction for deleting objects from a single Bunny.net storage zone.
  *
  * <p>Instances can be created using the provided static factory methods.</p>
  *
  * @since 2.1.0
  */
-interface SingleBunnyDownloader {
+sealed interface SingleBunnyDeleter permits SingleBunnyDeleterImpl {
 
     /**
-     * Creates a {@code SingleBunnyDownloader} with custom timeout settings.
+     * Creates a {@code SingleBunnyDeleter} with custom timeout settings.
      *
      * @param config            configuration containing API key, storage zone, and region;
      *                          must not be null
@@ -20,11 +18,11 @@ interface SingleBunnyDownloader {
      *                          must be positive
      * @param readTimeout       maximum time in milliseconds to read data;
      *                          must be positive
-     * @return a configured {@code SingleBunnyDownloader} instance
+     * @return a configured {@code SingleBunnyDeleter} instance
      * @throws IllegalArgumentException if configuration is null
      *                                  or timeout values are non-positive
      */
-    static SingleBunnyDownloader create(
+    static SingleBunnyDeleter create(
             SingleBunnyNetConfig config,
             int connectionTimeout,
             int readTimeout
@@ -38,11 +36,11 @@ interface SingleBunnyDownloader {
         if (readTimeout <= 0) {
             throw new IllegalArgumentException("readTimeout must be positive");
         }
-        return new SingleBunnyDownloaderImpl(config, connectionTimeout, readTimeout);
+        return new SingleBunnyDeleterImpl(config, connectionTimeout, readTimeout);
     }
 
     /**
-     * Creates a {@code SingleBunnyDownloader} with default timeout settings.
+     * Creates a {@code SingleBunnyDeleter} with default timeout settings.
      *
      * <p>Default values:</p>
      * <ul>
@@ -52,25 +50,18 @@ interface SingleBunnyDownloader {
      *
      * @param config configuration containing API key, storage zone, and region;
      *               must not be null
-     * @return a configured {@code SingleBunnyDownloader} instance
+     * @return a configured {@code SingleBunnyDeleter} instance
      * @throws IllegalArgumentException if configuration is null
      */
-    static SingleBunnyDownloader create(SingleBunnyNetConfig config) {
-        if (config == null) {
-            throw new IllegalArgumentException("SingleBunnyNetConfig cannot be null");
-        }
+    static SingleBunnyDeleter create(SingleBunnyNetConfig config) {
         return create(config, 15_000, 45_000);
     }
 
     /**
-     * Downloads an object from the configured storage zone.
-     *
-     * <p>The returned {@link GetObjectResponse} must be closed
-     * after use to release underlying HTTP resources.</p>
+     * Deletes an object from the configured storage zone.
      *
      * @param key the object key (path) inside the storage zone;
      *            must not be null or blank
-     * @return a {@link GetObjectResponse} containing object data and metadata
      */
-    GetObjectResponse download(String key);
+    void delete(String key);
 }

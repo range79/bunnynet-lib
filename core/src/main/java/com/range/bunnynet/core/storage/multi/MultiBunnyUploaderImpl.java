@@ -1,10 +1,10 @@
-package com.range.bunnynet.core.multi;
+package com.range.bunnynet.core.storage.multi;
 
 import com.range.bunnynet.core.model.PutObjectRequest;
 import com.range.bunnynet.core.model.PutObjectResponse;
 import com.range.bunnynet.core.region.Region;
 import com.range.bunnynet.core.http.BunnyHttpClient;
-import com.range.bunnynet.core.AbstractBunnyUploader;
+import com.range.bunnynet.core.http.AbstractBunnyUploader;
 
 final class MultiBunnyUploaderImpl extends AbstractBunnyUploader implements MultiBunnyUploader {
 

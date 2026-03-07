@@ -1,17 +1,16 @@
-package com.range.bunnynet.core.single;
+package com.range.bunnynet.core.storage.single;
 
-
-import com.range.bunnynet.core.AbstractBunnyDeleter;
+import com.range.bunnynet.core.http.AbstractBunnyDownloader;
+import com.range.bunnynet.core.model.GetObjectResponse;
 import com.range.bunnynet.core.http.BunnyHttpClient;
 
-
-final class SingleBunnyDeleterImpl
-        extends AbstractBunnyDeleter
-        implements SingleBunnyDeleter {
+final class SingleBunnyDownloaderImpl
+        extends AbstractBunnyDownloader
+        implements SingleBunnyDownloader {
 
     private final SingleBunnyNetConfig config;
 
-    public SingleBunnyDeleterImpl(
+    SingleBunnyDownloaderImpl(
             SingleBunnyNetConfig config,
             int connectionTimeout,
             int readTimeout
@@ -25,16 +24,17 @@ final class SingleBunnyDeleterImpl
     }
 
     @Override
-    public void delete(String key) {
+    public GetObjectResponse download(String key) {
 
         if (key == null || key.isBlank()) {
             throw new IllegalArgumentException("Key cannot be null or empty");
         }
 
-        internalDelete(
+        return internalDownload(
                 config.storageZone(),
                 config.region().getEndpoint(),
                 key
         );
     }
+
 }

@@ -1,4 +1,4 @@
-package com.range.bunnynet.core.multi;
+package com.range.bunnynet.core.storage.multi;
 
 import com.range.bunnynet.core.model.PutObjectRequest;
 import com.range.bunnynet.core.model.PutObjectResponse;

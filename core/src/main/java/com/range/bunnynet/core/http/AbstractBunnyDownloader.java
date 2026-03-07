@@ -1,9 +1,8 @@
-package com.range.bunnynet.core;
+package com.range.bunnynet.core.http;
 
 import com.range.bunnynet.core.model.GetObjectResponse;
 import com.range.bunnynet.core.exception.BunnyFileDownloadFailedException;
 import com.range.bunnynet.core.exception.BunnyInvalidCredentialsException;
-import com.range.bunnynet.core.http.BunnyHttpClient;
 
 public abstract class AbstractBunnyDownloader {
 

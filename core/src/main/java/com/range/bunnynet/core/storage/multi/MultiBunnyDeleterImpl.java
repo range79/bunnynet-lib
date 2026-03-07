@@ -1,6 +1,6 @@
-package com.range.bunnynet.core.multi;
+package com.range.bunnynet.core.storage.multi;
 
-import com.range.bunnynet.core.AbstractBunnyDeleter;
+import com.range.bunnynet.core.http.AbstractBunnyDeleter;
 import com.range.bunnynet.core.region.Region;
 import com.range.bunnynet.core.http.BunnyHttpClient;
 

@@ -1,6 +1,6 @@
-package com.range.bunnynet.core.multi;
+package com.range.bunnynet.core.storage.multi;
 
-import com.range.bunnynet.core.AbstractBunnyDownloader;
+import com.range.bunnynet.core.http.AbstractBunnyDownloader;
 import com.range.bunnynet.core.model.GetObjectResponse;
 import com.range.bunnynet.core.region.Region;
 import com.range.bunnynet.core.http.BunnyHttpClient;

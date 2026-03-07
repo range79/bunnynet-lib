@@ -1,10 +1,9 @@
-package com.range.bunnynet.core;
+package com.range.bunnynet.core.http;
 
 import com.range.bunnynet.core.model.PutObjectRequest;
 import com.range.bunnynet.core.model.PutObjectResponse;
 import com.range.bunnynet.core.exception.BunnyFileUploadFailedException;
 import com.range.bunnynet.core.exception.BunnyInvalidCredentialsException;
-import com.range.bunnynet.core.http.BunnyHttpClient;
 import okhttp3.Request;
 
 public abstract class AbstractBunnyUploader {

@@ -1,4 +1,4 @@
-package com.range.bunnynet.core.single;
+package com.range.bunnynet.core.storage.single;
 
 import com.range.bunnynet.core.model.GetObjectResponse;
 import com.range.bunnynet.core.model.PutObjectRequest;
@@ -15,7 +15,7 @@ import com.range.bunnynet.core.model.PutObjectResponse;
  *
  * @since 2.1.0
  */
-public interface SingleBunnyStorage {
+public sealed interface SingleBunnyStorage permits SingleBunnyStorageImpl{
 
     /**
      * Creates a new {@code SingleBunnyStorage} instance

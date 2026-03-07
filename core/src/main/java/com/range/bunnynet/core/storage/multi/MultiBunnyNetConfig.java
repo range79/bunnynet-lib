@@ -1,4 +1,4 @@
-package com.range.bunnynet.core.multi;
+package com.range.bunnynet.core.storage.multi;
 
 /**
  * Configuration holder for multi-zone Bunny.net operations.
