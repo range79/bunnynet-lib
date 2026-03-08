@@ -13,12 +13,11 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(MultiBunnyProperties.class)
 @ConditionalOnClass(MultiBunnyStorage.class)
 @ConditionalOnProperty(
-        prefix = "multi.bunny.client",
+        prefix = "bunnynet.multi",
         name = "enabled",
-        havingValue = "true",
-        matchIfMissing = true
+        havingValue = "true"
 )
-public class MultiBunnyStorageConfig {
+public final class MultiBunnyStorageConfig {
 
     private final MultiBunnyProperties properties;
 

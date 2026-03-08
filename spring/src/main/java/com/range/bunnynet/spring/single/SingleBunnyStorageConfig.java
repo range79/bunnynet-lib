@@ -13,12 +13,11 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(SingleBunnyProperties.class)
 @ConditionalOnClass(SingleBunnyStorage.class)
 @ConditionalOnProperty(
-        prefix = "single.bunny.client",
+        prefix = "bunnynet.single",
         name = "enabled",
-        havingValue = "true",
-        matchIfMissing = true
+        havingValue = "true"
 )
-public class SingleBunnyStorageConfig {
+public final class SingleBunnyStorageConfig {
 
     private final SingleBunnyProperties properties;
 
