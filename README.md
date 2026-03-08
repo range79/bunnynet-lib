@@ -11,20 +11,22 @@
 
 Listen up, I just had to drop this because somebody had to fix the mess.
 
-## Why did I even write this library?
+---
+
+# Why did I even write this library?
 
 1. because the official library is outdated and poorly designed.
 
 2. I opened the official BunnyCDN Java library, stared at it for three seconds, and straight-up lost it laughing. That thing is so bad it feels like some 2008 intern lied his way into the job saying "yeah I know Java" and nobody ever code-reviewed a single line.
 
    * The main class extends Exception. Yeah, the whole library is literally an exception.
-   * Every single method throws raw Exception. Like "I have no idea what could go wrong so let's just let it explode everywhere."
+   * Every single method throws raw Exception.
    * Static LinkedList<String> for crawling files. Thread-safety? Never heard of her.
    * Does Collections.reverse(Arrays.asList(...)) like it's fresh off a 2009 StackOverflow copy-paste.
-   * Manual URL encoding done by hand, and you just know it's half-assed.
-   * Overall energy: pure caffeine, deadline, and junior-dev panic attack in code form.
+   * Manual URL encoding done by hand.
+   * Overall energy: caffeine, deadline pressure, and junior-dev panic attack in code form.
 
-   In short, the official library is a tragic comedy that somehow made it to production.
+In short, the official library is a tragic comedy that somehow made it to production.
 
 Official BunnyCDN Java Storage Library (click if you want to suffer):
 https://github.com/BunnyWay/BunnyCDN.Java.Storage
@@ -33,68 +35,58 @@ So yeah, I sat down and wrote a clean, modern, actually-thought-out library that
 
 ---
 
-## Why two config classes?
-
-Because the official one couldn't even dream of this level.
-
-### SingleBunnyNetConfig
-
-* When you just need one region and one storage zone.
-* Dead simple, zero overcomplication, "bro I just wanna upload files" mode.
-
-### MultiBunnyNetConfig
-
-* When you want to blast the same file to multiple regions at once.
-* Real multi-region backup god tier stuff.
-* Something the official garbage could never pull off even on its best day.
-
----
-
-## Features (stuff that makes the official library look even worse)
+# Features
 
 * Clean architecture with proper interfaces and implementations.
 * Typed exception hierarchy (`BunnyException`) instead of throwing random `Exception`.
 * Region configuration with predefined constants.
 * Streaming uploads and downloads.
-* Full support for uploads, downloads, deletes.
-* Blazing fast `BunnyHttpClient` running on OkHttp.
-* Java 17+ modern toolchain.
-* One-line Maven Central install.
-* Spring Boot starters for easy integration.
-* Multi-region storage support.
+* Upload, download and delete operations.
+* Blazing fast `BunnyHttpClient` powered by **OkHttp**.
+* Java **17+ modern toolchain**.
+* One-line install via **Maven Central**.
+* **Single-region storage client**
+* **Multi-region storage client**
+* **Spring Boot auto configuration**
 
 Unlike the official BunnyCDN Java library, this project is published on **Maven Central**.
 
-Instead of manually downloading and adding a JAR file, you can install it with a single dependency.
+Instead of manually downloading a random JAR from GitHub and praying it works, you can install it with a single dependency.
 
 ---
 
 # Modules
 
-The project is split into multiple modules so developers can include **only what they need**.
+The project is organized into a small set of focused modules.
 
-| Module                                     | Description                                |
-| ------------------------------------------ | ------------------------------------------ |
-| [core](./core/README.md)                   | Core infrastructure used by all modules    |
-| [single](./single/README.md)               | Client for single region storage           |
-| [multi](./multi/README.md)                 | Client for multi-region storage            |
-| [spring-single](./spring-single/README.md) | Spring Boot integration for single storage |
-| [spring-multi](./spring-multi/README.md)   | Spring Boot integration for multi storage  |
+| Module                       | Description                                    |
+| ---------------------------- | ---------------------------------------------- |
+| [core](./core/README.md)     | Main BunnyNet client implementation            |
+| [spring](./spring/README.md) | Spring Boot auto-configuration and integration |
 
-Each module contains its own README with documentation and usage examples.
+The **core module** contains the full BunnyNet client implementation including:
+
+* Single storage client
+* Multi storage client
+* HTTP client
+* DTO models
+* Region configuration
+* Exception hierarchy
+
+The **spring module** provides Spring Boot auto-configuration for the client.
 
 ---
 
 # Architecture
 
 ```
-Spring Boot Starters
+Spring Boot Integration
         ↓
-   Single / Multi Clients
+Storage Clients (Single / Multi)
         ↓
-        Core
+      Core
         ↓
-     HTTP Client
+   BunnyHttpClient
         ↓
    Bunny Storage API
 ```
@@ -113,10 +105,10 @@ Spring Boot Starters
 | Single storage client        | ⚠️ Basic                       | ✅                   |
 | Multi-region storage support | ❌                              | ✅                   |
 | Spring Boot integration      | ❌                              | ✅                   |
-| OkHttp based HTTP client     | ❌                              | ✅                   |
+| OkHttp HTTP client           | ❌                              | ✅                   |
 | Modular project structure    | ❌                              | ✅                   |
 | Maven Central publishing     | ❌                              | ✅                   |
-| Java 17+ modern toolchain    | ❌                              | ✅                   |
+| Java 17+ toolchain           | ❌                              | ✅                   |
 | Active development           | ❌                              | ✅                   |
 
 ---
@@ -127,7 +119,10 @@ If you find this project useful, you can support development here:
 
 ☕ Buy me a coffee
 https://buymeacoffee.com/darkrange6s
-## Contributors
+
+---
+
+# Contributors
 
 <a href="https://github.com/range79/bunnynet-lib/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=range79/bunnynet-lib" />
