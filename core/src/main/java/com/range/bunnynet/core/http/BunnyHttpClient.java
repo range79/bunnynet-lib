@@ -3,78 +3,70 @@ package com.range.bunnynet.core.http;
 import com.range.bunnynet.core.model.GetObjectResponse;
 import com.range.bunnynet.core.model.PutObjectRequest;
 import com.range.bunnynet.core.exception.BunnyConnectionFailedException;
-import okhttp3.*;
-import okio.BufferedSink;
-import okio.Okio;
-import okio.Source;
 
-import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
 import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
+
 
 public final class BunnyHttpClient {
 
     private final String apiKey;
-    private final OkHttpClient client;
-    public BunnyHttpClient(String apiKey, OkHttpClient client) {
+    private final HttpClient client;
+
+    public BunnyHttpClient(String apiKey, HttpClient client) {
         this.apiKey = apiKey;
         this.client = client;
     }
 
-    public BunnyHttpClient(String apiKey, int connectionTimeout, int readTimeout) {
+    public BunnyHttpClient(String apiKey, int connectionTimeout) {
         this.apiKey = apiKey;
-        this.client = new OkHttpClient.Builder()
-                .connectTimeout(connectionTimeout, TimeUnit.MILLISECONDS)
-                .readTimeout(readTimeout, TimeUnit.MILLISECONDS)
+        this.client = HttpClient.newBuilder()
+                .connectTimeout(Duration.ofMillis(connectionTimeout))
                 .build();
     }
 
-
-
-    public Request createPutRequest(
+    public HttpRequest createPutRequest(
             String url,
-            MediaType contentType,
+            String contentType,
             Map<String, String> metadata,
             PutObjectRequest request
     ) {
-        RequestBody body = new RequestBody() {
-            @Override
-            public MediaType contentType() {
-                return contentType;
-            }
 
-            @Override
-            public void writeTo(BufferedSink sink) throws IOException {
-                try (Source source = Okio.source(request.inputStream())) {
-                    sink.writeAll(source);
-                }
-            }
-        };
-
-        Request.Builder builder = new Request.Builder()
-                .url(url)
-                .put(body)
-                .addHeader("AccessKey", apiKey);
+        HttpRequest.Builder builder = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("AccessKey", apiKey)
+                .header("Content-Type", contentType)
+                .PUT(HttpRequest.BodyPublishers.ofInputStream(request::inputStream));
 
         if (metadata != null) {
-            metadata.forEach((key, value) -> builder.addHeader("Meta-" + key, value));
+            metadata.forEach((key, value) ->
+                    builder.header("Meta-" + key, value)
+            );
         }
 
         return builder.build();
     }
 
-    public int executeUpload(Request request) throws BunnyConnectionFailedException {
-        try (Response response = client.newCall(request).execute()) {
-            return response.code();
-        } catch (IOException e) {
+    public int executeUpload(HttpRequest request)
+            throws BunnyConnectionFailedException {
+
+        try {
+            HttpResponse<Void> response =
+                    client.send(request, HttpResponse.BodyHandlers.discarding());
+
+            return response.statusCode();
+
+        } catch (Exception e) {
             throw new BunnyConnectionFailedException(
-                    "Failed to execute upload to: " + request.url(), e
+                    "Failed to execute upload to: " + request.uri(), e
             );
         }
     }
-
-
 
     public GetObjectResponse downloadObject(
             String storageZone,
@@ -82,65 +74,70 @@ public final class BunnyHttpClient {
             String key
     ) throws BunnyConnectionFailedException {
 
-        HttpUrl url = Objects.requireNonNull(HttpUrl.parse(endpoint))
-                .newBuilder()
-                .addPathSegment(storageZone)
-                .addPathSegments(key)
-                .build();
+        String url = endpoint + "/" + storageZone + "/" + key;
 
-        Request request = new Request.Builder()
-                .url(url)
-                .get()
-                .addHeader("AccessKey", apiKey)
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .header("AccessKey", apiKey)
                 .build();
-
-        final Response response;
 
         try {
-            response = client.newCall(request).execute();
-        } catch (IOException e) {
+
+            HttpResponse<InputStream> response =
+                    client.send(request, HttpResponse.BodyHandlers.ofInputStream());
+
+            InputStream body = response.body();
+
+            String contentType = response.headers()
+                    .firstValue("Content-Type")
+                    .orElse("application/octet-stream");
+
+            long contentLength = response.headers()
+                    .firstValue("Content-Length")
+                    .map(Long::parseLong)
+                    .orElse(-1L);
+
+            return new GetObjectResponse(
+                    storageZone,
+                    key,
+                    "https://" + storageZone + ".b-cdn.net/" + key,
+                    contentType,
+                    contentLength,
+                    response.headers(),
+                    body,
+                    response.statusCode()
+            );
+
+        } catch (Exception e) {
             throw new BunnyConnectionFailedException(
                     "Failed to download from: " + url, e
             );
         }
-
-        ResponseBody body = Objects.requireNonNull(response.body(), "Response body is null");
-
-        MediaType mediaType = body.contentType();
-        String contentType = mediaType != null
-                ? mediaType.toString()
-                : "application/octet-stream";
-
-        return new GetObjectResponse(
-                storageZone,
-                key,
-                "https://" + storageZone + ".b-cdn.net/" + key,
-                contentType,
-                body.contentLength(),
-                response.headers(),
-                response,
-                body.byteStream(),
-                response.code()
-        );
     }
 
-    public int deleteObject(String storageZone, String endpoint, String key) throws BunnyConnectionFailedException {
+    public int deleteObject(
+            String storageZone,
+            String endpoint,
+            String key
+    ) throws BunnyConnectionFailedException {
 
-        HttpUrl url = Objects.requireNonNull(HttpUrl.parse(endpoint))
-                .newBuilder()
-                .addPathSegment(storageZone)
-                .addPathSegments(key)
+        String url = endpoint + "/" + storageZone + "/" + key;
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .DELETE()
+                .header("AccessKey", apiKey)
                 .build();
 
-        Request request = new Request.Builder()
-                .url(url)
-                .delete()
-                .addHeader("AccessKey", apiKey)
-                .build();
+        try {
 
-        try (Response response = client.newCall(request).execute()) {
-            return response.code();
-        } catch (IOException e) {
+            HttpResponse<Void> response =
+                    client.send(request, HttpResponse.BodyHandlers.discarding());
+
+            return response.statusCode();
+
+        } catch (Exception e) {
             throw new BunnyConnectionFailedException(
                     "Failed to delete object at: " + url, e
             );
