@@ -8,7 +8,7 @@ import com.range.bunnynet.core.http.AbstractBunnyUploader;
 
 final class MultiBunnyUploaderImpl extends AbstractBunnyUploader implements MultiBunnyUploader {
 
-    public MultiBunnyUploaderImpl(MultiBunnyNetConfig config, int connectionTimeout, int readTimeout) {
+    public MultiBunnyUploaderImpl(MultiBunnyNetConfig config, int connectionTimeout) {
         super(new BunnyHttpClient(config.apiKey(), connectionTimeout));
     }
 

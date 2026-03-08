@@ -38,11 +38,11 @@ So yeah, I sat down and wrote a clean, modern, actually-thought-out library that
 # Features
 
 * Clean architecture with proper interfaces and implementations.
-* Typed exception hierarchy (`BunnyException`) instead of throwing random `Exception`.
+* Typed exception hierarchy (BunnyException) instead of throwing random Exception.
 * Region configuration with predefined constants.
 * Streaming uploads and downloads.
 * Upload, download and delete operations.
-* Blazing fast `BunnyHttpClient` powered by **OkHttp**.
+* Blazing fast `BunnyHttpClient` powered by ~~**OkHttp**~~ **Java HttpClient (java.net.http)**.
 * Java **17+ modern toolchain**.
 * One-line install via **Maven Central**.
 * **Single-region storage client**
@@ -55,6 +55,13 @@ Instead of manually downloading a random JAR from GitHub and praying it works, y
 
 ---
 
+# Why I removed OkHttp
+
+Earlier versions of this library used **OkHttp** as the HTTP client.
+
+However, one of the goals of this project is to keep external dependencies to a minimum and avoid unnecessary dependency chains.
+
+Since Java already provides a built-in HTTP client (`java.net.http.HttpClient`) starting from Java 11, adding OkHttp would only introduce an extra dependency for functionality that already exists in the JDK.
 # Modules
 
 The project is organized into a small set of focused modules.
@@ -79,17 +86,17 @@ The **spring module** provides Spring Boot auto-configuration for the client.
 
 # Architecture
 
-```
 Spring Boot Integration
-        ↓
+↓
 Storage Clients (Single / Multi)
-        ↓
-      Core
-        ↓
-   BunnyHttpClient
-        ↓
-   Bunny Storage API
-```
+↓
+Core
+↓
+BunnyHttpClient
+↓
+Bunny Storage API
+
+
 
 ---
 
@@ -105,7 +112,6 @@ Storage Clients (Single / Multi)
 | Single storage client        | ⚠️ Basic                       | ✅                   |
 | Multi-region storage support | ❌                              | ✅                   |
 | Spring Boot integration      | ❌                              | ✅                   |
-| OkHttp HTTP client           | ❌                              | ✅                   |
 | Modular project structure    | ❌                              | ✅                   |
 | Maven Central publishing     | ❌                              | ✅                   |
 | Java 17+ toolchain           | ❌                              | ✅                   |
@@ -126,4 +132,5 @@ https://buymeacoffee.com/darkrange6s
 
 <a href="https://github.com/range79/bunnynet-lib/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=range79/bunnynet-lib" />
-</a>
+</a> 
+
