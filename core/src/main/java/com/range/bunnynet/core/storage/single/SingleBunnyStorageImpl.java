@@ -20,7 +20,7 @@ final class SingleBunnyStorageImpl implements SingleBunnyStorage{
 
     @Override
     public PutObjectResponse uploadFile(PutObjectRequest putObjectRequest) {
-        return singleBunnyUploader.uploadFile(putObjectRequest);
+        return singleBunnyUploader.upload(putObjectRequest);
     }
 
     @Override
