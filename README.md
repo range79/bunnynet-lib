@@ -15,8 +15,6 @@ Listen up, I just had to drop this because somebody had to fix the mess.
 
 # Why did I even write this library?
 
-# Why did I even write this library?
-
 1. Because the official library is outdated and poorly designed.
 
 2. I opened the official BunnyCDN Java library, glanced at it for a few seconds, and couldn't believe what I was seeing. It felt like a very early-intern project that never got reviewed.
