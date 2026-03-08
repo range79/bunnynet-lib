@@ -16,14 +16,8 @@ updates:
     schedule:
       interval: "weekly"
 
-  # Multi module
+  # Spring module
   - package-ecosystem: "gradle"
-    directory: "/multi"
-    schedule:
-      interval: "weekly"
-
-  # Single module
-  - package-ecosystem: "gradle"
-    directory: "/single"
+    directory: "/spring"
     schedule:
       interval: "weekly"
