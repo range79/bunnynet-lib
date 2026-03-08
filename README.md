@@ -15,23 +15,25 @@ Listen up, I just had to drop this because somebody had to fix the mess.
 
 # Why did I even write this library?
 
-1. because the official library is outdated and poorly designed.
+# Why did I even write this library?
 
-2. I opened the official BunnyCDN Java library, stared at it for three seconds, and straight-up lost it laughing. That thing is so bad it feels like some 2008 intern lied his way into the job saying "yeah I know Java" and nobody ever code-reviewed a single line.
+1. Because the official library is outdated and poorly designed.
 
-   * The main class extends Exception. Yeah, the whole library is literally an exception.
-   * Every single method throws raw Exception.
-   * Static LinkedList<String> for crawling files. Thread-safety? Never heard of her.
-   * Does Collections.reverse(Arrays.asList(...)) like it's fresh off a 2009 StackOverflow copy-paste.
+2. I opened the official BunnyCDN Java library, glanced at it for a few seconds, and couldn't believe what I was seeing. It felt like a very early-intern project that never got reviewed.
+
+   * The main class extends `Exception`. Yes, the whole library is basically an exception.
+   * Every single method throws raw `Exception`.
+   * Uses `Static LinkedList<String>` for crawling files. Thread-safety? Not considered.
+   * Calls `Collections.reverse(Arrays.asList(...))` as if copied from an old forum post.
    * Manual URL encoding done by hand.
-   * Overall energy: caffeine, deadline pressure, and junior-dev panic attack in code form.
+   * Overall style: rushed, unstructured, and prone to errors.
 
-In short, the official library is a tragic comedy that somehow made it to production.
+In short, the official library is poorly structured and not suitable for modern development.
 
-Official BunnyCDN Java Storage Library (click if you want to suffer):
+Official BunnyCDN Java Storage Library (for reference):
 https://github.com/BunnyWay/BunnyCDN.Java.Storage
 
-So yeah, I sat down and wrote a clean, modern, actually-thought-out library that feels like it belongs in 2026 instead of a time capsule from the dark ages.
+I wrote this library to provide a clean, modern, well-thought-out implementation that fits 2026 standards instead of outdated practices.
 
 ---
 
