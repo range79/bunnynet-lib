@@ -15,7 +15,7 @@ import com.range.bunnynet.core.region.Region;
  *
  * @since 2.1.0
  */
-sealed interface MultiBunnyDownloader permits MultiBunnyDownloaderImpl{
+sealed interface MultiBunnyDownloader permits MultiBunnyDownloaderImpl {
 
     /**
      * Creates a {@code MultiBunnyDownloader} with custom timeout settings.
@@ -23,31 +23,27 @@ sealed interface MultiBunnyDownloader permits MultiBunnyDownloaderImpl{
      * @param config            configuration containing the shared API key;
      *                          must not be null
      * @param connectionTimeout maximum time in milliseconds to establish a connection
-     * @param readTimeout       maximum time in milliseconds to read data
      * @return a configured {@code MultiBunnyDownloader} instance
      * @throws IllegalArgumentException if configuration is invalid
      */
     static MultiBunnyDownloader create(
             MultiBunnyNetConfig config,
-            int connectionTimeout,
-            int readTimeout
+            int connectionTimeout
     ) {
         MultiStorageValidator.validateConfig(config);
 
         return new MultiBunnyDownloaderImpl(
                 config,
-                connectionTimeout,
-                readTimeout
+                connectionTimeout
         );
     }
 
     /**
      * Creates a {@code MultiBunnyDownloader} with default timeout settings.
      *
-     * <p>Default values:</p>
+     * <p>Default value:</p>
      * <ul>
      *     <li>Connection timeout: 15,000 ms</li>
-     *     <li>Read timeout: 45,000 ms</li>
      * </ul>
      *
      * @param config configuration containing the shared API key;
@@ -57,7 +53,7 @@ sealed interface MultiBunnyDownloader permits MultiBunnyDownloaderImpl{
      */
     static MultiBunnyDownloader create(MultiBunnyNetConfig config) {
         MultiStorageValidator.validateConfig(config);
-        return create(config, 15_000, 45_000);
+        return create(config, 15_000);
     }
 
     /**
@@ -67,7 +63,6 @@ sealed interface MultiBunnyDownloader permits MultiBunnyDownloaderImpl{
      * try (GetObjectResponse response =
      *          downloader.download("zone", "path/file.png", Region.DE)) {
      *     InputStream in = response.getStream();
-     *     // read data
      * }
      * }</pre>
      *

@@ -12,13 +12,11 @@ final class SingleBunnyDownloaderImpl
 
     SingleBunnyDownloaderImpl(
             SingleBunnyNetConfig config,
-            int connectionTimeout,
-            int readTimeout
+            int connectionTimeout
     ) {
         super(new BunnyHttpClient(
                 config.apiKey(),
-                connectionTimeout,
-                readTimeout
+                connectionTimeout
         ));
         this.config = config;
     }

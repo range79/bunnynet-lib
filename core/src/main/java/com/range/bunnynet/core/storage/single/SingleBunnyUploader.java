@@ -10,7 +10,7 @@ import com.range.bunnynet.core.model.PutObjectResponse;
  *
  * @since 2.1.0
  */
-sealed interface SingleBunnyUploader permits SingleBunnyUploaderImpl {
+public sealed interface SingleBunnyUploader permits SingleBunnyUploaderImpl {
 
     /**
      * Creates a {@code SingleBunnyUploader} with default timeout settings.
@@ -18,7 +18,6 @@ sealed interface SingleBunnyUploader permits SingleBunnyUploaderImpl {
      * <p>Default values:</p>
      * <ul>
      *     <li>Connection timeout: 15,000 ms</li>
-     *     <li>Read timeout: 45,000 ms</li>
      * </ul>
      *
      * @param singleBunnyNetConfig configuration containing API key,
@@ -30,7 +29,7 @@ sealed interface SingleBunnyUploader permits SingleBunnyUploaderImpl {
         if (singleBunnyNetConfig == null) {
             throw new IllegalArgumentException("SingleBunnyNetConfig cannot be null");
         }
-        return new SingleBunnyUploaderImpl(singleBunnyNetConfig, 15_000, 45_000);
+        return new SingleBunnyUploaderImpl(singleBunnyNetConfig, 15_000);
     }
 
     /**
@@ -40,16 +39,13 @@ sealed interface SingleBunnyUploader permits SingleBunnyUploaderImpl {
      *                             storage zone, and region; must not be null
      * @param connectionTimeout    maximum time in milliseconds to establish a connection;
      *                             must be positive
-     * @param readTimeout          maximum time in milliseconds to read data;
-     *                             must be positive
      * @return a configured {@code SingleBunnyUploader} instance
      * @throws IllegalArgumentException if configuration is null
      *                                  or timeout values are non-positive
      */
     static SingleBunnyUploader create(
             SingleBunnyNetConfig singleBunnyNetConfig,
-            int connectionTimeout,
-            int readTimeout
+            int connectionTimeout
     ) {
         if (singleBunnyNetConfig == null) {
             throw new IllegalArgumentException("SingleBunnyNetConfig cannot be null");
@@ -57,14 +53,10 @@ sealed interface SingleBunnyUploader permits SingleBunnyUploaderImpl {
         if (connectionTimeout <= 0) {
             throw new IllegalArgumentException("connectionTimeout must be positive");
         }
-        if (readTimeout <= 0) {
-            throw new IllegalArgumentException("readTimeout must be positive");
-        }
 
         return new SingleBunnyUploaderImpl(
                 singleBunnyNetConfig,
-                connectionTimeout,
-                readTimeout
+                connectionTimeout
         );
     }
 
@@ -75,5 +67,5 @@ sealed interface SingleBunnyUploader permits SingleBunnyUploaderImpl {
      *                         must not be null
      * @return a {@link PutObjectResponse} describing the uploaded object
      */
-    PutObjectResponse uploadFile(PutObjectRequest putObjectRequest);
+    PutObjectResponse upload(PutObjectRequest putObjectRequest);
 }

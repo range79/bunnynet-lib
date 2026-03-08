@@ -11,13 +11,11 @@ final class MultiBunnyDownloaderImpl
 
     public MultiBunnyDownloaderImpl(
             MultiBunnyNetConfig config,
-            int connectionTimeout,
-            int readTimeout
+            int connectionTimeout
     ) {
         super(new BunnyHttpClient(
                 config.apiKey(),
-                connectionTimeout,
-                readTimeout
+                connectionTimeout
         ));
     }
 

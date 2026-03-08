@@ -20,17 +20,15 @@ sealed interface MultiBunnyDeleter permits MultiBunnyDeleterImpl {
      * @param config            configuration containing the shared API key;
      *                          must not be null
      * @param connectionTimeout maximum time in milliseconds to establish a connection
-     * @param readTimeout       maximum time in milliseconds to read data
      * @return a configured {@code MultiBunnyDeleter} instance
      * @throws IllegalArgumentException if configuration is invalid
      */
     static MultiBunnyDeleter create(
             MultiBunnyNetConfig config,
-            int connectionTimeout,
-            int readTimeout
+            int connectionTimeout
     ) {
         MultiStorageValidator.validateConfig(config);
-        return new MultiBunnyDeleterImpl(config, connectionTimeout, readTimeout);
+        return new MultiBunnyDeleterImpl(config, connectionTimeout);
     }
 
     /**
@@ -39,7 +37,6 @@ sealed interface MultiBunnyDeleter permits MultiBunnyDeleterImpl {
      * <p>Default values:</p>
      * <ul>
      *     <li>Connection timeout: 15,000 ms</li>
-     *     <li>Read timeout: 45,000 ms</li>
      * </ul>
      *
      * @param config configuration containing the shared API key;
@@ -49,7 +46,7 @@ sealed interface MultiBunnyDeleter permits MultiBunnyDeleterImpl {
      */
     static MultiBunnyDeleter create(MultiBunnyNetConfig config) {
         MultiStorageValidator.validateConfig(config);
-        return create(config, 15_000, 45_000);
+        return create(config, 15_000);
     }
 
     /**

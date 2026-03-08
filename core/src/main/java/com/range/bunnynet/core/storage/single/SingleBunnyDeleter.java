@@ -7,7 +7,7 @@ package com.range.bunnynet.core.storage.single;
  *
  * @since 2.1.0
  */
-sealed interface SingleBunnyDeleter permits SingleBunnyDeleterImpl {
+public sealed interface SingleBunnyDeleter permits SingleBunnyDeleterImpl {
 
     /**
      * Creates a {@code SingleBunnyDeleter} with custom timeout settings.
@@ -16,16 +16,13 @@ sealed interface SingleBunnyDeleter permits SingleBunnyDeleterImpl {
      *                          must not be null
      * @param connectionTimeout maximum time in milliseconds to establish a connection;
      *                          must be positive
-     * @param readTimeout       maximum time in milliseconds to read data;
-     *                          must be positive
      * @return a configured {@code SingleBunnyDeleter} instance
      * @throws IllegalArgumentException if configuration is null
      *                                  or timeout values are non-positive
      */
     static SingleBunnyDeleter create(
             SingleBunnyNetConfig config,
-            int connectionTimeout,
-            int readTimeout
+            int connectionTimeout
     ) {
         if (config == null) {
             throw new IllegalArgumentException("SingleBunnyNetConfig cannot be null");
@@ -33,19 +30,15 @@ sealed interface SingleBunnyDeleter permits SingleBunnyDeleterImpl {
         if (connectionTimeout <= 0) {
             throw new IllegalArgumentException("connectionTimeout must be positive");
         }
-        if (readTimeout <= 0) {
-            throw new IllegalArgumentException("readTimeout must be positive");
-        }
-        return new SingleBunnyDeleterImpl(config, connectionTimeout, readTimeout);
+        return new SingleBunnyDeleterImpl(config, connectionTimeout);
     }
 
     /**
      * Creates a {@code SingleBunnyDeleter} with default timeout settings.
      *
-     * <p>Default values:</p>
+     * <p>Default value:</p>
      * <ul>
      *     <li>Connection timeout: 15,000 ms</li>
-     *     <li>Read timeout: 45,000 ms</li>
      * </ul>
      *
      * @param config configuration containing API key, storage zone, and region;
@@ -54,7 +47,7 @@ sealed interface SingleBunnyDeleter permits SingleBunnyDeleterImpl {
      * @throws IllegalArgumentException if configuration is null
      */
     static SingleBunnyDeleter create(SingleBunnyNetConfig config) {
-        return create(config, 15_000, 45_000);
+        return create(config, 15_000);
     }
 
     /**

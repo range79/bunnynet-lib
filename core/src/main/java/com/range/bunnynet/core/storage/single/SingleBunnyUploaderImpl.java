@@ -13,19 +13,17 @@ final class SingleBunnyUploaderImpl
 
     SingleBunnyUploaderImpl(
             SingleBunnyNetConfig config,
-            int connectionTimeout,
-            int readTimeout
+            int connectionTimeout
     ) {
         super(new BunnyHttpClient(
                 config.apiKey(),
-                connectionTimeout,
-                readTimeout
+                connectionTimeout
         ));
         this.config = config;
     }
 
     @Override
-    public PutObjectResponse uploadFile(PutObjectRequest putObjectRequest) {
+    public PutObjectResponse upload(PutObjectRequest putObjectRequest) {
 
         if (putObjectRequest == null) {
             throw new IllegalArgumentException("PutObjectRequest cannot be null");

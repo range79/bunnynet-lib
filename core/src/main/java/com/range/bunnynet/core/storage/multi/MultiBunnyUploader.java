@@ -13,25 +13,23 @@ import com.range.bunnynet.core.exception.BunnyFileUploadFailedException;
  *
  * @since 2.1.0
  */
-sealed interface MultiBunnyUploader permits MultiBunnyUploaderImpl{
+public sealed interface MultiBunnyUploader permits MultiBunnyUploaderImpl {
 
     /**
      * Creates a {@code MultiBunnyUploader} with custom timeout settings.
      *
-     * @param config                configuration containing the shared API key;
-     *                              must not be null
-     * @param connectionTimeout     maximum time in milliseconds to establish a connection
-     * @param connectionReadTimeout maximum time in milliseconds to read data
+     * @param config            configuration containing the shared API key;
+     *                          must not be null
+     * @param connectionTimeout maximum time in milliseconds to establish a connection
      * @return a configured {@code MultiBunnyUploader} instance
      * @throws IllegalArgumentException if configuration is invalid
      */
     static MultiBunnyUploader create(
             MultiBunnyNetConfig config,
-            int connectionTimeout,
-            int connectionReadTimeout
+            int connectionTimeout
     ) {
         MultiStorageValidator.validateConfig(config);
-        return new MultiBunnyUploaderImpl(config, connectionTimeout, connectionReadTimeout);
+        return new MultiBunnyUploaderImpl(config, connectionTimeout);
     }
 
     /**
@@ -40,7 +38,6 @@ sealed interface MultiBunnyUploader permits MultiBunnyUploaderImpl{
      * <p>Default values:</p>
      * <ul>
      *     <li>Connection timeout: 15,000 ms</li>
-     *     <li>Read timeout: 60,000 ms</li>
      * </ul>
      *
      * @param config configuration containing the shared API key;
@@ -50,7 +47,7 @@ sealed interface MultiBunnyUploader permits MultiBunnyUploaderImpl{
      */
     static MultiBunnyUploader create(MultiBunnyNetConfig config) {
         MultiStorageValidator.validateConfig(config);
-        return new MultiBunnyUploaderImpl(config, 15_000, 60_000);
+        return new MultiBunnyUploaderImpl(config, 15_000);
     }
 
     /**
@@ -70,19 +67,4 @@ sealed interface MultiBunnyUploader permits MultiBunnyUploaderImpl{
             Region storageRegion
     ) throws BunnyFileUploadFailedException;
 
-    /**
-     * Uploads an object to the specified storage zone using
-     * the default region defined by the implementation.
-     *
-     * @param putObjectRequest the upload request containing object data and metadata;
-     *                         must not be null
-     * @param storageZoneName  the name of the storage zone;
-     *                         must not be null or blank
-     * @return a {@link PutObjectResponse} describing the uploaded object
-     * @throws BunnyFileUploadFailedException if the upload operation fails
-     */
-    PutObjectResponse uploadFileBunnyWithDefaultRegion(
-            PutObjectRequest putObjectRequest,
-            String storageZoneName
-    ) throws BunnyFileUploadFailedException;
 }

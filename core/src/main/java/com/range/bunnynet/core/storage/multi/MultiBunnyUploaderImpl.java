@@ -9,7 +9,7 @@ import com.range.bunnynet.core.http.AbstractBunnyUploader;
 final class MultiBunnyUploaderImpl extends AbstractBunnyUploader implements MultiBunnyUploader {
 
     public MultiBunnyUploaderImpl(MultiBunnyNetConfig config, int connectionTimeout, int readTimeout) {
-        super(new BunnyHttpClient(config.apiKey(), connectionTimeout, readTimeout));
+        super(new BunnyHttpClient(config.apiKey(), connectionTimeout));
     }
 
     @Override
@@ -18,9 +18,4 @@ final class MultiBunnyUploaderImpl extends AbstractBunnyUploader implements Mult
         return internalUpload(request, storageZone, region.getEndpoint());
     }
 
-    @Override
-    public PutObjectResponse uploadFileBunnyWithDefaultRegion(PutObjectRequest putObjectRequest, String storageZoneName) {
-
-        return upload(putObjectRequest, storageZoneName, Region.FRANKFURT_DE);
-    }
 }

@@ -9,7 +9,7 @@ import com.range.bunnynet.core.model.GetObjectResponse;
  *
  * @since 2.1.0
  */
-sealed  interface SingleBunnyDownloader permits SingleBunnyDownloaderImpl {
+public sealed interface SingleBunnyDownloader permits SingleBunnyDownloaderImpl {
 
     /**
      * Creates a {@code SingleBunnyDownloader} with custom timeout settings.
@@ -18,16 +18,13 @@ sealed  interface SingleBunnyDownloader permits SingleBunnyDownloaderImpl {
      *                          must not be null
      * @param connectionTimeout maximum time in milliseconds to establish a connection;
      *                          must be positive
-     * @param readTimeout       maximum time in milliseconds to read data;
-     *                          must be positive
      * @return a configured {@code SingleBunnyDownloader} instance
      * @throws IllegalArgumentException if configuration is null
      *                                  or timeout values are non-positive
      */
     static SingleBunnyDownloader create(
             SingleBunnyNetConfig config,
-            int connectionTimeout,
-            int readTimeout
+            int connectionTimeout
     ) {
         if (config == null) {
             throw new IllegalArgumentException("SingleBunnyNetConfig cannot be null");
@@ -35,19 +32,15 @@ sealed  interface SingleBunnyDownloader permits SingleBunnyDownloaderImpl {
         if (connectionTimeout <= 0) {
             throw new IllegalArgumentException("connectionTimeout must be positive");
         }
-        if (readTimeout <= 0) {
-            throw new IllegalArgumentException("readTimeout must be positive");
-        }
-        return new SingleBunnyDownloaderImpl(config, connectionTimeout, readTimeout);
+        return new SingleBunnyDownloaderImpl(config, connectionTimeout);
     }
 
     /**
      * Creates a {@code SingleBunnyDownloader} with default timeout settings.
      *
-     * <p>Default values:</p>
+     * <p>Default value:</p>
      * <ul>
      *     <li>Connection timeout: 15,000 ms</li>
-     *     <li>Read timeout: 45,000 ms</li>
      * </ul>
      *
      * @param config configuration containing API key, storage zone, and region;
@@ -59,7 +52,7 @@ sealed  interface SingleBunnyDownloader permits SingleBunnyDownloaderImpl {
         if (config == null) {
             throw new IllegalArgumentException("SingleBunnyNetConfig cannot be null");
         }
-        return create(config, 15_000, 45_000);
+        return create(config, 15_000);
     }
 
     /**
