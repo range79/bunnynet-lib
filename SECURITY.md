@@ -5,9 +5,9 @@
 The following versions of **bunnynet-lib** currently receive security updates.
 
 | Version | Supported          |
-| ------- | ------------------ |
-| 1.x     | :white_check_mark: |
-| < 1.0   | :x:                |
+|---------| ------------------ |
+| 3.x     | :white_check_mark: |
+| < 3.0   | :x:                |
 
 Only the latest major version receives security fixes.
 
