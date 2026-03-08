@@ -176,12 +176,15 @@ com.range.bunnynet.core
 
 ---
 
+
 # HTTP Client
 
 The library internally uses:
 
 ```
+
 BunnyHttpClient
+
 ```
 
 Responsibilities:
@@ -191,9 +194,9 @@ Responsibilities:
 * streaming uploads and downloads
 * handling Bunny Storage API responses
 
-The client is implemented using **OkHttp**.
+The client is implemented using ~~**OkHttp**~~ **Java HttpClient (java.net.http)**.
 
----
+
 
 # Exception Hierarchy
 
